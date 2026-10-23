@@ -80,3 +80,9 @@ its own canonical URL at emudhra.hamazon.is. Deployment backups and configuratio
 must stay outside its public directory. Open Graph image URLs must be updated if
 the guide is hosted at another origin. Card metadata and image availability can
 be tested locally; a platform's cached preview is controlled by that platform.
+
+## DNS and certificate relationship
+
+- The visible diagram precedes the connection-results section and explicitly combines successful DNS redirection with acceptance of a forged certificate before showing possible interception or modification. No attack-success percentages are shown.
+- One closed disclosure explains cache poisoning, TLS validation, independent content protection, variable attack conditions, DNSSEC and encrypted DNS with primary sources. Existing detailed BIND references remain available there.
+- The browser test, visible 14-row table, fixed result notice and update actions retain their existing behavior. Japanese and English layouts passed at 320, 390, 768 and 1280 pixels.

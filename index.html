@@ -396,6 +396,27 @@
       #results th:nth-child(2) { width:25%; }
       #results th:last-child { width:35%; }
     }
+
+    .dns-relationship { margin:10px 0 24px; padding:22px 0; border-top:2px solid var(--ink); }
+    .dns-relationship > h2 { font-size:clamp(1.25rem,2vw,1.65rem); margin:4px 0 18px; }
+    .dns-chain { display:grid; grid-template-columns:1fr 28px 1fr 28px 1.2fr; gap:10px; align-items:stretch; }
+    .dns-condition,.dns-consequence { padding:15px; background:#e9edf0; min-width:0; }
+    .dns-consequence { background:#f0e7d6; border-left:3px solid #8b6137; }
+    .dns-symbol { font:700 1.4rem/1.2 Menlo,Consolas,monospace; display:block; margin-bottom:9px; }
+    .dns-chain h3 { font-size:1rem; line-height:1.6; margin:0; }
+    .dns-join { display:grid; place-items:center; font-size:1.4rem; }
+    .dns-if { font-size:.72rem; font-weight:700; margin:0 0 5px; }
+    .dns-caption { font-size:.85rem; margin:14px 0; }
+    .dns-actions { display:flex; flex-wrap:wrap; gap:10px 24px; font-size:.85rem; font-weight:700; }
+    @media(max-width:680px) {
+      .dns-chain { grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr); gap:7px; }
+      .dns-condition { padding:12px 9px; }
+      .dns-chain h3 { font-size:.84rem; }
+      .dns-chain > .dns-join:nth-of-type(2) { grid-column:1/-1; transform:rotate(90deg); height:20px; }
+      .dns-consequence { grid-column:1/-1; text-align:center; padding:10px; }
+      .dns-consequence br { display:none; }
+      .dns-symbol { font-size:1.2rem; margin-bottom:6px; }
+    }
   </style>
 </head>
 <body>
@@ -414,6 +435,24 @@
 <a href="#related-issues" data-i18n>See related issues &amp; updates →</a>
 </div></div><p class="map-foot">Check apps and devices through their own update settings.</p>
 </div></section>
+<section class="dns-relationship" id="combined-risk" aria-labelledby="risk-title"><p class="eyebrow">WHEN TWO CONDITIONS COMBINE</p>
+<h2 id="risk-title">Protect the destination. Verify its identity.</h2>
+<div class="dns-chain"><div class="dns-condition"><span class="dns-symbol" aria-hidden="true">↪</span><h3>False DNS data<br>redirects the connection</h3>
+</div><span class="dns-join" aria-hidden="true">＋</span><div class="dns-condition"><span class="dns-symbol" aria-hidden="true">✓?</span><h3>The app accepts<br>a forged certificate</h3>
+</div><span class="dns-join" aria-hidden="true">→</span><div class="dns-consequence"><p class="dns-if">IF BOTH HAPPEN</p>
+<h3>Communication may be<br>read or altered</h3>
+</div></div><p class="dns-caption">Even a familiar URL can lead to an impersonated service when both conditions hold.</p>
+<nav class="dns-actions" aria-label="Protect both checks / 両方への対策"><a href="#device-action" data-i18n>Update routers &amp; DNS →</a>
+<a href="#app-action" data-i18n>Update browsers &amp; apps →</a>
+</nav><details id="risk-details" class="result-explanation"><summary data-i18n>How the conditions combine, and what each protection does</summary><p>DNS translates a service name into its address. Cache poisoning places false answers in a resolver’s cache. If those answers are accepted and used, a connection can be directed to a server controlled by an attacker while the requested hostname stays the same. Router DNS-setting changes and a compromised resolver are other paths to redirection.</p>
+<p>HTTPS then checks the server’s identity using its certificate. If the client accepts a certificate forged with an affected CA key and its other checks permit the connection, the attacker may impersonate that service and read or alter data protected only by that TLS connection. Correctly implemented independent end-to-end encryption and content signatures can provide additional protection.</p>
+<p>The chance of DNS poisoning depends on the attacker’s position, resolver implementation and configuration, vulnerabilities, and opportunities to send forged replies. Guessing one response and succeeding over repeated attempts are different probabilities. This diagram explains the conditions and impact, rather than assigning a universal success rate.</p>
+<p>Keep router and DNS software updated. DNS operators should enable and maintain DNSSEC validation: it authenticates signed DNS data when the chain of trust validates. Encrypted DNS protects the connection to the resolver. Browser, OS, app and certificate-store updates protect the separate TLS identity check. Follow your vendor or administrator’s guidance for each.</p>
+<p>Sources: <a href="https://www.rfc-editor.org/rfc/rfc5452.html">RFC 5452: forged DNS responses and countermeasures</a> · <a href="https://www.isc.org/dnssec/">ISC: DNSSEC</a> · <a href="https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/">Mozilla: eMudhra and impersonation</a>. This is a conditional explanation; evidence of individual incidents is described separately below.</p>
+<div class="bind-note"><h3>Where BIND 9 fits</h3>
+<p>BIND 9 is software used by some DNS servers. ISC has documented cache-poisoning flaws, including <a href="https://kb.isc.org/docs/cve-2025-40778">CVE-2025-40778 (2025)</a> and <a href="https://kb.isc.org/docs/cve-2026-11721">CVE-2026-11721 (2026)</a>, that can affect the address-book side of this diagram. The affected versions and conditions differ.</p>
+<p>Other flaws, such as <a href="https://kb.isc.org/docs/cve-2026-19630">CVE-2026-19630</a>, can interrupt DNS service; they do not by themselves establish that traffic can be redirected. DNS operators should check the <a href="https://kb.isc.org/docs/aa-00913">current ISC vulnerability matrix</a> and their distribution’s advisory. Home users can ask their router vendor or internet provider.</p>
+</div></details></section>
 <section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">BROWSER CHECK</p>
 <h2 id="check-title">A result for this browser, on this network.</h2>
 <p>Check this browser, then review your apps and devices.</p>
@@ -574,24 +613,6 @@
 <p><a href="https://www.qnap.com/en-us/security-advisory/qsa-26-18">QNAP’s 22 October 2026 PHP advisory</a> lists affected products and protections while fixes are prepared, including restricting internet access to management services. This is a separate PHP vulnerability advisory, not an eMudhra exposure list.</p>
 <p>PHP can use its own <a href="https://www.php.net/manual/en/curl.configuration.php">curl CA configuration</a> or <a href="https://www.php.net/manual/en/context.ssl.php">TLS certificate settings</a>. Which certificate list is used depends on the application and configuration.</p>
 </details></section></details>
-<details class="guide-details" id="risk-details"><summary data-i18n>How DNS, router and certificate issues can combine</summary><section class="risk-section" id="combined-risk" aria-labelledby="risk-title"><div class="section-heading"><p class="eyebrow">04 / WHY BOTH UPDATES MATTER</p>
-<h2 id="risk-title">Two protections. Keep both in place.</h2>
-<p>DNS is the internet’s address book. Certificates help software check who it is talking to. A weakness in one does not automatically defeat the other.</p>
-</div><div class="risk-flow"><article class="risk-step"><span class="flow-number" aria-hidden="true">A</span><h3>The destination is changed</h3>
-<p>DNS poisoning can redirect traffic. So can a router takeover that permits changing its DNS settings; exploiting a reachable PHP flaw is one possible route to such a takeover.</p>
-</article>
-<span class="flow-join" aria-hidden="true">＋</span><article class="risk-step"><span class="flow-number" aria-hidden="true">B</span><h3>The false identity is accepted</h3>
-<p>An unpatched client accepts a forged certificate made with an affected key, and its other checks do not block it.</p>
-</article>
-<span class="flow-join" aria-hidden="true">→</span><article class="risk-outcome"><p class="eyebrow">IF BOTH HAPPEN</p>
-<h3>A fake service may look real</h3>
-<p>Data on that connection could be read or changed. Separate end-to-end encryption or signatures can still provide protection.</p>
-</article>
-</div><p class="section-note">This is a possible combination of conditions, not evidence that it happened to you or that these incidents were used together.</p>
-<div class="bind-note"><h3>Where BIND 9 fits</h3>
-<p>BIND 9 is software used by some DNS servers. ISC has documented cache-poisoning flaws, including <a href="https://kb.isc.org/docs/cve-2025-40778">CVE-2025-40778 (2025)</a> and <a href="https://kb.isc.org/docs/cve-2026-11721">CVE-2026-11721 (2026)</a>, that can affect the address-book side of this diagram. The affected versions and conditions differ.</p>
-<p>Other flaws, such as <a href="https://kb.isc.org/docs/cve-2026-19630">CVE-2026-19630</a>, can interrupt DNS service; they do not by themselves establish that traffic can be redirected. DNS operators should check the <a href="https://kb.isc.org/docs/aa-00913">current ISC vulnerability matrix</a> and their distribution’s advisory. Home users can ask their router vendor or internet provider.</p>
-</div></section></details>
 <details class="guide-details" id="admin-details"><summary data-i18n>For developers and administrators</summary><section class="admin-section" id="admin-guide" aria-labelledby="admin-title"><div><p class="eyebrow">FOR DEVELOPERS & ADMINISTRATORS</p>
 <h2 id="admin-title">Update what runs behind the screen.</h2>
 <p>Inventory OS certificate stores, bundled CA lists, language runtimes, containers, CI jobs and device firmware. Apply vendor fixes, rebuild or redeploy where needed, then verify the running versions. Browser updates alone do not cover these.</p>
@@ -1002,7 +1023,7 @@ certctl rehash
   "A successful DNS attack, a compromised router, or another network attack directs traffic to an attacker.": "DNSへの攻撃やルーターの乗っ取りなどが成功し、通信が攻撃者の側へ誘導される。",
   "The false identity is accepted": "偽の相手を受け入れる",
   "An unpatched client accepts a forged certificate made with an affected key, and its other checks do not block it.": "未対応のアプリなどが、問題の鍵で作られた偽の証明書を受け入れ、他の確認でも止められない。",
-  "IF BOTH HAPPEN": "条件が重なると",
+  "IF BOTH HAPPEN": "両方が重なると",
   "A fake service may look real": "偽のサービスを、本物だと思ってしまう",
   "Data on that connection could be read or changed. Separate end-to-end encryption or signatures can still provide protection.": "その通信の内容を読まれたり、書き換えられたりするおそれがあります。別の暗号化や署名による保護が残る場合もあります。",
   "This is a possible combination of conditions, not evidence that it happened to you or that these incidents were used together.": "これは条件が重なった場合の仕組みの説明です。あなたに被害が起きたことや、これらを組み合わせた攻撃の発生を示すものではありません。",
@@ -1213,7 +1234,21 @@ certctl rehash
   "\u003cstrong>Wi-Fi password:\u003c/strong> joins the wireless network.\u003cbr>\u003cstrong>Admin password:\u003c/strong> opens the router’s settings. Check each in your device’s instructions.": "\u003cstrong>Wi-Fi用：\u003c/strong>無線ネットワークにつなぐためのもの。\u003cbr>\u003cstrong>管理用：\u003c/strong>ルーターの設定画面を開くためのもの。機器の説明書で、それぞれを確認します。",
   "Replace shared default, easily guessed or reused admin passwords with a long, unique password within the device’s supported limits. Some devices ship with a strong password unique to that unit; follow the vendor’s guidance for that model.": "共通の初期値、推測しやすい文字列、使い回しの管理用パスワードは、機器が対応する長さで十分に長い固有のものへ変更。機器ごとに強い初期パスワードが設定された製品もあるため、型番ごとの案内で確認します。",
   "If someone can reach the management interface and guess its password, they may gain access to settings such as DNS. A strong password protects that login; firmware updates address software flaws. Follow your provider’s instructions to turn off unused internet-facing administration.": "管理画面にアクセスできる相手がパスワードを推測できると、DNSなどの設定を変更される場合があります。強いパスワードでログインを守り、本体の更新でソフトの欠陥に対処します。利用していない外部からの管理機能は、提供元の手順に沿ってオフにします。",
-  "Guidance: \u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC: Wi-Fi and admin passwords\u003c/a> · \u003ca href=\"https://dlpa.jp/guidance/\">DLPA: unique passwords and updates\u003c/a>.": "確認先：\u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC：Wi-Fi用と管理用のパスワード\u003c/a>・\u003ca href=\"https://dlpa.jp/guidance/\">DLPA：パスワードの固有化と更新\u003c/a>。"
+  "Guidance: \u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC: Wi-Fi and admin passwords\u003c/a> · \u003ca href=\"https://dlpa.jp/guidance/\">DLPA: unique passwords and updates\u003c/a>.": "確認先：\u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC：Wi-Fi用と管理用のパスワード\u003c/a>・\u003ca href=\"https://dlpa.jp/guidance/\">DLPA：パスワードの固有化と更新\u003c/a>。",
+  "WHEN TWO CONDITIONS COMBINE": "条件が重なると、何が起きる？",
+  "Protect the destination. Verify its identity.": "行き先と本人確認。両方を守る。",
+  "False DNS data\u003cbr>redirects the connection": "DNSの偽情報で\u003cbr>偽の接続先へ",
+  "The app accepts\u003cbr>a forged certificate": "偽造証明書を\u003cbr>アプリが受け入れる",
+  "Communication may be\u003cbr>read or altered": "通信の盗み見・改ざんに\u003cbr>つながる可能性",
+  "Even a familiar URL can lead to an impersonated service when both conditions hold.": "いつものURLでも、この条件が重なると偽の相手と通信してしまう可能性があります。",
+  "Update routers &amp; DNS →": "ルーター・DNSの更新を確認 →",
+  "Update browsers &amp; apps →": "ブラウザ・アプリの更新を確認 →",
+  "How the conditions combine, and what each protection does": "条件が重なる仕組みと、それぞれの対策",
+  "DNS translates a service name into its address. Cache poisoning places false answers in a resolver’s cache. If those answers are accepted and used, a connection can be directed to a server controlled by an attacker while the requested hostname stays the same. Router DNS-setting changes and a compromised resolver are other paths to redirection.": "DNSはサービス名から接続先のアドレスを調べます。キャッシュポイズニングは、その回答を一時保存する場所へ偽情報を入れる攻撃です。偽の回答が受け入れられ、接続に使われると、指定したホスト名はそのままでも、攻撃者が管理するサーバーへ誘導される場合があります。ルーターのDNS設定の変更や、DNSサーバーの侵害も、通信先が変わる経路です。",
+  "HTTPS then checks the server’s identity using its certificate. If the client accepts a certificate forged with an affected CA key and its other checks permit the connection, the attacker may impersonate that service and read or alter data protected only by that TLS connection. Correctly implemented independent end-to-end encryption and content signatures can provide additional protection.": "HTTPSでは、接続先の証明書を使って相手の身元を確認します。侵害された認証局の鍵で作られた偽造証明書をクライアントが受け入れ、ほかの検証も通過すると、攻撃者がそのサービスになりすまし、そのTLS接続だけで保護された情報を読み取ったり変更したりできる可能性があります。適切に実装された独立したエンドツーエンド暗号化や、内容への署名は追加の保護になります。",
+  "The chance of DNS poisoning depends on the attacker’s position, resolver implementation and configuration, vulnerabilities, and opportunities to send forged replies. Guessing one response and succeeding over repeated attempts are different probabilities. This diagram explains the conditions and impact, rather than assigning a universal success rate.": "DNSの偽情報が受け入れられる確率は、攻撃者の位置、DNSサーバーの実装・設定、脆弱性、偽の応答を送り込める機会によって変わります。1回の応答を推測する確率と、試行を重ねた攻撃全体の成功率も別です。この図では、共通の成功率を示す代わりに、必要な条件と起こり得る影響を示しています。",
+  "Keep router and DNS software updated. DNS operators should enable and maintain DNSSEC validation: it authenticates signed DNS data when the chain of trust validates. Encrypted DNS protects the connection to the resolver. Browser, OS, app and certificate-store updates protect the separate TLS identity check. Follow your vendor or administrator’s guidance for each.": "ルーターやDNSのソフトウェアを更新します。DNS管理者はDNSSECの検証を有効に保ち、信頼の連鎖が検証できる署名付きDNSデータの真正性を確認します。暗号化DNSはDNSサーバーまでの通信を保護します。ブラウザ・OS・アプリ・証明書ストアの更新は、別の段階で行うTLSの本人確認を守ります。それぞれ提供元や管理者の案内に沿って対応してください。",
+  "Sources: \u003ca href=\"https://www.rfc-editor.org/rfc/rfc5452.html\">RFC 5452: forged DNS responses and countermeasures\u003c/a> · \u003ca href=\"https://www.isc.org/dnssec/\">ISC: DNSSEC\u003c/a> · \u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozilla: eMudhra and impersonation\u003c/a>. This is a conditional explanation; evidence of individual incidents is described separately below.": "出典：\u003ca href=\"https://www.rfc-editor.org/rfc/rfc5452.html\">RFC 5452：偽のDNS応答と対策\u003c/a>・\u003ca href=\"https://www.isc.org/dnssec/\">ISC：DNSSEC\u003c/a>・\u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozilla：eMudhraとなりすまし\u003c/a>。図は条件を組み合わせた説明です。個別の事例の根拠は、下の詳細で区別しています。"
 }
 </script>
 <script>
