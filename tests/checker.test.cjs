@@ -21,6 +21,7 @@ function checker(fetch, options = {}) {
   }
   const tbody = element(), summary = element(), rerun = element();
   const verdict = element(), verdictTitle = element(), verdictDetail = element();
+  const globalNotice = element(), globalTitle = element(), globalDetail = element(), globalAction = element(), announcement = element();
   const document = {
     documentElement: {},
     createElement: element,
@@ -29,6 +30,9 @@ function checker(fetch, options = {}) {
     getElementById: id => ({ summary, rerun, results: element(),
       'browser-verdict': verdict, 'verdict-title': verdictTitle,
       'verdict-detail': verdictDetail, 'verdict-symbol': element(),
+      'global-notice': globalNotice, 'global-title': globalTitle,
+      'global-detail': globalDetail, 'global-action': globalAction,
+      'global-symbol': element(), 'urgent-announcement': announcement,
       'translations-ja': { textContent: japanese } })[id] || null,
   };
   const context = vm.createContext({
@@ -41,6 +45,7 @@ function checker(fetch, options = {}) {
   if (options.noHasOwn) vm.runInContext('Object.hasOwn = undefined', context);
   vm.runInContext(script, context);
   return { context, tbody, summary, rerun, verdict, verdictTitle, verdictDetail,
+    globalNotice, globalTitle, globalDetail, globalAction, announcement,
     probe: () => vm.runInContext("probe('test.example')", context),
     start: () => vm.runInContext('start()', context) };
 }
@@ -143,4 +148,43 @@ test('a received test response takes action priority over incomplete checks', as
   await page.start();
   assert.equal(page.verdict.className, 'verdict needs-action');
   assert.match(page.verdictDetail.textContent, /does not show that an attack happened/);
+});
+
+test('the first received response raises the global alert before other probes finish', async () => {
+  let calls = 0, finish;
+  const waiting = new Promise(resolve => { finish = resolve; });
+  const page = checker(() => ++calls === 1 ? Promise.resolve({ status: 200, text: async () => marker }) : waiting);
+  const running = page.start();
+  await new Promise(setImmediate);
+  assert.equal(page.rerun.disabled, true);
+  assert.equal(page.globalNotice.className, 'global-notice needs-action');
+  assert.match(page.globalTitle.textContent, /test response was received/);
+  assert.equal(page.globalAction.href, '#browser-action');
+  assert.match(page.announcement.textContent, /not proof of an attack/);
+  finish({ status: 403, text: async () => 'proxy' });
+  await running;
+});
+
+test('retry and an incomplete result retain a clearly labeled previous alert', async () => {
+  let mode = 'connected', finish;
+  const waiting = new Promise(resolve => { finish = resolve; });
+  const page = checker(() => {
+    if (mode === 'waiting') return waiting;
+    if (mode === 'blocked') return Promise.reject(new TypeError('network failure'));
+    return Promise.resolve({ status: 200, text: async () => marker });
+  });
+  await page.start();
+  mode = 'waiting';
+  const running = page.start();
+  assert.equal(page.globalNotice.className, 'global-notice needs-action');
+  assert.match(page.globalTitle.textContent, /previous.*Checking again/);
+  finish({ status: 403, text: async () => 'proxy' });
+  await running;
+  assert.equal(page.globalNotice.className, 'global-notice needs-action');
+  assert.match(page.globalTitle.textContent, /previous.*incomplete/);
+  mode = 'blocked';
+  await page.start();
+  assert.equal(page.globalNotice.className, 'global-notice no-response');
+  assert.match(page.globalDetail.textContent, /Network failures/);
+  assert.equal(page.announcement.textContent, '');
 });

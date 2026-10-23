@@ -7,7 +7,8 @@ This branch starts at PR #99 commit
   download to delay the checker. Missing, malformed, or invalid data falls back
   to the original English.
 - The executable page script uses ECMAScript 2018 syntax, a compatible own-property
-  check, and a manual check button when IntersectionObserver is unavailable.
+  check, and a manual retry button. Automatic checks start on page load without
+  relying on IntersectionObserver or scrolling.
 - Certificate and network errors retain the original `blocked` classification
   and green result color. Text describes the observation: the expected test
   response was not received. A visible note explains that this does not prove
@@ -18,11 +19,21 @@ This branch starts at PR #99 commit
   remaining result is incomplete, and green only if every probe returned the
   existing `blocked` result. Green describes missing responses, not verified
   distrust. Apps, command-line installations, and devices are explicitly outside
-  a browser test's scope. The test starts when its visible overview enters view.
+  a browser test's scope. A fixed result bar remains visible while scrolling.
+  The first expected test response immediately triggers the red bar and an
+  accessible alert, without waiting for other probes. Rechecks retain a previous
+  positive result with an explicit historical label until they complete.
+  Incomplete rechecks cannot erase a positive result. A full all-blocked result
+  clears it. The bar makes no claim that an attack occurred.
 - Plain-language steps cover browser/OS, app, and firmware updates. A conditional
   DNS/TLS diagram distinguishes cache poisoning from denial of service and cites
   ISC advisories. It does not claim a combined exploit has occurred. Version tables
   are identified as the upstream snapshot dated 23 October 2026.
+- The first screen gives three update actions. A device diagram explains PHP,
+  TLS libraries, and certificate lists using linked vendor and PHP documentation.
+  PHP vulnerabilities and certificate trust are distinct issues; PHP presence
+  does not prove eMudhra exposure and a PHP patch alone does not prove trust is
+  fixed. Products and versions vary; follow manufacturer instructions.
 - Detailed evidence and administrator workarounds remain available in disclosure
   sections. Deep links open all enclosing disclosures, including nested ones.
 - The static Open Graph and X card tags point to the public 1200×630 PNG, so social
