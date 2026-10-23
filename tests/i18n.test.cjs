@@ -6,9 +6,9 @@ const { test } = require('node:test');
 const vm = require('node:vm');
 
 const html = readFileSync(join(__dirname, '..', 'index.html'), 'utf8');
-const japanese = readFileSync(join(__dirname, '..', 'ja.js'), 'utf8');
+const japanese = html.match(/<script type="application\/json" id="translations-ja">([\s\S]*?)<\/script>/)[1];
 const setup = html.match(/<script>([\s\S]*?)\/\/ Hosts under test\./)[1];
-const dictionary = vm.runInNewContext(`${japanese}\nJA`);
+const dictionary = JSON.parse(japanese);
 const englishTitle = 'eMudhra Intermediate CA Compromise';
 const englishDescription = html.match(/<meta name="description" content="([^"]*)"/)[1];
 
@@ -21,6 +21,8 @@ function render(languages, search = '', options = {}) {
   const listeners = {};
   const document = {
     documentElement: { lang: 'en' },
+    getElementById: id => id === 'translations-ja' && options.loadTranslation !== false ?
+      { textContent: options.translationData ?? japanese } : null,
     querySelectorAll: selector => selector === '[data-language]' ? links :
       selector === 'meta[content]' ? [meta] : [title, ...blocks],
   };
@@ -30,7 +32,7 @@ function render(languages, search = '', options = {}) {
     navigator: { languages, language: 'ja-JP' },
     window: { addEventListener: (name, callback) => { listeners[name] = callback; } },
   });
-  if (options.loadTranslation !== false) vm.runInContext(japanese, context);
+  if (options.noHasOwn) vm.runInContext('Object.hasOwn = undefined', context);
   vm.runInContext(setup, context);
   return { document, title, meta, blocks, links, location, listeners, context };
 }
@@ -97,11 +99,11 @@ test('changed links or inline code invalidate the entire fragment', () => {
 
 test('changed checker templates fall back to English and still substitute current values', () => {
   const page = render(['ja']);
-  const message = 'Your browser trusted {n} of {total} compromised certificate chains.';
+  const message = 'Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.';
   const updated = 'Your browser accepted {n} of {total} certificate chains.';
   const translate = english => vm.runInContext(`t(${JSON.stringify(english)})`, page.context);
   assert.equal(translate(message).replace('{n}', 1).replace('{total}', 14),
-    '接続テスト14件のうち，1件で侵害された中間CAを使った接続に成功しました。接続失敗だけでは，安全とは断定できません。この結果はこのブラウザでの確認に限ります。Go製アプリなど，別のソフトウェアの状態は個別に確認してください。');
+    '接続テスト14件のうち，1件でテスト用の応答を受信しました。接続失敗だけでは安全とは断定できません。この結果はこのブラウザでの確認に限ります。通信を中継・検査するプロキシが結果に影響することがあります。');
   assert.equal(translate(updated).replace('{n}', 2).replace('{total}', 16),
     'Your browser accepted 2 of 16 certificate chains.');
   for (const english of ['constructor', 'toString', '__proto__', 'New message']) {
@@ -117,10 +119,33 @@ test('language links preserve query parameters and follow the current section', 
   assert.equal(page.links[1].href, 'https://example.com/?ref=review&lang=ja#windows');
 });
 
+test('Japanese initialization works without Object.hasOwn', () => {
+  const page = render(['ja-JP'], '', { noHasOwn: true });
+  assert.equal(page.document.documentElement.lang, 'ja');
+  assert.equal(page.title.innerHTML, dictionary[englishTitle]);
+});
+
+test('missing, malformed, and invalid translation data fall back to English', () => {
+  for (const translationData of ['{broken', 'null', '[]', '"text"', '{"eMudhra Intermediate CA Compromise": 42}']) {
+    const page = render(['ja'], '', { translationData });
+    assert.equal(page.document.documentElement.lang, 'en');
+    assert.equal(page.title.innerHTML, englishTitle);
+  }
+});
+
+test('translations are inert local data with no external script dependency', () => {
+  assert.equal(/<script\b[^>]*\bsrc=/i.test(html), false);
+  assert.equal(japanese.includes('<'), false);
+  assert.equal(setup.includes('?.'), false);
+});
+
 test('all translation pairs preserve links, inline code, and placeholders, including stale entries', () => {
   const values = (text, pattern) => [...text.matchAll(pattern)].map(match => match[1]).sort();
   // Unused translations are allowed: upstream English updates must not require a translation update.
   for (const [english, translation] of Object.entries(dictionary)) {
+    for (const tag of translation.match(/<[^>]+>/g) || []) {
+      assert.ok(english.includes(tag) || tag === '<br>', 'Unexpected translated markup: ' + tag);
+    }
     for (const pattern of [/href="([^"]*)"/g, /<code>([\s\S]*?)<\/code>/g, /(\{\w+\})/g]) {
       assert.deepEqual(values(translation, pattern), values(english, pattern), english);
     }

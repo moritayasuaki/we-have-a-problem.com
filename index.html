@@ -104,7 +104,7 @@ openssl dgst -sha384 -verify EM-DV-TLS-CA-G3B.pub.pem -signature EM-DV-TLS-CA-G3
 <p>To check curl or other command-line clients, run:</p>
 <pre>curl https://dv-g3b-emudhra.we-have-a-problem.com/
 curl https://dv-g3b-aaa-emudhra.we-have-a-problem.com/</pre>
-<p>A certificate error means the client does not trust the compromised intermediates. To check whether the client also accepts certificates that were never logged to CT, run:</p>
+<p>A certificate error means the connection was rejected; it does not establish why. Certificate Transparency enforcement or other certificate errors can also cause rejection. To check whether the client accepts certificates that were never logged to CT, run:</p>
 <pre>curl https://dv-g3b-noct-emudhra.we-have-a-problem.com/
 curl https://dv-g3b-aaa-noct-emudhra.we-have-a-problem.com/</pre>
 <p>Most browsers enforce CT, but many non-browser clients, including curl, do not which places them at greater risk.</p>
@@ -336,21 +336,117 @@ certctl rehash
 
 </div>
 
-<script src="ja.js"></script>
+<script type="application/json" id="translations-ja">
+{
+  "eMudhra Intermediate CA Compromise": "eMudhra中間認証局(CA)の秘密鍵の値が極端に小さいことによる侵害問題",
+  "The private keys of eight eMudhra intermediate CA certificates, trusted by major root programs, have been compromised. Check whether your client is affected and how to protect it.": "主要なOSやブラウザなどで信頼されているeMudhra中間CA証明書の秘密鍵が8件侵害されました。OSやブラウザ，Goなどの言語処理系，ライブラリ，アプリケーションへの影響と対処方法を確認してください。",
+  "\u003cstrong>20th October 2026\u003c/strong>": "\u003cstrong>2026年10月20日\u003c/strong>",
+  "The private keys of eight eMudhra intermediate CA certificates have been compromised. They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores.": "eMudhra中間CA証明書の秘密鍵が8件侵害されました。これらの証明書は，Mozilla，Microsoft，Apple，Chromeのルートプログラム（OSやブラウザの開発元が，どの認証局を信頼するかを審査し，採用・除外を決める制度）で採用されたルート証明書につながっています。それらのルート証明書は，多くのトラストストア（OSやブラウザ，言語処理系，ライブラリ，アプリケーションが信頼する証明書の一覧・保管場所）にも取り込まれています。クライアントは，そこにあるルート証明書を信頼の起点として，接続先の証明書を検証します。",
+  "\u003ca href=\"#proof\">How do we know?\u003c/a>": "\u003ca href=\"#proof\">侵害の発見の経緯\u003c/a>",
+  "To demonstrate that the keys are compromised, the original reporter Wayne signed the following message with the private key of each of the eight intermediate CAs and reported it to the Root Program Teams on the 17th of October:": "最初の報告者であるWayne氏は，秘密鍵が侵害されていることを示すため，8つの中間CAそれぞれの秘密鍵で以下のメッセージに署名し，10月17日にルートプログラムの各チームに報告しました。",
+  "\u003ca href=\"proof.zip\">proof.zip\u003c/a> contains the message, and for each intermediate the certificate, its public key and a signature on the message. To verify with OpenSSL:": "\u003ca href=\"proof.zip\">proof.zip\u003c/a>には，このメッセージと，各中間CAの証明書，公開鍵，メッセージに対する署名が含まれています。OpenSSLで検証するには，次を実行します。",
+  "\u003ca href=\"#actions\">What actions have been taken?\u003c/a>": "\u003ca href=\"#actions\">これまでの対策\u003c/a>",
+  "The root programs and many downstream trust stores have taken action to protect their users. The certificates have been blocked in Firefox and Chrome since the 17th of October, on Microsoft platforms since the 20th and on Apple products since the 22nd.": "ルートプログラムの運営者や，その信頼リストを取り込んで使うソフトウェアの管理者は，利用者を保護するための対策を取りました。これらの証明書は，FirefoxとChromeでは10月17日から，Microsoftのプラットフォームでは20日から，Apple製品では22日からブロックされています。",
+  "The issue was responsibly disclosed to downstream trust stores on the 19th of October. Many have already released updates or are in the process of releasing updates.": "この問題は，責任ある開示の手順に従って，10月19日に各ルートプログラムの信頼リストを取り込んで使うトラストストアの管理者へ通知されました。多くはすでに更新を公開しているか，公開に向けて対応を進めています。",
+  "\u003ca href=\"#consequences\">What are the consequences?\u003c/a>": "\u003ca href=\"#consequences\">危惧される影響について\u003c/a>",
+  "An attacker with the private key of any of the compromised intermediate CAs could impersonate any website or service.": "侵害された中間CAのいずれかの秘密鍵を持つ攻撃者は，任意のウェブサイトやサービスになりすますことができます。",
+  "This has already been remediated by Mozilla, Microsoft, Apple, and Chrome for their users through their tools for distributing revocation information such as \u003ca href=\"https://blog.mozilla.org/security/2015/03/03/revoking-intermediate-certificates-introducing-onecrl/\">OneCRL\u003c/a>, \u003ca href=\"https://hacks.mozilla.org/2025/08/crlite-fast-private-and-comprehensive-certificate-revocation-checking-in-firefox/\">CRLite\u003c/a> and \u003ca href=\"https://www.chromium.org/Home/chromium-security/crlsets/\">CRLSets\u003c/a>.": "Mozilla，Microsoft，Apple，Chromeは，\u003ca href=\"https://blog.mozilla.org/security/2015/03/03/revoking-intermediate-certificates-introducing-onecrl/\">OneCRL\u003c/a>，\u003ca href=\"https://hacks.mozilla.org/2025/08/crlite-fast-private-and-comprehensive-certificate-revocation-checking-in-firefox/\">CRLite\u003c/a>，\u003ca href=\"https://www.chromium.org/Home/chromium-security/crlsets/\">CRLSets\u003c/a>などの失効情報を配信する仕組みによって，すでに利用者向けの対策を実施しています。",
+  "The CA has also revoked the compromised intermediate certificates. However, many other clients do not consume revocation information and require software updates to ensure they no longer trust the compromised intermediates.": "認証局も，侵害された中間CA証明書を失効させました。ただし，ブラウザ以外の多くのクライアントは失効情報を利用していないため，侵害された中間CAを確実に信頼しなくなるよう，ソフトウェアを更新する必要があります。Goで作られたアプリケーションや，独自のCAバンドルを使うライブラリなども確認対象です。OSやブラウザが対策済みでも，アプリケーション側の証明書検証処理やライブラリの更新が必要になる場合があります。",
+  "\u003ca href=\"#check\">Does your client still trust the compromised intermediates?\u003c/a>": "\u003ca href=\"#check\">私のクライアントは，侵害された中間CAをまだ信頼していますか？\u003c/a>",
+  "Intermediate CA": "中間CA",
+  "Chains to": "ルート証明書",
+  "Result": "このブラウザでの接続結果",
+  "Run check": "このブラウザで接続をテストする",
+  "On 22nd October 2026, two chains marked \u003cem>No CT\u003c/em> were added. Their leaf certificates were never logged to Certificate Transparency (CT), so clients that enforce CT reject them even if they still trust the intermediate. A successful connection to these hosts means the client trusts the compromised intermediates \u003cem>and\u003c/em> does not enforce CT. As described \u003ca href=\"#cause\">below\u003c/a>, these are the clients that can be attacked without anyone noticing.": "2026年10月22日に，\u003cem>No CT\u003c/em>と表示された2つの証明書チェーンを追加しました。これらのリーフ証明書はCertificate Transparency（CT）のログに一度も記録されていません。そのため，CTを必須とするクライアントは，中間CAをまだ信頼していてもこれらの証明書を拒否します。これらのホストへの接続に成功した場合，そのクライアントは侵害された中間CAを信頼しており，\u003cem>かつ\u003c/em>CTを必須としていないことを意味します。\u003ca href=\"#cause\">後述\u003c/a>のとおり，これらは誰にも気づかれずに攻撃を受ける可能性があるクライアントです。",
+  "To check curl or other command-line clients, run:": "curlなどのコマンドラインクライアントを確認するには，次を実行します。",
+  "Most browsers enforce CT, but many non-browser clients, including curl, do not which places them at greater risk.": "ほとんどのブラウザーはCTを必須としていますが，curlを含むブラウザー以外の多くのクライアントは必須としていないため，より高いリスクにさらされています。",
+  "To check a trust store offline, \u003ca href=\"chains.zip\">chains.zip\u003c/a> contains the certificate chain served by each of the fourteen hosts above in PEM format, with instructions for verifying them with OpenSSL.": "トラストストアをオフラインで確認するために，\u003ca href=\"chains.zip\">chains.zip\u003c/a>には，上記14のホストそれぞれが提示する証明書チェーンをPEM形式で収録しています。OpenSSLで検証する手順も含まれています。",
+  "\u003ca href=\"#cause\">What is known about the cause?\u003c/a>": "\u003ca href=\"#cause\">原因についての判明事項\u003c/a>",
+  "The private keys for the intermediate certificates were incorrectly generated by the CA. This means that anyone can recover them from the certificates.": "認証局による中間CA証明書の秘密鍵の生成方法に誤りがありました。そのため，誰でも証明書から秘密鍵を復元できます。",
+  "This would have been possible since the certificates were created in April 2025. There are no entries in the certificate transparency logs for these intermediates in that period, indicating that CT-enforcing clients like Firefox, Chrome, Edge and Safari could not have been attacked.": "この復元は，証明書が作成された2025年4月以降，可能だったと考えられます。その期間のCTログには，これらの中間CAに関する記録がありません。このことは，Firefox，Chrome，Edge，SafariのようにCTを必須とするクライアントは，この攻撃を受けることがなかったことを示しています。",
+  "However, many clients outside of the browser ecosystem do not enforce Certificate Transparency. We do not know if attackers exploited the flawed key generation to target these clients.": "ただし，ブラウザーのエコシステムに属さない多くのクライアントは，Certificate Transparencyを必須としていません。攻撃者が鍵生成の不備を悪用し，これらのクライアントを標的にしたかどうかは不明です。",
+  "Further technical information about the cause is captured in the \u003ca href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=2083449\">initial incident report\u003c/a> in Mozilla's bug tracker.": "原因に関する詳しい技術情報は，Mozillaのバグトラッカーの\u003ca href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=2083449\">最初のインシデント報告\u003c/a>に記載されています。",
+  "\u003ca href=\"#unpatched\">Which clients aren't yet patched?\u003c/a>": "\u003ca href=\"#unpatched\">未対応クライアントの状況\u003c/a>",
+  "The servers behind the \u003ca href=\"#check\">checker\u003c/a> record how many times each user-agent connects successfully, meaning it still trusts the compromised intermediates. Only these counts are recorded. See the \u003ca href=\"https://statistics-emudhra.we-have-a-problem.com/\">user-agent statistics\u003c/a>.": "\u003ca href=\"#check\">確認ツール\u003c/a>のサーバーは，各ユーザーエージェントが接続に成功した回数を記録しています。接続の成功は，そのクライアントが侵害された中間CAをまだ信頼していることを意味します。記録されるのは，この回数のみです。\u003ca href=\"https://statistics-emudhra.we-have-a-problem.com/\">ユーザーエージェントの統計\u003c/a>を参照してください。",
+  "A \u003ca href=\"https://statistics-emudhra.we-have-a-problem.com/stats.json\">JSON dump\u003c/a> with more detail, including counts for each JA4 fingerprint, is also available.": "JA4フィンガープリントごとの回数など，より詳しい情報を含む\u003ca href=\"https://statistics-emudhra.we-have-a-problem.com/stats.json\">JSONデータ\u003c/a>も公開されています。",
+  "\u003ca href=\"#intermediates\">Which intermediates were compromised?\u003c/a>": "\u003ca href=\"#intermediates\">侵害された中間CAの一覧\u003c/a>",
+  "\u003ca href=\"impacted-intermediates.json\">impacted-intermediates.json\u003c/a> lists the eight intermediates and their Sectigo cross-signs. \u003ca href=\"roots.json\">roots.json\u003c/a> lists the roots they chain to.": "\u003ca href=\"impacted-intermediates.json\">impacted-intermediates.json\u003c/a>には，8つの中間CAと，Sectigoによるそれらのクロス署名証明書が一覧化されています。\u003ca href=\"roots.json\">roots.json\u003c/a>には，それらがつながるルート証明書が一覧化されています。",
+  "\u003ca href=\"#operators\">What actions can trust store operators take?\u003c/a>": "\u003ca href=\"#operators\">トラストストア運用者向けの対策\u003c/a>",
+  "Please see \u003ca href=\"https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/0R3XLJL6FuE\">this thread\u003c/a> in Mozilla's dev-security-policy forum.": "Mozillaのdev-security-policyフォーラムの\u003ca href=\"https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/0R3XLJL6FuE\">こちらのスレッド\u003c/a>を参照してください。",
+  "\u003ca href=\"#users\">What actions can users take?\u003c/a>": "\u003ca href=\"#users\">利用者向けの対策\u003c/a>",
+  "Users should update their browsers and operating systems to the latest versions as soon as possible.": "ブラウザとOSを，できるだけ早く最新バージョンに更新してください。開発者・管理者は，言語処理系やライブラリと，それらを組み込んだアプリケーションの対応状況も確認してください。Goなどのコンパイル済みアプリケーションでは，対策済みのツールチェーンで再ビルドし，更新したバイナリを配布・デプロイする必要がある場合があります。",
+  "\u003ca href=\"#developers\">Who has patched?\u003c/a>": "\u003ca href=\"#developers\">各ソフトウェアの対応状況\u003c/a>",
+  "Pending entries are listed at the end of each group.": "修正版の提供を待っている項目は，各グループの末尾に記載しています。",
+  "\u003ca href=\"#patched-os\">Operating systems and distributions\u003c/a>": "\u003ca href=\"#patched-os\">OSとディストリビューション\u003c/a>",
+  "Software": "ソフトウェア",
+  "Patched version": "修正済みバージョン",
+  "\u003ca href=\"https://bugs.debian.org/1151413\">Same as Debian\u003c/a>": "\u003ca href=\"https://bugs.debian.org/1151413\">Debianと同じ\u003c/a>",
+  "pending": "修正版の提供待ち",
+  "\u003ca href=\"#patched-bundles\">Root store bundles and libraries\u003c/a>": "\u003ca href=\"#patched-bundles\">ルート証明書の一覧とライブラリ\u003c/a>",
+  "\u003ca href=\"#patched-runtimes\">Language runtimes\u003c/a>": "\u003ca href=\"#patched-runtimes\">言語処理系・ランタイム\u003c/a>",
+  "\u003ca href=\"#patched-tools\">Applications and tools\u003c/a>": "\u003ca href=\"#patched-tools\">アプリケーションとツール\u003c/a>",
+  "Add more at \u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">github.com/galadran/we-have-a-problem.com\u003c/a>.": "追加情報は\u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">github.com/galadran/we-have-a-problem.com\u003c/a>へお寄せください。",
+  "\u003ca href=\"#workarounds\">Are there workarounds until patches are available?\u003c/a>": "\u003ca href=\"#workarounds\">修正版が提供されるまでの回避策\u003c/a>",
+  "macOS curl, git, and Python": "macOSのcurl，git，Python",
+  "macOS blocks the compromised intermediates, but the built-in \u003ccode>curl\u003c/code>, \u003ccode>git\u003c/code>, \u003ccode>python3\u003c/code>, \u003ccode>perl\u003c/code>, \u003ccode>ruby\u003c/code>, and \u003ccode>openssl\u003c/code> verify certificates against \u003ccode>/etc/ssl/cert.pem\u003c/code> without checking revocation, and that file has not been updated. To remove the affected roots from it, run:": "macOSは侵害された中間CAをブロックしていますが，標準搭載の\u003ccode>curl\u003c/code>，\u003ccode>git\u003c/code>，\u003ccode>python3\u003c/code>，\u003ccode>perl\u003c/code>，\u003ccode>ruby\u003c/code>，\u003ccode>openssl\u003c/code>は，失効を確認せずに\u003ccode>/etc/ssl/cert.pem\u003c/code>で証明書を検証します。このファイルはまだ更新されていません。影響を受けるルート証明書をこのファイルから削除するには，次を実行します。",
+  "The built-in \u003ccode>pip3\u003c/code>, and the \u003ccode>pip\u003c/code> in virtual environments created from the built-in \u003ccode>python3\u003c/code>, use their own outdated copy of the roots instead. To make them use the fixed system file, run:": "標準搭載の\u003ccode>pip3\u003c/code>と，標準搭載の\u003ccode>python3\u003c/code>から作成した仮想環境内の\u003ccode>pip\u003c/code>は，代わりに独自の古いルート証明書のコピーを使用します。修正したシステムファイルを使わせるには，次を実行します。",
+  "For nix-darwin users, please \u003cstrong>additionally\u003c/strong> follow NixOS instructions.": "nix-darwinをお使いの場合は，\u003cstrong>加えて\u003c/strong>NixOSの手順にも従ってください。",
+  "Until a distribution ships an updated \u003ccode>ca-certificates\u003c/code> package, expert users can distrust the affected roots in the system trust store. This is NOT recommended for ordinary users.": "ディストリビューションが更新済みの\u003ccode>ca-certificates\u003c/code>パッケージを提供するまでは，専門知識のある利用者は，システムのトラストストアで影響を受けるルート証明書を信頼しないように設定できます。一般の利用者には推奨しません。",
+  "On Debian and Ubuntu, run as root:": "DebianとUbuntuでは，root権限で次を実行します。",
+  "If you use the Java certificate store, it might fall out of sync with your system certificate store. To sync the stores, run as root:": "Javaの証明書ストアを使用している場合，システムの証明書ストアと同期しなくなることがあります。両者を同期するには，root権限で次を実行します。",
+  "On Alpine, run as root:": "Alpineでは，root権限で次を実行します。",
+  "On Fedora, RHEL, CentOS Stream, Rocky Linux, AlmaLinux and Amazon Linux 2023, run as root:": "Fedora，RHEL，CentOS Stream，Rocky Linux，AlmaLinux，Amazon Linux 2023では，root権限で次を実行します。",
+  "On openSUSE and SLES, run as root:": "openSUSEとSLESでは，root権限で次を実行します。",
+  "On Arch Linux, run as root:": "Arch Linuxでは，root権限で次を実行します。",
+  "On NixOS, add to your configuration:": "NixOSでは，設定に次を追加します。",
+  "Microsoft has shipped blocks for these certificates through Windows' \u003ca href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-trust#automatic-certificate-trust-list-updates\">automatic certificate trust list updates\u003c/a>. Machines that receive these updates don't need this workaround. This script lets administrators block the compromised certificates locally on machines that do not, for example those that are offline or have automatic updates disabled.": "Microsoftは，Windowsの\u003ca href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-trust#automatic-certificate-trust-list-updates\">証明書信頼リストの自動更新\u003c/a>を通じて，これらの証明書をブロックする更新を配信しています。これらの更新を受け取る端末には，この回避策は不要です。このスクリプトを使うと，管理者は，オフラインの端末や自動更新が無効な端末など，更新を受け取れない端末で，侵害された証明書をローカルにブロックできます。",
+  "\u003cstrong>This mitigation is not recommended for enterprise-managed devices.\u003c/strong> Your IT department will manage the rollout; contact them before applying local changes.": "\u003cstrong>この緩和策は，企業が管理する端末には推奨しません。\u003c/strong>IT部門が展開を管理するため，ローカルで変更を適用する前にIT部門へ連絡してください。",
+  "Download and inspect \u003ca href=\"Block-EmudhraCompromisedCA.ps1\">\u003ccode>Block-EmudhraCompromisedCA.ps1\u003c/code>\u003c/a>, then run it from an elevated PowerShell terminal. Requires PowerShell 5.1 or later and the built-in Windows PKI module. This command bypasses execution policy for this process only; it does not change the machine's policy. Organization-enforced policies may still prevent execution.": "\u003ca href=\"Block-EmudhraCompromisedCA.ps1\">\u003ccode>Block-EmudhraCompromisedCA.ps1\u003c/code>\u003c/a>をダウンロードして内容を確認し，管理者権限のPowerShellターミナルから実行してください。PowerShell 5.1以降と，Windows標準のPKIモジュールが必要です。このコマンドは，このプロセスに限って実行ポリシーを回避し，端末のポリシーは変更しません。組織が強制するポリシーによっては，実行が阻止される場合があります。",
+  "The script imports its 16 compromised intermediates and cross-signs into \u003ccode>LocalMachine\\Disallowed\u003c/code> (Untrusted Certificates).": "このスクリプトは，侵害された中間CA証明書とクロス署名証明書，計16件を\u003ccode>LocalMachine\\Disallowed\u003c/code>（信頼されていない証明書）にインポートします。",
+  "This mitigation applies to clients using the Windows operating system certificate trust stores and chain validation (including Schannel TLS and Authenticode). It adds blocks to Untrusted Certificates without modifying Trusted Root Certification Authorities. Applications using independent CA bundles still need their own updates.": "この緩和策は，Windowsの証明書トラストストアとOSによる証明書チェーン検証を利用するクライアント（Schannel TLSやAuthenticodeを含む）に適用されます。「信頼されたルート証明機関」を変更せず，「信頼されていない証明書」にブロックを追加します。独自のCAバンドルを使用するアプリケーションは，引き続き個別の更新が必要です。",
+  "On NetBSD 10 and later, run as root:": "NetBSD 10以降では，root権限で次を実行します。",
+  "On FreeBSD 14 or later, run the following commands as root:": "FreeBSD 14以降では，root権限で次のコマンドを実行します。",
+  "Site published by \u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a>. This site is the work of \u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">many contributors\u003c/a> from the community. The source is on \u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">GitHub\u003c/a> and PRs are welcome.": "このサイトは\u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a>が公開し，コミュニティの\u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">多くの貢献者\u003c/a>が制作しています。ソースコードは\u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">GitHub\u003c/a>で公開しており，PRを歓迎します。\u003cbr>この一時的な和訳はGrEarlによって提案されています。",
+  "No Certificate Transparency: this certificate was never logged to CT and has no SCTs. Clients that enforce CT, such as Chrome, Safari and Firefox, reject it even if they still trust the intermediate.": "Certificate Transparencyなし：この証明書はCTログに一度も記録されておらず，SCTもありません。Chrome，Safari，Firefoxなど，CTを必須とするクライアントは，中間CAをまだ信頼していてもこの証明書を拒否します。",
+  "⚠️ Inconclusive (unexpected HTTP {status} response)": "⚠️ 判定できません（テスト用の応答を確認できませんでした：HTTP {status}）",
+  "⚠️ Inconclusive (timed out)": "⚠️ 判定できません（時間内に応答がありませんでした）",
+  "not yet checked": "まだテストしていません",
+  "checking…": "接続をテスト中…",
+  "Run again": "もう一度接続をテストする",
+  "pending\u003cbr>(1.4.16, 1.6.0)": "修正版の提供待ち\u003cbr>(1.4.16, 1.6.0)",
+  "❌ Connected (potentially affected)": "❌ 接続成功（影響を受けている可能性があります）",
+  "⚠️ Inconclusive (certificate or network error)": "⚠️ 判定できません（証明書または通信のエラー）",
+  "Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.": "接続テスト{total}件のうち，{n}件でテスト用の応答を受信しました。接続失敗だけでは安全とは断定できません。この結果はこのブラウザでの確認に限ります。通信を中継・検査するプロキシが結果に影響することがあります。",
+  " {unknown} checks were inconclusive because of certificate or network errors, timeouts, or unexpected responses. Try again later or from a network without a TLS-intercepting proxy.": " {unknown}件は，証明書または通信のエラー，タイムアウト，想定外の応答により判定できませんでした。時間をおいて再試行するか，通信を中継・検査するプロキシを経由しないネットワークからお試しください。",
+  "A certificate error means the connection was rejected; it does not establish why. Certificate Transparency enforcement or other certificate errors can also cause rejection. To check whether the client accepts certificates that were never logged to CT, run:": "証明書エラーは接続が拒否されたことを示しますが，その理由までは確定できません。Certificate Transparencyの強制や，別の証明書エラーでも拒否されることがあります。CTログに一度も記録されていない証明書を受け入れるかどうかを確認するには，次を実行します。",
+  "⚠️ Inconclusive (checker unavailable)": "⚠️ 判定できません（確認ツールを利用できません）",
+  "The checker could not complete. No safety conclusion can be drawn.": "確認ツールを完了できませんでした。安全性についての結論は出せません。"
+}
+</script>
 <script>
 // An explicit choice takes precedence over the browser's preferred supported language.
 const requestedLanguage = new URLSearchParams(location.search).get('lang');
-const preferredLanguage = (navigator.languages?.length ? navigator.languages : [navigator.language])
+const preferredLanguage = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language])
   .map(lang => (lang || '').toLowerCase().split('-')[0])
   .find(lang => lang === 'ja' || lang === 'en') || 'en';
 const language = ['ja', 'en'].includes(requestedLanguage) ? requestedLanguage : preferredLanguage;
-const messages = language === 'ja' && typeof JA !== 'undefined' ? JA : null;
+let messages = null;
+if (language === 'ja') {
+  // Translation data is local and inert. Invalid data must never stop the checker.
+  try {
+    const data = document.getElementById('translations-ja');
+    const parsed = data ? JSON.parse(data.textContent) : null;
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) &&
+        Object.keys(parsed).every(key => typeof parsed[key] === 'string')) messages = parsed;
+  } catch (err) { /* Keep the original English. */ }
+}
+const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 
 function t(english) {
-  return messages && Object.hasOwn(messages, english) ? messages[english] : english;
+  return messages && hasOwn(messages, english) ? messages[english] : english;
 }
 
-// Keep the original English if the translation file cannot be loaded.
+// Keep the original English if the embedded translation data is unavailable.
 document.documentElement.lang = messages ? 'ja' : 'en';
 if (messages) {
   // Match complete fragments so edits to links or inline code also invalidate translations.
@@ -425,12 +521,13 @@ async function probe(host) {
     if (!body.includes(EXPECTED_BODY)) {
       return { status: 'unknown', text: t('⚠️ Inconclusive (unexpected HTTP {status} response)').replace('{status}', res.status) };
     }
-    return { status: 'connected', text: t('❌ Insecure') };
+    return { status: 'connected', text: t('❌ Connected (potentially affected)') };
   } catch (err) {
     // A slow server is not evidence that the chain was rejected.
     if (err.name === 'AbortError') return { status: 'unknown', text: t('⚠️ Inconclusive (timed out)') };
     // Browsers report TLS failures and network errors identically here.
-    return { status: 'blocked', text: t('✅ Did not connect') };
+    // Neither proves that the compromised intermediate was distrusted.
+    return { status: 'unknown', text: t('⚠️ Inconclusive (certificate or network error)') };
   } finally {
     clearTimeout(timer);
   }
@@ -464,19 +561,18 @@ async function run() {
   const results = await Promise.all(HOSTS.map(async ({ host }, i) => {
     const r = await probe(host);
     cells[i].textContent = r.text;
-    cells[i].className = { connected: 'bad', blocked: 'good', unknown: 'pending' }[r.status];
+    cells[i].className = { connected: 'bad', unknown: 'pending' }[r.status];
     return r.status;
   }));
   const n = results.filter(s => s === 'connected').length;
   const unknown = results.filter(s => s === 'unknown').length;
-  const summaryTemplate = 'Your browser trusted {n} of {total} compromised certificate chains.';
-  summary.lang = messages && Object.hasOwn(messages, summaryTemplate) ? 'ja' : 'en';
+  const summaryTemplate = 'Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.';
+  summary.lang = messages && hasOwn(messages, summaryTemplate) ? 'ja' : 'en';
   summary.textContent = t(summaryTemplate).replace('{n}', n).replace('{total}', HOSTS.length);
   if (unknown) {
-    const incompleteTemplate = ' {unknown} timed out or returned an unexpected response, so the result is incomplete. ' +
-      'Please try again later, or from a network without a TLS-intercepting proxy.';
+    const incompleteTemplate = " {unknown} checks were inconclusive because of certificate or network errors, timeouts, or unexpected responses. Try again later or from a network without a TLS-intercepting proxy.";
     const incomplete = document.createElement('span');
-    incomplete.lang = messages && Object.hasOwn(messages, incompleteTemplate) ? 'ja' : 'en';
+    incomplete.lang = messages && hasOwn(messages, incompleteTemplate) ? 'ja' : 'en';
     incomplete.textContent = t(incompleteTemplate).replace('{unknown}', unknown);
     summary.appendChild(incomplete);
   }
@@ -484,18 +580,31 @@ async function run() {
 
 // Disable the button until the run has finished and the cooldown has passed.
 async function start() {
-  observer.disconnect();
+  if (rerun.disabled) return;
+  if (observer) observer.disconnect();
   rerun.disabled = true;
-  await Promise.all([run(), new Promise(r => setTimeout(r, COOLDOWN_MS))]);
-  rerun.textContent = t('Run again');
-  rerun.disabled = false;
+  try {
+    await Promise.all([run().catch(() => {
+      for (const td of cells) {
+        td.textContent = t('⚠️ Inconclusive (checker unavailable)');
+        td.className = 'pending';
+      }
+      summary.textContent = t('The checker could not complete. No safety conclusion can be drawn.');
+    }), new Promise(r => setTimeout(r, COOLDOWN_MS))]);
+  } finally {
+    rerun.textContent = t('Run again');
+    rerun.disabled = false;
+  }
 }
 
 // Run automatically the first time the results table scrolls into view.
-const observer = new IntersectionObserver(entries => {
-  if (entries.some(e => e.isIntersecting)) start();
-});
-observer.observe(document.getElementById('results'));
+let observer = null;
+if ('IntersectionObserver' in window) {
+  observer = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting)) start();
+  });
+  observer.observe(document.getElementById('results'));
+}
 
 rerun.addEventListener('click', start);
 

@@ -1,0 +1,22 @@
+name: Translation and checker tests
+
+on: [push, pull_request]
+
+# Public source only. No write token, secrets, dependencies, or external actions.
+permissions: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read the exact public commit and run tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --no-tags --depth=1 origin "$GITHUB_SHA"
+          git checkout --detach FETCH_HEAD
+          node --version
+          node --test tests/*.test.cjs
