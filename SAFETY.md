@@ -34,6 +34,19 @@ This branch starts at PR #99 commit
   PHP vulnerabilities and certificate trust are distinct issues; PHP presence
   does not prove eMudhra exposure and a PHP patch alone does not prove trust is
   fixed. Products and versions vary; follow manufacturer instructions.
+- Related updates are dated 23 October 2026 and cite PHP, ISC, Cloudflare,
+  Homebrew, Electron, Mozilla, Google and the DoH RFC. PHP RCE, conditional BIND
+  RCE/cache poisoning, and DNS denial of service are distinguished. Combined
+  exploitation is described as conditional reasoning, not observed exploitation.
+  cloudflared/WARP updates are vendor-confirmed; specific Slack/Teams exposure
+  is not inferred from their framework. Neither 8.8.8.8 route control nor past
+  download tampering is implied by possession of compromised certificate keys.
+- Router examples distinguish vendor-firmware remote access (Zbtlink), attacker-added
+  backdoors (Quad7), and end-of-life devices (KV Botnet). Dates and sampling limits
+  accompany counts. A separate Archer AX21 CVE is not assigned as Quad7’s entry
+  flaw. The examples do not establish PHP causation, malicious vendor intent, or
+  combined eMudhra exploitation. Product-specific remediation takes precedence
+  over brand/country generalizations.
 - Detailed evidence and administrator workarounds remain available in disclosure
   sections. Deep links open all enclosing disclosures, including nested ones.
 - The static Open Graph and X card tags point to the public 1200×630 PNG, so social

@@ -319,7 +319,7 @@
       .device-client,.device-cloud { display:flex; gap:12px; align-items:center; text-align:left; }
       .device-client .icon,.device-cloud .icon { width:32px; height:32px; flex-shrink:0; }
       .device-name,.device-small { margin:0; } .device-cloud,.device-cutaway > .device-connector:nth-of-type(4) { grid-column:auto; }
-      .device-connector { transform:rotate(90deg); line-height:1; }
+      .device-connector { transform:rotate(90deg); line-height:1; justify-self:center; }
       .device-shell { padding:16px; } .device-cutaway figcaption { margin-top:4px; }
       .two-issues { grid-template-columns:1fr; gap:14px; } .two-issues article { padding-top:16px; }
       .device-next { padding:20px; } .device-next ol { grid-template-columns:1fr; gap:18px; }
@@ -331,6 +331,55 @@
     }
     @media print { body { padding-bottom:0; } .global-notice { display:none; } }
 
+
+    .related-section { border-top:2px solid var(--ink); padding:30px 0; }
+    .incident-chain { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:16px; align-items:center; padding:20px; background:#e7ebed; margin-bottom:20px; font-size:.88rem; }
+    .incident-chain > span,.incident-chain > strong { min-width:0; }
+    .incident-chain b { justify-self:center; color:#8b6137; font-size:1.3rem; }
+    .related-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:start; }
+    .related-card { border:1px solid var(--line); border-top:3px solid #8b6137; margin:0; padding:0; min-width:0; }
+    .related-card > summary { padding:20px; display:block; cursor:pointer; }
+    .related-card > summary::marker { content:""; }
+    .related-card > summary::-webkit-details-marker { display:none; }
+    .related-category { display:block; font:600 .67rem/1.6 Menlo,Consolas,monospace; color:var(--muted); }
+    .related-title { display:block; font-size:1.05rem; line-height:1.55; margin-top:10px; }
+    .related-action { display:block; font-size:.8rem; line-height:1.75; margin-top:10px; font-weight:400; }
+    .related-expand { display:block; font-size:.76rem; margin-top:15px; text-decoration:underline; }
+    .related-card[open] { grid-column:1/-1; }
+    .related-card[open] > summary { background:#e7ebed; }
+    .related-body { padding:20px; max-width:70rem; }
+    .related-body p,.related-questions p { font-size:.87rem; line-height:1.85; overflow-wrap:anywhere; }
+    .related-body p + p { margin-top:15px; }
+    .related-questions { margin-top:22px; border-top:1px solid var(--line); }
+    .related-questions h3 { font-size:1rem; margin-top:25px; }
+    .related-questions p { max-width:65rem; }
+    @media (max-width:680px) {
+      .incident-chain { grid-template-columns:1fr; text-align:center; gap:6px; padding:15px; font-size:.82rem; }
+      .incident-chain b:last-of-type { transform:rotate(90deg); }
+      .related-grid { grid-template-columns:1fr; gap:12px; }
+      .related-card > summary { padding:16px; }
+      .related-title { font-size:1rem; margin-top:5px; }
+      .related-action,.related-expand { margin-top:7px; }
+    }
+
+    .router-evidence > summary { padding:18px 0; }
+    .router-summary-note { display:block; margin:8px 0 0 18px; font-weight:400; font-size:.8rem; color:var(--muted); }
+    .router-cases { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin:24px 0; }
+    .router-case { min-width:0; border-top:3px solid #8b6137; padding-top:16px; }
+    .router-case h3 { margin:12px 0 16px; font-size:1.13rem; line-height:1.5; }
+    .router-case p + p { margin-top:16px; }
+    .router-do { padding-top:16px; border-top:1px solid var(--line); }
+    .router-followup { border-top:1px solid var(--line); padding-bottom:24px; }
+    .router-followup h3 { margin:24px 0 10px; }
+    .router-followup p + p { margin-top:15px; }
+    .router-next { padding:20px; background:#e7ebed; }
+    .router-next h3 { margin:0 0 10px; }
+    @media (max-width:900px) { .router-cases { grid-template-columns:1fr; gap:24px; } }
+
+    .router-route { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:7px; align-items:center; margin:0 0 16px; text-align:center; font-size:.72rem; line-height:1.6; }
+    .router-route span { min-width:0; background:#e7ebed; padding:8px 3px; }
+    .router-route b { color:#8b6137; }
+    .router-priority { font-weight:700; border-left:3px solid #8b6137; padding-left:10px; }
   </style>
 </head>
 <body>
@@ -339,16 +388,54 @@
 </header>
 <main id="main"><section class="hero incident-hero" aria-labelledby="page-title"><div class="hero-copy"><p class="eyebrow incident-tag">SECURITY INCIDENT / 23 OCT 2026</p>
 <h1 id="page-title">Check this browser.<br><span>Update apps &amp; devices.</span></h1>
-<p class="hero-intro">The eMudhra certificate incident can let affected software accept a false identity. This page checks only this browser.</p>
+<p class="hero-intro">Even familiar destinations can be impersonated if traffic is diverted and forged certificates are accepted. This page checks only this browser.</p>
 <nav class="first-actions" aria-label="Next steps / いまやること"><a href="#browser-action"><span class="first-number" aria-hidden="true">01</span><span data-i18n>Update browser &amp; OS</span>
 <span class="first-arrow" aria-hidden="true">↗</span></a><a href="#app-action"><span class="first-number" aria-hidden="true">02</span><span data-i18n>Update your apps</span>
 <span class="first-arrow" aria-hidden="true">↗</span></a><a href="#device-action"><span class="first-number" aria-hidden="true">03</span><span><span data-i18n>Update router &amp; device software</span><small data-i18n>Ask the vendor about PHP &amp; certificate fixes, too.</small></span>
 <span class="first-arrow" aria-hidden="true">↗</span></a></nav><p class="reassurance">The test runs automatically. A red result prompts updates; it is not proof of an attack.</p>
 </div><div class="incident-map"><p class="map-kicker">WHAT THIS PAGE CAN SEE</p>
-<div class="signal-path"><div class="signal-node browser"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><p class="signal-name">Browser</p><p class="signal-caption">Tested here</p></div><div class="signal-node apps"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><p class="signal-name">Apps</p><p class="signal-caption">Check updates</p></div><div class="signal-node router"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><p class="signal-name">Router / NAS</p><p class="signal-caption">Software inside, too</p></div></div><div class="php-teaser"><span class="php-chip" aria-hidden="true">PHP</span><div><p>Some devices run PHP behind their admin screen.</p>
-<a href="#device-guide" data-i18n>See what to update →</a>
+<div class="signal-path"><div class="signal-node browser"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><p class="signal-name">Browser</p><p class="signal-caption">Tested here</p></div><div class="signal-node apps"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><p class="signal-name">Apps</p><p class="signal-caption">Check updates</p></div><div class="signal-node router"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><p class="signal-name">Router / NAS</p><p class="signal-caption">Software inside, too</p></div></div><div class="php-teaser"><span class="php-chip" aria-hidden="true">PHP</span><div><p>PHP, DNS and apps need separate fixes.</p>
+<a href="#related-issues" data-i18n>See related issues &amp; updates →</a>
 </div></div><p class="map-foot">A green browser result does not check apps or devices.</p>
 </div></section>
+<section class="related-section" id="related-issues" aria-labelledby="related-title"><div class="section-heading"><p class="eyebrow">RELATED UPDATES / VERIFIED 23 OCT 2026</p>
+<h2 id="related-title">Close each gap.</h2>
+<p>These flaws need attention on their own. The diagram shows a possible combination, not a confirmed combined attack.</p>
+</div><div class="incident-chain" aria-label="Conditional risk / 条件が重なった場合"><span data-i18n>Intrusion or DNS tampering enables redirection</span>
+<b aria-hidden="true">＋</b><span data-i18n>The app accepts a forged identity</span>
+<b aria-hidden="true">→</b><strong data-i18n>A familiar service can be impersonated</strong>
+</div><div class="related-grid"><details class="related-card" id="php-updates"><summary><span class="related-category" data-i18n>PHP / CRITICAL · 21 OCT</span>
+<strong class="related-title" data-i18n>Block device &amp; server intrusion</strong>
+<span class="related-action" data-i18n>Apply PHP and product security updates.</span>
+<span class="related-expand" data-i18n>Affected products &amp; fixes ↓</span>
+</summary><div class="related-body"><p><a href="https://www.php.net/archive/2026.php#2026-10-21-5">PHP’s advisory</a>: CVE-2026-109618 / CVE-2026-109619 (PHP2Shell) can allow unauthenticated code execution in web-serving PHP. A CMS update alone may leave PHP unchanged.</p>
+<p>Fixed PHP releases: 8.5.12, 8.4.27, 8.3.36 and 8.2.35. Use the supported fix for your branch, including vendor backports, and reload or restart as instructed.</p>
+<p>Device users: follow the affected-model notice, such as <a href="https://www.qnap.com/en-us/security-advisory/qsa-26-18">QNAP’s PHP advisory</a>. A router takeover could enable traffic redirection only if the attacker gains the needed control. PHP use alone does not prove this chain is possible.</p>
+</div></details><details class="related-card" id="dns-updates"><summary><span class="related-category" data-i18n>BIND 9 / HIGH · 21 OCT</span>
+<strong class="related-title" data-i18n>Protect DNS service &amp; answers</strong>
+<span class="related-action" data-i18n>DNS operators: apply the supported fix.</span>
+<span class="related-expand" data-i18n>Affected products &amp; fixes ↓</span>
+</summary><div class="related-body"><p><a href="https://kb.isc.org/docs/cve-2026-94300">CVE-2026-94300</a>: potential remote code execution or a crash. It requires capturing and replaying GSS-TSIG-signed traffic while its key is valid, plus other conditions. A compromised DNS service could become a path to redirection; this is a conditional inference.</p>
+<p><a href="https://kb.isc.org/docs/cve-2026-19630">CVE-2026-19630</a>: CPU or memory exhaustion can stop DNS. This availability flaw alone does not establish spoofing or interception.</p>
+<p>Still unpatched? The older <a href="https://kb.isc.org/docs/cve-2026-11721">CVE-2026-11721 (22 July)</a> can poison a resolver’s cache when DNSSEC wildcard synthesis is enabled. That can affect the destination side of the diagram.</p>
+<p>For the October fixes, use BIND 9.20.30 or your vendor’s supported patched package; consult the <a href="https://kb.isc.org/docs/aa-00913">ISC matrix</a> for your branch. ISC reports no known active exploits in the linked advisories. Home users should ask their provider or device vendor.</p>
+</div></details><details class="related-card" id="app-trust-updates"><summary><span class="related-category" data-i18n>APPS &amp; TOOLS / eMudhra</span>
+<strong class="related-title" data-i18n>Update the actual connection software</strong>
+<span class="related-action" data-i18n>Include cloudflared, WARP and bundled trust stores.</span>
+<span class="related-expand" data-i18n>Affected products &amp; fixes ↓</span>
+</summary><div class="related-body"><p><a href="https://blog.cloudflare.com/emudhra-certificate-compromise/">Cloudflare confirms updates are needed</a>: cloudflared 2026.10.2 or later; use the vendor-listed fixed WARP / 1.1.1.1 client for your platform. For containers, replace the image and redeploy. Verify the running version.</p>
+<p><a href="https://formulae.brew.sh/formula/ca-certificates">Homebrew ca-certificates</a> is a separate CA bundle (current formula: 2026-10-20). Update it and the tools that use it. A browser or system update does not update every copied or bundled certificate list.</p>
+<p><a href="https://www.electronjs.org/docs/latest/tutorial/security">Electron apps ship their own components</a>. Users update each app; maintainers must ship fixed dependencies. Do not infer Slack or Teams exposure from a framework name: check the product, platform, installed version and vendor notice.</p>
+</div></details></div><details class="related-questions" id="connection-questions"><summary data-i18n>Familiar sites, IoT, Wi-Fi, DoH: what changes?</summary><h3>A familiar URL is still worth protecting</h3>
+<p><a href="https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/">Mozilla describes impersonation when an attacker can intercept a connection</a>. An unfamiliar link is not required: apps can contact their usual services automatically. A lookalike phishing domain is a separate risk that does not require eMudhra keys.</p>
+<h3>A fixed destination is not the same as a fixed identity</h3>
+<p>An IoT device may always use the same hostname yet still depend on DNS and certificate checks. Certificate or key pinning, a private CA, and independent content signatures can add protection when correctly implemented. A hostile Wi-Fi network is one possible interception position, not proof that every hotel network is compromised.</p>
+<h3>8.8.8.8, DoH and DNSSEC play different roles</h3>
+<p>eMudhra keys do not grant control of the route to 8.8.8.8 or arbitrary DNS answers. Plain DNS does not use TLS. <a href="https://www.rfc-editor.org/rfc/rfc8484.html#section-9">DoH uses HTTPS</a>, so its client must also authenticate the server correctly; update that client rather than turn encryption off.</p>
+<p><a href="https://developers.google.com/speed/public-dns/docs/security">Google explains DNSSEC and encrypted DNS as complementary defenses</a>. DNSSEC authenticates signed DNS data and has separate keys from TLS certificates. DoH is not a repair for every vulnerable resolver or app.</p>
+<h3>Do past downloads need to be treated as fake?</h3>
+<p>This incident alone does not establish that a download was altered. Where available, verify the publisher’s signature using a separately trusted key and official guidance. A checksum obtained over the same intercepted connection is not independent evidence. Keep certificate verification enabled.</p>
+</details></section>
 <section class="actions-section" id="next-steps" aria-labelledby="steps-title"><div class="section-heading"><p class="eyebrow">01 / WHAT TO DO</p>
 <h2 id="steps-title">Three updates to check.</h2>
 <p>Use your usual settings and official update channels. At work, follow your IT team’s guidance.</p>
@@ -363,14 +450,47 @@
 <article class="action-card" id="device-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><span class="step-number">3</span></div><h3>Router & connected devices</h3>
 <p>Use the model number to find the manufacturer’s security notice. Install the recommended firmware and app updates. Device software can include PHP and its own certificate settings.</p>
 <p class="action-foot">An unsupported device? Ask about replacement or limit its internet access.</p>
+<p class="action-foot"><a href="#router-examples">Real router cases &amp; what to check →</a></p>
+
 </article>
 </div><p class="section-note">Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.</p>
-</section>
+<details class="router-evidence related-questions" id="router-examples"><summary><strong data-i18n>Real routers. Three different failure paths.</strong>
+<span class="router-summary-note" data-i18n>Built-in access / intrusion / end of support — see examples ↓</span>
+</summary><p class="section-note">These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.</p>
+<div class="router-cases"><article class="router-case"><p class="related-category">BUILT INTO FIRMWARE / AUG 2026</p>
+<h3>Zbtlink · 20 models examined</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Built in</span><b aria-hidden="true">→</b><span data-i18n>Calls out</span><b aria-hidden="true">→</b><span data-i18n>Control at risk</span></div>
+<p class="router-priority" data-i18n>Check model &amp; remediation</p>
+<p><a href="https://www.vulncheck.com/blog/zbt-endlessdoors">VulnCheck’s ENDLESSDOORS analysis</a> found a boot-started remote-control component with full administrator privileges and no peer authentication (CVE-2026-66747), including in Z8102AX-2DSIM and WG3526 firmware. Control of its server or network path can enable takeover; the device connects outward.</p>
+<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">The follow-up report</a> records ZBT’s explanation as an after-sales support tool. The observed code behavior and the vendor’s claimed purpose are distinct; malicious intent is not established here.</p>
+<p class="router-do"><strong>Do now:</strong> Check the exact model, firmware and vendor response. If trustworthy remediation is unavailable, ask your provider about isolation or replacement. Turning off remote administration alone does not remove this outbound component.</p>
+</article><article class="router-case"><p class="related-category">ADDED AFTER INTRUSION / OCT 2024</p>
+<h3>Quad7 · about 8,000 active devices</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>A vulnerability</span><b aria-hidden="true">→</b><span data-i18n>Intrusion</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
+<p class="router-priority" data-i18n>Update &amp; recover if compromised</p>
+<p><a href="https://www.microsoft.com/en-us/security/blog/2024/10/31/chinese-threat-actor-storm-0940-uses-credentials-from-password-spray-attacks-from-a-covert-network/">Microsoft’s CovertNetwork-1658 report</a> describes mostly TP-Link routers: attackers exploited a vulnerability, then added backdoors and proxies for password-spray attacks. About 8,000 was the historical average active network size, not today’s count.</p>
+<p>This is not evidence of a factory-installed TP-Link backdoor. Microsoft was still investigating the specific entry exploit; the report does not identify its CVE.</p>
+<p class="router-do"><strong>Do now:</strong> Apply the vendor’s supported firmware. Suspected compromise needs the vendor’s recovery steps as well as updates. Protect online accounts with multi-factor authentication.</p>
+</article><article class="router-case"><p class="related-category">NO MORE SECURITY PATCHES / JAN 2024</p>
+<h3>KV Botnet · end-of-life routers</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Support ends</span><b aria-hidden="true">→</b><span data-i18n>No more fixes</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
+<p class="router-priority" data-i18n>Check support &amp; replace</p>
+<p><a href="https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical">The US Justice Department</a> reported disrupting hundreds of US routers used by Volt Typhoon. The vast majority were end-of-life Cisco and NETGEAR devices, no longer receiving security fixes. The attackers used them to conceal further hacking activity.</p>
+<p>KV Botnet is a separate attack network from Quad7. Restarting an unpatched device is not a lasting repair.</p>
+<p class="router-do"><strong>Do now:</strong> Check the support end date. For an unsupported router, arrange replacement with your provider or administrator; a working internet connection does not show that security support continues.</p>
+</article></div><div class="router-followup"><h3>A named flaw with a published fix</h3>
+<p><a href="https://www.tp-link.com/us/support/faq/3643/">Archer AX21: CVE-2023-1389</a>. In April 2023, TP-Link acknowledged reports of Mirai exploitation and published firmware fixes. Choose the current firmware for your region and hardware revision. This separate example does not identify Quad7’s entry flaw.</p>
+<h3>How this connects to DNS and certificates</h3>
+<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">VulnCheck’s August follow-up</a> also documented DNS-redirection functions in a different ZBT component, SPEAKINGSTONE. That demonstrates a router mechanism for changing destinations. If traffic can be diverted <em>and</em> the connecting app accepts a forged certificate, a familiar HTTPS service can be impersonated. The report does not establish that this combined attack occurred.</p>
+<p>Some router or NAS management software uses PHP, as the <a href="#device-guide">device diagram</a> explains. These router cases have different causes: check the product’s actual components and affected-model advisory, not the presence of PHP alone.</p>
+</div><div class="router-next"><h3>Check the label → the update → the support date</h3>
+<p>Choose by the exact model, update support and security response, not just a brand or country. <a href="https://dlpa.jp/guidance/">DLPA’s recommended-router guidance</a> is one reference for automatic updates and safer defaults; it is not a guarantee that a device has no vulnerabilities.</p>
+</div></details></section>
 <section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">02 / CHECK THIS BROWSER</p>
 <h2 id="check-title">A result for this browser, on this network.</h2>
 <p>The check contacts 14 test hosts. It cannot inspect your apps, your router or another browser. Test hosts count successful connections by client type.</p>
 </div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">This browser has not been checked yet.</p>
-<p id="verdict-detail">The check starts when this panel is visible. You can also use the button below.</p>
+<p id="verdict-detail">The check starts automatically when the page loads. You can also use the button below.</p>
 </div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>The expected test response was received.</p>
 <p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · No test response</strong><br>Keep your software up to date.</p>
 <p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
@@ -973,7 +1093,85 @@ certctl rehash
   "The eMudhra certificate incident can let affected software accept a false identity. This page checks only this browser.": "偽の通信相手を受け入れるおそれのある証明書の問題です。ここで確認できるのは、このブラウザだけ。",
   "Ask the vendor about PHP &amp; certificate fixes, too.": "内蔵PHP・証明書の対応もメーカーに確認",
   "The test runs automatically. A red result prompts updates; it is not proof of an attack.": "自動で確認します。赤い結果は更新を促す通知で、被害の発生を示すものではありません。",
-  "DNS poisoning can redirect traffic. So can a router takeover that permits changing its DNS settings; exploiting a reachable PHP flaw is one possible route to such a takeover.": "DNSの偽情報や、DNS設定を変更できるほどのルーター侵入で、偽の通信先へ誘導される場合があります。攻撃が届くPHPの欠陥などは、その侵入の入口になり得ます。"
+  "DNS poisoning can redirect traffic. So can a router takeover that permits changing its DNS settings; exploiting a reachable PHP flaw is one possible route to such a takeover.": "DNSの偽情報や、DNS設定を変更できるほどのルーター侵入で、偽の通信先へ誘導される場合があります。攻撃が届くPHPの欠陥などは、その侵入の入口になり得ます。",
+  "Even familiar destinations can be impersonated if traffic is diverted and forged certificates are accepted. This page checks only this browser.": "いつもの接続先でも、通信の誘導と証明書の問題が重なると危険です。ここで確認できるのは、このブラウザだけ。",
+  "PHP, DNS and apps need separate fixes.": "PHP・DNS・アプリ、それぞれの対策を。",
+  "See related issues &amp; updates →": "関連する問題と更新先を見る →",
+  "The check starts automatically when the page loads. You can also use the button below.": "ページを開くと自動で確認します。下のボタンでも実行できます。",
+  "RELATED UPDATES / VERIFIED 23 OCT 2026": "関連する更新 / 2026.10.23 確認",
+  "Close each gap.": "重なるリスクに、それぞれの対策を。",
+  "These flaws need attention on their own. The diagram shows a possible combination, not a confirmed combined attack.": "それぞれ単独でも対応が必要です。図は条件が重なった場合の説明で、組み合わせた攻撃の確認情報ではありません。",
+  "Device intrusion or altered DNS": "機器への侵入・DNSの改ざん",
+  "The app accepts a forged identity": "アプリが偽の証明書を受け入れる",
+  "A familiar service can be impersonated": "いつもの接続先になりすまされる",
+  "PHP / CRITICAL · 21 OCT": "PHP / 緊急 · 10月21日",
+  "Block device &amp; server intrusion": "機器・サーバーへの侵入を防ぐ",
+  "Apply PHP and product security updates.": "PHPと製品の修正を適用。",
+  "Affected products &amp; fixes ↓": "対象と修正情報を見る ↓",
+  "\u003ca href=\"https://www.php.net/archive/2026.php#2026-10-21-5\">PHP’s advisory\u003c/a>: CVE-2026-109618 / CVE-2026-109619 (PHP2Shell) can allow unauthenticated code execution in web-serving PHP. A CMS update alone may leave PHP unchanged.": "\u003ca href=\"https://www.php.net/archive/2026.php#2026-10-21-5\">PHP公式の告知\u003c/a>：CVE-2026-109618 / CVE-2026-109619（PHP2Shell）。Webからの要求を処理するPHPで、認証なしのコード実行につながる重大な欠陥です。CMSの更新だけでは、PHPが更新されない場合があります。",
+  "Fixed PHP releases: 8.5.12, 8.4.27, 8.3.36 and 8.2.35. Use the supported fix for your branch, including vendor backports, and reload or restart as instructed.": "修正版はPHP 8.5.12、8.4.27、8.3.36、8.2.35。利用中の系統に合う修正を適用し、案内に従って再読込・再起動します。販売元による修正の取り込みも確認してください。",
+  "Device users: follow the affected-model notice, such as \u003ca href=\"https://www.qnap.com/en-us/security-advisory/qsa-26-18\">QNAP’s PHP advisory\u003c/a>. A router takeover could enable traffic redirection only if the attacker gains the needed control. PHP use alone does not prove this chain is possible.": "機器の利用者は、\u003ca href=\"https://www.qnap.com/en-us/security-advisory/qsa-26-18\">QNAPのPHP脆弱性情報\u003c/a>など、対象機種の案内で確認します。ルーターへの侵入から通信を誘導できるかは、奪われた権限や機能次第です。PHPを使うだけで、この流れが成立するとは限りません。",
+  "BIND 9 / HIGH · 21 OCT": "BIND 9 / 高 · 10月21日",
+  "Protect DNS service &amp; answers": "DNSの動作と応答を守る",
+  "DNS operators: apply the supported fix.": "DNS管理者は対応済みの版へ更新。",
+  "\u003ca href=\"https://kb.isc.org/docs/cve-2026-94300\">CVE-2026-94300\u003c/a>: potential remote code execution or a crash. It requires capturing and replaying GSS-TSIG-signed traffic while its key is valid, plus other conditions. A compromised DNS service could become a path to redirection; this is a conditional inference.": "\u003ca href=\"https://kb.isc.org/docs/cve-2026-94300\">CVE-2026-94300\u003c/a>：コード実行や停止につながる可能性。GSS-TSIG署名付き通信を取得し、鍵が有効な間に再送できることなどが条件です。DNSの制御を奪われれば通信誘導につながり得る、という部分は条件付きの推論です。",
+  "\u003ca href=\"https://kb.isc.org/docs/cve-2026-19630\">CVE-2026-19630\u003c/a>: CPU or memory exhaustion can stop DNS. This availability flaw alone does not establish spoofing or interception.": "\u003ca href=\"https://kb.isc.org/docs/cve-2026-19630\">CVE-2026-19630\u003c/a>：CPUやメモリーを使い尽くし、DNSを停止させる問題です。この停止の欠陥だけで、通信先の偽装や盗聴ができるとはいえません。",
+  "Still unpatched? The older \u003ca href=\"https://kb.isc.org/docs/cve-2026-11721\">CVE-2026-11721 (22 July)\u003c/a> can poison a resolver’s cache when DNSSEC wildcard synthesis is enabled. That can affect the destination side of the diagram.": "未更新なら、以前の\u003ca href=\"https://kb.isc.org/docs/cve-2026-11721\">CVE-2026-11721（7月22日）\u003c/a>も確認。DNSSECのワイルドカード合成が有効な場合、DNSのキャッシュに偽情報が入るおそれがあります。図の「通信先を変える」側の問題です。",
+  "For the October fixes, use BIND 9.20.30 or your vendor’s supported patched package; consult the \u003ca href=\"https://kb.isc.org/docs/aa-00913\">ISC matrix\u003c/a> for your branch. ISC reports no known active exploits in the linked advisories. Home users should ask their provider or device vendor.": "10月の問題にはBIND 9.20.30、または販売元の対応済みパッケージを適用し、系統ごとの状況は\u003ca href=\"https://kb.isc.org/docs/aa-00913\">ISCの一覧\u003c/a>で確認します。リンク先の各告知では、ISCは悪用を把握していないとしています。家庭の利用者は回線や機器の提供元に確認してください。",
+  "APPS &amp; TOOLS / eMudhra": "アプリ・ツール / eMudhra",
+  "Update the actual connection software": "実際に通信するソフトを更新",
+  "Include cloudflared, WARP and bundled trust stores.": "cloudflared・WARP・独自の証明書一覧も。",
+  "\u003ca href=\"https://blog.cloudflare.com/emudhra-certificate-compromise/\">Cloudflare confirms updates are needed\u003c/a>: cloudflared 2026.10.2 or later; use the vendor-listed fixed WARP / 1.1.1.1 client for your platform. For containers, replace the image and redeploy. Verify the running version.": "\u003ca href=\"https://blog.cloudflare.com/emudhra-certificate-compromise/\">Cloudflareは更新を正式に案内\u003c/a>：cloudflaredは2026.10.2以降へ。WARP・1.1.1.1アプリは、OSごとに案内された修正版へ更新します。コンテナはイメージを更新して再配置し、実際に動く版を確認してください。",
+  "\u003ca href=\"https://formulae.brew.sh/formula/ca-certificates\">Homebrew ca-certificates\u003c/a> is a separate CA bundle (current formula: 2026-10-20). Update it and the tools that use it. A browser or system update does not update every copied or bundled certificate list.": "\u003ca href=\"https://formulae.brew.sh/formula/ca-certificates\">Homebrewのca-certificates\u003c/a>は別の証明書一覧です（確認時の版：2026-10-20）。これと利用するツールを更新します。ブラウザやOSの更新だけで、コピー済み・内蔵の一覧すべてが更新されるわけではありません。",
+  "\u003ca href=\"https://www.electronjs.org/docs/latest/tutorial/security\">Electron apps ship their own components\u003c/a>. Users update each app; maintainers must ship fixed dependencies. Do not infer Slack or Teams exposure from a framework name: check the product, platform, installed version and vendor notice.": "\u003ca href=\"https://www.electronjs.org/docs/latest/tutorial/security\">Electron製アプリは部品を内蔵します\u003c/a>。利用者はアプリ自体を、開発者は依存部品を更新して配布します。SlackやTeamsの影響をフレームワーク名だけで判断せず、製品・OS・利用中の版・提供元の案内で確認してください。",
+  "Familiar sites, IoT, Wi-Fi, DoH: what changes?": "いつものサイト・IoT・Wi-Fi・DoHでは、何が変わる？",
+  "A familiar URL is still worth protecting": "「いつものURL」でも、更新は必要",
+  "\u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozilla describes impersonation when an attacker can intercept a connection\u003c/a>. An unfamiliar link is not required: apps can contact their usual services automatically. A lookalike phishing domain is a separate risk that does not require eMudhra keys.": "\u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozillaは、通信を横取りできる場合のなりすましを説明しています\u003c/a>。怪しいリンクを押すことは必須条件ではなく、アプリはいつもの接続先へ自動通信することもあります。似た名前のフィッシングサイトは、eMudhraの鍵がなくても成立する別の問題です。",
+  "A fixed destination is not the same as a fixed identity": "接続先の固定と、相手の確認は別",
+  "An IoT device may always use the same hostname yet still depend on DNS and certificate checks. Certificate or key pinning, a private CA, and independent content signatures can add protection when correctly implemented. A hostile Wi-Fi network is one possible interception position, not proof that every hotel network is compromised.": "IoT機器が同じ名前の接続先だけを使っていても、DNSと証明書の検証に依存する場合があります。証明書・鍵の固定、独自の認証局、内容に対する別の署名などは、適切に実装されていれば追加の防御になります。悪意あるWi-Fiは通信を横取りする位置の一例で、ホテルの回線すべてが侵害されたという意味ではありません。",
+  "8.8.8.8, DoH and DNSSEC play different roles": "8.8.8.8・DoH・DNSSECは役割が違う",
+  "eMudhra keys do not grant control of the route to 8.8.8.8 or arbitrary DNS answers. Plain DNS does not use TLS. \u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoH uses HTTPS\u003c/a>, so its client must also authenticate the server correctly; update that client rather than turn encryption off.": "eMudhraの鍵だけで、8.8.8.8への経路やDNSの回答を自由に操作できるわけではありません。通常のDNSはTLSを使いません。\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoHはHTTPSを使う\u003c/a>ので、利用ソフトが相手を正しく検証する必要もあります。暗号化を切るのではなく、そのソフトを更新してください。",
+  "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">Google explains DNSSEC and encrypted DNS as complementary defenses\u003c/a>. DNSSEC authenticates signed DNS data and has separate keys from TLS certificates. DoH is not a repair for every vulnerable resolver or app.": "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">GoogleはDNSSECと暗号化DNSを補い合う防御として説明しています\u003c/a>。DNSSECは署名されたDNS情報を検証し、TLS証明書とは別の鍵を使います。DoHを使うだけで、DNSサーバーやアプリの欠陥すべてが直るわけではありません。",
+  "Do past downloads need to be treated as fake?": "過去のダウンロードも偽物だった？",
+  "This incident alone does not establish that a download was altered. Where available, verify the publisher’s signature using a separately trusted key and official guidance. A checksum obtained over the same intercepted connection is not independent evidence. Keep certificate verification enabled.": "この問題だけで、過去のダウンロードが改ざんされたとは判断できません。可能なら、別に信頼を確認した鍵と公式の案内で配布元の署名を検証します。同じ横取りされた通信から得たチェックサムだけでは、独立した根拠にはなりません。証明書の検証は有効のままにしてください。",
+  "Intrusion or DNS tampering enables redirection": "侵入・DNS改ざんで通信を誘導できる",
+  "\u003ca href=\"#router-examples\">Real router cases &amp; what to check →\u003c/a>": "\u003ca href=\"#router-examples\">ルーターの実例と確認すること →\u003c/a>",
+  "Real routers. Three different failure paths.": "ルーターで実際に起きた、３つの問題。",
+  "Built-in access / intrusion / end of support — see examples ↓": "出荷時の機能／侵入後の改ざん／サポート終了 — 実例を見る ↓",
+  "These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.": "入口も原因も異なる事例です。ルーター全体の被害率を示すものではなく、PHPが原因だった、eMudhraと組み合わせた攻撃があった、という証拠でもありません。",
+  "BUILT INTO FIRMWARE / AUG 2026": "出荷時のソフトに存在 / 2026年8月",
+  "Zbtlink · 20 models examined": "Zbtlink · 調査した20機種",
+  "\u003ca href=\"https://www.vulncheck.com/blog/zbt-endlessdoors\">VulnCheck’s ENDLESSDOORS analysis\u003c/a> found a boot-started remote-control component with full administrator privileges and no peer authentication (CVE-2026-66747), including in Z8102AX-2DSIM and WG3526 firmware. Control of its server or network path can enable takeover; the device connects outward.": "\u003ca href=\"https://www.vulncheck.com/blog/zbt-endlessdoors\">VulnCheckのENDLESSDOORS解析\u003c/a>では、Z8102AX-2DSIMやWG3526などに、起動時から動く遠隔操作機能を確認（CVE-2026-66747）。最上位の管理者権限を持ち、接続相手を認証しません。機器側から外部へ接続するため、そのサーバーや通信経路の支配が乗っ取りにつながります。",
+  "\u003ca href=\"https://www.vulncheck.com/blog/zbt-darklantern-speakingstone\">The follow-up report\u003c/a> records ZBT’s explanation as an after-sales support tool. The observed code behavior and the vendor’s claimed purpose are distinct; malicious intent is not established here.": "\u003ca href=\"https://www.vulncheck.com/blog/zbt-darklantern-speakingstone\">続報\u003c/a>には、ZBT側がアフターサービス用と説明したことも記載されています。確認された動作と、メーカーが説明する目的は分け、ここでは悪意の有無を断定しません。",
+  "\u003cstrong>Do now:\u003c/strong> Check the exact model, firmware and vendor response. If trustworthy remediation is unavailable, ask your provider about isolation or replacement. Turning off remote administration alone does not remove this outbound component.": "\u003cstrong>いまやること：\u003c/strong>型番・ソフトの版・販売元の対応を確認。信頼できる修正を確認できなければ、提供元に利用の切り離しや交換を相談。外部からの管理をオフにするだけでは、この発信機能は除けません。",
+  "ADDED AFTER INTRUSION / OCT 2024": "侵入後に追加 / 2024年10月",
+  "Quad7 · about 8,000 active devices": "Quad7 · 稼働は平均約8,000台",
+  "\u003ca href=\"https://www.microsoft.com/en-us/security/blog/2024/10/31/chinese-threat-actor-storm-0940-uses-credentials-from-password-spray-attacks-from-a-covert-network/\">Microsoft’s CovertNetwork-1658 report\u003c/a> describes mostly TP-Link routers: attackers exploited a vulnerability, then added backdoors and proxies for password-spray attacks. About 8,000 was the historical average active network size, not today’s count.": "\u003ca href=\"https://www.microsoft.com/en-us/security/blog/2024/10/31/chinese-threat-actor-storm-0940-uses-credentials-from-password-spray-attacks-from-a-covert-network/\">MicrosoftのCovertNetwork-1658報告\u003c/a>では、主にTP-Link製のルーターが対象。攻撃者が脆弱性で侵入し、後から遠隔操作・中継機能を追加して、多数のアカウントへのパスワード試行に悪用しました。約8,000台は当時の稼働台数の平均で、現在の台数ではありません。",
+  "This is not evidence of a factory-installed TP-Link backdoor. Microsoft was still investigating the specific entry exploit; the report does not identify its CVE.": "TP-Linkが出荷時にバックドアを入れた証拠ではありません。Microsoftは侵入に使われた具体的な手法を調査中としており、この報告では原因のCVEを特定していません。",
+  "\u003cstrong>Do now:\u003c/strong> Apply the vendor’s supported firmware. Suspected compromise needs the vendor’s recovery steps as well as updates. Protect online accounts with multi-factor authentication.": "\u003cstrong>いまやること：\u003c/strong>販売元の対応済みソフトへ更新。侵害が疑われる場合は更新だけで済ませず、販売元の復旧手順も確認。オンラインのアカウントには多要素認証を設定。",
+  "NO MORE SECURITY PATCHES / JAN 2024": "修正の提供が終了 / 2024年1月",
+  "KV Botnet · end-of-life routers": "KV Botnet · サポート終了機器",
+  "\u003ca href=\"https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical\">The US Justice Department\u003c/a> reported disrupting hundreds of US routers used by Volt Typhoon. The vast majority were end-of-life Cisco and NETGEAR devices, no longer receiving security fixes. The attackers used them to conceal further hacking activity.": "\u003ca href=\"https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical\">米司法省の発表\u003c/a>では、Volt Typhoonが使った米国内のルーター数百台を無力化。大半がサポート終了済みのCisco・NETGEAR製で、修正の提供がなく、別の攻撃の発信元を隠す中継に使われていました。",
+  "KV Botnet is a separate attack network from Quad7. Restarting an unpatched device is not a lasting repair.": "KV BotnetとQuad7は別の攻撃基盤です。未修正の機器を再起動するだけでは、恒久的な対策になりません。",
+  "\u003cstrong>Do now:\u003c/strong> Check the support end date. For an unsupported router, arrange replacement with your provider or administrator; a working internet connection does not show that security support continues.": "\u003cstrong>いまやること：\u003c/strong>サポート終了日を確認。終了済みなら回線の提供元や管理者と交換を手配。「まだネットにつながる」と「安全のための修正が届く」は別です。",
+  "A named flaw with a published fix": "修正が出ている、具体的な脆弱性も",
+  "\u003ca href=\"https://www.tp-link.com/us/support/faq/3643/\">Archer AX21: CVE-2023-1389\u003c/a>. In April 2023, TP-Link acknowledged reports of Mirai exploitation and published firmware fixes. Choose the current firmware for your region and hardware revision. This separate example does not identify Quad7’s entry flaw.": "\u003ca href=\"https://www.tp-link.com/us/support/faq/3643/\">Archer AX21：CVE-2023-1389\u003c/a>。TP-Linkは2023年4月にMiraiによる悪用の報告を認め、修正ソフトを提供しています。購入地域とハードウェアの版に合う最新版を選びます。これは別の事例で、Quad7の侵入原因を特定するものではありません。",
+  "How this connects to DNS and certificates": "DNS・証明書とは、どこでつながる？",
+  "\u003ca href=\"https://www.vulncheck.com/blog/zbt-darklantern-speakingstone\">VulnCheck’s August follow-up\u003c/a> also documented DNS-redirection functions in a different ZBT component, SPEAKINGSTONE. That demonstrates a router mechanism for changing destinations. If traffic can be diverted \u003cem>and\u003c/em> the connecting app accepts a forged certificate, a familiar HTTPS service can be impersonated. The report does not establish that this combined attack occurred.": "\u003ca href=\"https://www.vulncheck.com/blog/zbt-darklantern-speakingstone\">VulnCheckの8月の続報\u003c/a>では、別のZBT製部品SPEAKINGSTONEに、DNSの誘導先を書き換える機能も確認されています。ルーター側で通信先を変えられる具体例です。通信が誘導され、\u003cem>かつ\u003c/em>接続するアプリが偽の証明書を通すと、いつものHTTPSサービスになりすまされる可能性があります。この複合攻撃の発生を示す報告ではありません。",
+  "Some router or NAS management software uses PHP, as the \u003ca href=\"#device-guide\">device diagram\u003c/a> explains. These router cases have different causes: check the product’s actual components and affected-model advisory, not the presence of PHP alone.": "ルーターやNASの管理ソフトにPHPが使われる例は、\u003ca href=\"#device-guide\">機器の図解\u003c/a>で説明しています。ただし、上の事例の原因はそれぞれ異なります。PHPがあるかだけでなく、その製品の部品と対象機種の告知で確認します。",
+  "Check the label → the update → the support date": "本体の型番 → 更新 → サポート期限を確認",
+  "Choose by the exact model, update support and security response, not just a brand or country. \u003ca href=\"https://dlpa.jp/guidance/\">DLPA’s recommended-router guidance\u003c/a> is one reference for automatic updates and safer defaults; it is not a guarantee that a device has no vulnerabilities.": "ブランドや国名だけでなく、型番・更新の提供・問題が出たときの対応で選びます。\u003ca href=\"https://dlpa.jp/guidance/\">DLPA推奨ルーターの案内\u003c/a>も、自動更新や初期設定を確認する目安の一つです。脆弱性がないことを保証するものではありません。",
+  "Built in": "出荷時に内蔵",
+  "Calls out": "外部へ接続",
+  "Control at risk": "制御され得る",
+  "Check model &amp; remediation": "型番と対応状況を確認",
+  "A vulnerability": "脆弱性",
+  "Intrusion": "侵入",
+  "Abused as proxy": "中継に悪用",
+  "Update &amp; recover if compromised": "更新・侵害時は復旧も",
+  "Support ends": "サポート終了",
+  "No more fixes": "修正が届かない",
+  "Check support &amp; replace": "期限を確認して交換"
 }
 </script>
 <script>
