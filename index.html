@@ -387,6 +387,15 @@
     .guide-details > section { border-top:0; padding-top:16px; }
     .result-explanation { margin-top:20px; border-top:1px solid var(--line); padding-top:14px; }
     .result-explanation > p { font-size:.87rem; line-height:1.8; margin:16px 0; }
+    .connection-results { margin-top:26px; }
+    .connection-results > h3 { font-size:1.08rem; margin-bottom:12px; }
+    @media (max-width:680px) {
+      #results { min-width:0; table-layout:fixed; }
+      #results th,#results td { padding:8px; font-size:.72rem; }
+      #results th:first-child,#results td:first-child { width:40%; }
+      #results th:nth-child(2) { width:25%; }
+      #results th:last-child { width:35%; }
+    }
   </style>
 </head>
 <body>
@@ -410,16 +419,17 @@
 <p>Check this browser, then review your apps and devices.</p>
 </div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">Ready to check this browser.</p>
 <p id="verdict-detail">The check starts automatically when the page loads. You can also use the button below.</p>
-</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><details class="result-explanation" id="result-explanation"><summary data-i18n>Result details and how the check works</summary><p id="verdict-explanation"></p><p>This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.</p><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>A site using an affected certificate was reachable.</p>
-<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · Keep automatic updates enabled</strong><br>No expected page content was obtained from the affected test sites.</p>
-<p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
-</div><p id="checker-note" class="section-note">The check observes whether this browser obtains the expected page content. Certificate rejection, network errors and proxies that inspect encrypted traffic can affect the result. Use your product’s official guidance to verify revocation or trust updates.</p>
-<details class="technical-details" id="test-details"><summary data-i18n>See all 14 connection results</summary>
+</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="connection-results" id="test-details"><h3>All 14 connection results</h3>
 <p id="summary" class="technical-summary"></p>
 <div class="table-scroll" tabindex="0"><table id="results">
   <thead><tr><th>Intermediate CA</th><th>Chains to</th><th>Result</th></tr></thead>
   <tbody></tbody>
-</table></div></details>
+</table></div></div>
+<details class="result-explanation" id="result-explanation"><summary data-i18n>Result details and how the check works</summary><p id="verdict-explanation"></p><p>This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.</p><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>A site using an affected certificate was reachable.</p>
+<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · Keep automatic updates enabled</strong><br>No expected page content was obtained from the affected test sites.</p>
+<p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
+</div><p id="checker-note" class="section-note">The check observes whether this browser obtains the expected page content. Certificate rejection, network errors and proxies that inspect encrypted traffic can affect the result. Use your product’s official guidance to verify revocation or trust updates.</p>
+
 </details>
 <noscript><p lang="ja">自動確認にはJavaScriptが必要です。上の３つの更新手順は、そのまま利用できます。</p>
 <p lang="en">The browser test needs JavaScript. The update steps above still apply.</p>
@@ -505,9 +515,10 @@
 <p><a href="https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/">Mozilla describes impersonation when an attacker can intercept a connection</a>. An unfamiliar link is not required: apps can contact their usual services automatically. A lookalike phishing domain is a separate risk that does not require eMudhra keys.</p>
 <h3>A fixed destination is not the same as a fixed identity</h3>
 <p>An IoT device may always use the same hostname yet still depend on DNS and certificate checks. Certificate or key pinning, a private CA, and independent content signatures can add protection when correctly implemented. A hostile Wi-Fi network is one possible interception position, not proof that every hotel network is compromised.</p>
-<h3>8.8.8.8, DoH and DNSSEC play different roles</h3>
-<p>eMudhra keys do not grant control of the route to 8.8.8.8 or arbitrary DNS answers. Plain DNS does not use TLS. <a href="https://www.rfc-editor.org/rfc/rfc8484.html#section-9">DoH uses HTTPS</a>, so its client must also authenticate the server correctly; update that client rather than turn encryption off.</p>
-<p><a href="https://developers.google.com/speed/public-dns/docs/security">Google explains DNSSEC and encrypted DNS as complementary defenses</a>. DNSSEC authenticates signed DNS data and has separate keys from TLS certificates. DoH is not a repair for every vulnerable resolver or app.</p>
+<h3>Protect the DNS service your device uses</h3>
+<p>DNS helps your device find a service’s address. Your router, internet provider or a public DNS service may handle these lookups. Google Public DNS, whose addresses include 8.8.8.8, is one example.</p>
+<p><a href="https://www.rfc-editor.org/rfc/rfc8484.html#section-9">DoH protects DNS communication using HTTPS</a>. Impersonating that service through a forged certificate requires both an opportunity to redirect or intercept traffic and a client that accepts the forged identity. The compromised CA keys concern the identity check; control of the communication path is a separate condition.</p>
+<p><a href="https://developers.google.com/speed/public-dns/docs/security">DNSSEC and encrypted DNS have complementary roles</a>: DNSSEC verifies signed DNS data using keys separate from TLS, while encrypted DNS protects communication with the resolver. Keep encryption enabled and update the DNS client, its certificate protections and any DNS server you manage.</p>
 <h3>Do past downloads need to be treated as fake?</h3>
 <p>This incident alone does not establish that a download was altered. Where available, verify the publisher’s signature using a separately trusted key and official guidance. A checksum obtained over the same intercepted connection is not independent evidence. Keep certificate verification enabled.</p>
 </details></section></details>
@@ -1107,9 +1118,6 @@ certctl rehash
   "\u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozilla describes impersonation when an attacker can intercept a connection\u003c/a>. An unfamiliar link is not required: apps can contact their usual services automatically. A lookalike phishing domain is a separate risk that does not require eMudhra keys.": "\u003ca href=\"https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/\">Mozillaは、通信を横取りできる場合のなりすましを説明しています\u003c/a>。怪しいリンクを押すことは必須条件ではなく、アプリはいつもの接続先へ自動通信することもあります。似た名前のフィッシングサイトは、eMudhraの鍵がなくても成立する別の問題です。",
   "A fixed destination is not the same as a fixed identity": "接続先の固定と、相手の確認は別",
   "An IoT device may always use the same hostname yet still depend on DNS and certificate checks. Certificate or key pinning, a private CA, and independent content signatures can add protection when correctly implemented. A hostile Wi-Fi network is one possible interception position, not proof that every hotel network is compromised.": "IoT機器が同じ名前の接続先だけを使っていても、DNSと証明書の検証に依存する場合があります。証明書・鍵の固定、独自の認証局、内容に対する別の署名などは、適切に実装されていれば追加の防御になります。悪意あるWi-Fiは通信を横取りする位置の一例で、ホテルの回線すべてが侵害されたという意味ではありません。",
-  "8.8.8.8, DoH and DNSSEC play different roles": "8.8.8.8・DoH・DNSSECは役割が違う",
-  "eMudhra keys do not grant control of the route to 8.8.8.8 or arbitrary DNS answers. Plain DNS does not use TLS. \u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoH uses HTTPS\u003c/a>, so its client must also authenticate the server correctly; update that client rather than turn encryption off.": "eMudhraの鍵だけで、8.8.8.8への経路やDNSの回答を自由に操作できるわけではありません。通常のDNSはTLSを使いません。\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoHはHTTPSを使う\u003c/a>ので、利用ソフトが相手を正しく検証する必要もあります。暗号化を切るのではなく、そのソフトを更新してください。",
-  "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">Google explains DNSSEC and encrypted DNS as complementary defenses\u003c/a>. DNSSEC authenticates signed DNS data and has separate keys from TLS certificates. DoH is not a repair for every vulnerable resolver or app.": "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">GoogleはDNSSECと暗号化DNSを補い合う防御として説明しています\u003c/a>。DNSSECは署名されたDNS情報を検証し、TLS証明書とは別の鍵を使います。DoHを使うだけで、DNSサーバーやアプリの欠陥すべてが直るわけではありません。",
   "Do past downloads need to be treated as fake?": "過去のダウンロードも偽物だった？",
   "This incident alone does not establish that a download was altered. Where available, verify the publisher’s signature using a separately trusted key and official guidance. A checksum obtained over the same intercepted connection is not independent evidence. Keep certificate verification enabled.": "この問題だけで、過去のダウンロードが改ざんされたとは判断できません。可能なら、別に信頼を確認した鍵と公式の案内で配布元の署名を検証します。同じ横取りされた通信から得たチェックサムだけでは、独立した根拠にはなりません。証明書の検証は有効のままにしてください。",
   "Intrusion or DNS tampering enables redirection": "侵入・DNS改ざんで通信を誘導できる",
@@ -1187,7 +1195,12 @@ certctl rehash
   "This browser obtained the expected content from {n} of {total} sites using affected certificates. Results describe this browser and network; certificate rejection, network errors and inspecting proxies affect the outcome.": "問題のある証明書を使う{total}サイトのうち、{n}サイトから所定の内容を取得しました。結果は、このブラウザと通信環境での確認です。証明書の拒否、通信エラー、通信を検査するプロキシの影響が含まれます。",
   "Ready to check this browser.": "このブラウザを確認します。",
   "BROWSER CHECK": "ブラウザの確認",
-  "UPDATE STEPS": "更新の手順"
+  "UPDATE STEPS": "更新の手順",
+  "All 14 connection results": "14件の接続結果",
+  "Protect the DNS service your device uses": "利用するDNSサービスと通信を守る",
+  "DNS helps your device find a service’s address. Your router, internet provider or a public DNS service may handle these lookups. Google Public DNS, whose addresses include 8.8.8.8, is one example.": "DNSは、接続したいサービスのアドレスを調べる仕組みです。ルーターや回線事業者、公開DNSサービスなどを利用します。8.8.8.8は、公開サービスであるGoogle Public DNSのアドレスの一例です。",
+  "\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoH protects DNS communication using HTTPS\u003c/a>. Impersonating that service through a forged certificate requires both an opportunity to redirect or intercept traffic and a client that accepts the forged identity. The compromised CA keys concern the identity check; control of the communication path is a separate condition.": "\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoHはHTTPSでDNSの通信を保護します\u003c/a>。偽の証明書でその接続先になりすますには、通信を誘導・中継できることと、利用ソフトが偽の相手を受け入れることの両方が条件です。今回のCAの鍵の問題は相手の確認に関わり、通信経路の操作は別の条件です。",
+  "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSEC and encrypted DNS have complementary roles\u003c/a>: DNSSEC verifies signed DNS data using keys separate from TLS, while encrypted DNS protects communication with the resolver. Keep encryption enabled and update the DNS client, its certificate protections and any DNS server you manage.": "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSECと暗号化DNSは、異なる部分を守ります\u003c/a>。DNSSECはTLSとは別の鍵で署名付きのDNS情報を検証し、暗号化DNSはDNSサービスとの通信を保護します。暗号化を有効に保ち、利用ソフト・証明書の保護機能・管理しているDNSサーバーを更新してください。"
 }
 </script>
 <script>

@@ -47,6 +47,8 @@ This branch starts at PR #99 commit
   flaw. The examples do not establish PHP causation, malicious vendor intent, or
   combined eMudhra exploitation. Product-specific remediation takes precedence
   over brand/country generalizations.
+- All 14 connection rows and their existing explanation are visible directly below
+  the browser verdict, without opening a disclosure. Table wording is preserved.
 - The default view prioritizes short update actions. Exact observations, network
   and proxy limitations, and detailed related-issue guidance are in closed native
   disclosures. Green recommends continued automatic updates; it is not relabeled
