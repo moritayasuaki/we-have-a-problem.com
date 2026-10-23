@@ -80,3 +80,12 @@ its own canonical URL at emudhra.hamazon.is. Deployment backups and configuratio
 must stay outside its public directory. Open Graph image URLs must be updated if
 the guide is hosted at another origin. Card metadata and image availability can
 be tested locally; a platform's cached preview is controlled by that platform.
+
+## Apple / OCSP diagnostics (23 October 2026)
+
+- Apple guidance distinguishes distributed revocation data, online checks, and best-attempt versus response-required policy. The page does not attribute a past red result to an outage or infer intermediate acceptance from root-store presence.
+- The browser's 14-host checker and classification are unchanged. An always-visible short Apple note links directly to a single optional detail section.
+- `check-ocsp.py` is an explicitly downloaded, read-only local diagnostic, not website JavaScript or a server proxy. It sends one bounded POST for each of three fixed public certificate paths, with no redirects, automatic retries, or trust-store changes. curl config loading is disabled; environment proxy routing can still apply and is disclosed.
+- OCSP response signatures, target matching and freshness must verify before a signed status is reported. HTTP success alone is never protection or revocation success. Embedded public issuers apply only to this diagnostic process. No response verification bypass flags are used.
+- Offline tests use temporary test keys and cover good/revoked/unknown, invalid signatures, malformed bodies, stale/future timestamps, wrong certificate and HTTP errors/timeouts. Verification passed using OpenSSL 4 and macOS LibreSSL 3.3.6; the CI also runs these tests.
+- Three live sample queries yielded HTTP 403/unconfirmed for the two emSign paths and a verified revoked response for the AAA cross-sign. This is a time-and-network-specific observation, not an outage diagnosis.

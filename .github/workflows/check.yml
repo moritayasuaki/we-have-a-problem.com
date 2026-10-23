@@ -20,3 +20,4 @@ jobs:
           git checkout --detach FETCH_HEAD
           node --version
           node --test tests/*.test.cjs
+          python3 tests/ocsp.test.py
