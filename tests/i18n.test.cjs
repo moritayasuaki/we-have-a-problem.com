@@ -99,11 +99,11 @@ test('changed links or inline code invalidate the entire fragment', () => {
 
 test('changed checker templates fall back to English and still substitute current values', () => {
   const page = render(['ja']);
-  const message = 'This browser connected to {n} of {total} sites using affected certificates. A failed connection does not prove safety. This checks only this browser; proxies that inspect encrypted traffic can affect the result.';
+  const message = 'This browser obtained the expected content from {n} of {total} sites using affected certificates. Results describe this browser and network; certificate rejection, network errors and inspecting proxies affect the outcome.';
   const updated = 'Your browser accepted {n} of {total} certificate chains.';
   const translate = english => vm.runInContext(`t(${JSON.stringify(english)})`, page.context);
   assert.equal(translate(message).replace('{n}', 1).replace('{total}', 14),
-    '問題のある証明書を使う14サイトのうち、1サイトへの接続が確認されました。接続失敗だけでは安全とは断定できません。このブラウザだけの結果です。暗号化通信を検査するプロキシが結果に影響する場合があります。');
+    '問題のある証明書を使う14サイトのうち、1サイトから所定の内容を取得しました。結果は、このブラウザと通信環境での確認です。証明書の拒否、通信エラー、通信を検査するプロキシの影響が含まれます。');
   assert.equal(translate(updated).replace('{n}', 2).replace('{total}', 16),
     'Your browser accepted 2 of 16 certificate chains.');
   for (const english of ['constructor', 'toString', '__proto__', 'New message']) {

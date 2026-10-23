@@ -380,6 +380,13 @@
     .router-route span { min-width:0; background:#e7ebed; padding:8px 3px; }
     .router-route b { color:#8b6137; }
     .router-priority { font-weight:700; border-left:3px solid #8b6137; padding-left:10px; }
+
+    .guide-details { border-top:1px solid var(--line); margin:0; padding:0; }
+    .guide-details > summary { padding:22px 0; font-size:1rem; line-height:1.65; }
+    .guide-details[open] > summary { margin-bottom:0; }
+    .guide-details > section { border-top:0; padding-top:16px; }
+    .result-explanation { margin-top:20px; border-top:1px solid var(--line); padding-top:14px; }
+    .result-explanation > p { font-size:.87rem; line-height:1.8; margin:16px 0; }
   </style>
 </head>
 <body>
@@ -388,17 +395,85 @@
 </header>
 <main id="main"><section class="hero incident-hero" aria-labelledby="page-title"><div class="hero-copy"><p class="eyebrow incident-tag">SECURITY INCIDENT / 23 OCT 2026</p>
 <h1 id="page-title">Check this browser.<br><span>Update apps &amp; devices.</span></h1>
-<p class="hero-intro">Even familiar destinations can be impersonated if traffic is diverted and forged certificates are accepted. This page checks only this browser.</p>
+<p class="hero-intro">The browser check starts automatically. Follow the three update steps below.</p>
 <nav class="first-actions" aria-label="Next steps / いまやること"><a href="#browser-action"><span class="first-number" aria-hidden="true">01</span><span data-i18n>Update browser &amp; OS</span>
 <span class="first-arrow" aria-hidden="true">↗</span></a><a href="#app-action"><span class="first-number" aria-hidden="true">02</span><span data-i18n>Update your apps</span>
 <span class="first-arrow" aria-hidden="true">↗</span></a><a href="#device-action"><span class="first-number" aria-hidden="true">03</span><span><span data-i18n>Update router &amp; device software</span><small data-i18n>Ask the vendor about PHP &amp; certificate fixes, too.</small></span>
-<span class="first-arrow" aria-hidden="true">↗</span></a></nav><p class="reassurance">The test runs automatically. A red result prompts updates; it is not proof of an attack.</p>
+<span class="first-arrow" aria-hidden="true">↗</span></a></nav><p class="reassurance">Start with your usual settings or official update menu.</p>
 </div><div class="incident-map"><p class="map-kicker">WHAT THIS PAGE CAN SEE</p>
 <div class="signal-path"><div class="signal-node browser"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><p class="signal-name">Browser</p><p class="signal-caption">Tested here</p></div><div class="signal-node apps"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><p class="signal-name">Apps</p><p class="signal-caption">Check updates</p></div><div class="signal-node router"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><p class="signal-name">Router / NAS</p><p class="signal-caption">Software inside, too</p></div></div><div class="php-teaser"><span class="php-chip" aria-hidden="true">PHP</span><div><p>PHP, DNS and apps need separate fixes.</p>
 <a href="#related-issues" data-i18n>See related issues &amp; updates →</a>
-</div></div><p class="map-foot">A green browser result does not check apps or devices.</p>
+</div></div><p class="map-foot">Check apps and devices through their own update settings.</p>
 </div></section>
-<section class="related-section" id="related-issues" aria-labelledby="related-title"><div class="section-heading"><p class="eyebrow">RELATED UPDATES / VERIFIED 23 OCT 2026</p>
+<section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">BROWSER CHECK</p>
+<h2 id="check-title">A result for this browser, on this network.</h2>
+<p>Check this browser, then review your apps and devices.</p>
+</div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">Ready to check this browser.</p>
+<p id="verdict-detail">The check starts automatically when the page loads. You can also use the button below.</p>
+</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><details class="result-explanation" id="result-explanation"><summary data-i18n>Result details and how the check works</summary><p id="verdict-explanation"></p><p>This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.</p><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>A site using an affected certificate was reachable.</p>
+<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · Keep automatic updates enabled</strong><br>No expected page content was obtained from the affected test sites.</p>
+<p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
+</div><p id="checker-note" class="section-note">The check observes whether this browser obtains the expected page content. Certificate rejection, network errors and proxies that inspect encrypted traffic can affect the result. Use your product’s official guidance to verify revocation or trust updates.</p>
+<details class="technical-details" id="test-details"><summary data-i18n>See all 14 connection results</summary>
+<p id="summary" class="technical-summary"></p>
+<div class="table-scroll" tabindex="0"><table id="results">
+  <thead><tr><th>Intermediate CA</th><th>Chains to</th><th>Result</th></tr></thead>
+  <tbody></tbody>
+</table></div></details>
+</details>
+<noscript><p lang="ja">自動確認にはJavaScriptが必要です。上の３つの更新手順は、そのまま利用できます。</p>
+<p lang="en">The browser test needs JavaScript. The update steps above still apply.</p>
+</noscript></section>
+<section class="actions-section" id="next-steps" aria-labelledby="steps-title"><div class="section-heading"><p class="eyebrow">UPDATE STEPS</p>
+<h2 id="steps-title">Three updates to check.</h2>
+<p>Use your usual settings and official update channels. At work, follow your IT team’s guidance.</p>
+</div><div class="action-grid"><article class="action-card" id="browser-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><span class="step-number">1</span></div><h3>Browser & operating system</h3>
+<p>Open the browser’s About or Update screen, then your device’s system updates. Apply available updates and restart when asked.</p>
+<p class="action-foot">Keep automatic updates enabled.</p>
+</article>
+<article class="action-card" id="app-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><span class="step-number">2</span></div><h3>Everyday apps</h3>
+<p>Open your app store or each app’s update menu. Apply the available updates.</p>
+<p class="action-foot">Check the vendor’s latest guidance.</p>
+</article>
+<article class="action-card" id="device-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><span class="step-number">3</span></div><h3>Router & connected devices</h3>
+<p>Find your model on the manufacturer’s site, then apply the recommended device updates.</p>
+<p class="action-foot">Check the support date; arrange replacement when support ends.</p>
+
+</article>
+</div><p class="section-note">Keep automatic updates and certificate warnings enabled.</p>
+<details class="router-evidence related-questions" id="router-examples"><summary><strong data-i18n>Real routers. Three different failure paths.</strong>
+<span class="router-summary-note" data-i18n>Built-in access / intrusion / end of support — see examples ↓</span>
+</summary><p class="section-note">These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.</p>
+<div class="router-cases"><article class="router-case"><p class="related-category">BUILT INTO FIRMWARE / AUG 2026</p>
+<h3>Zbtlink · 20 models examined</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Built in</span><b aria-hidden="true">→</b><span data-i18n>Calls out</span><b aria-hidden="true">→</b><span data-i18n>Control at risk</span></div>
+<p class="router-priority" data-i18n>Check model &amp; remediation</p>
+<p><a href="https://www.vulncheck.com/blog/zbt-endlessdoors">VulnCheck’s ENDLESSDOORS analysis</a> found a boot-started remote-control component with full administrator privileges and no peer authentication (CVE-2026-66747), including in Z8102AX-2DSIM and WG3526 firmware. Control of its server or network path can enable takeover; the device connects outward.</p>
+<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">The follow-up report</a> records ZBT’s explanation as an after-sales support tool. The observed code behavior and the vendor’s claimed purpose are distinct; malicious intent is not established here.</p>
+<p class="router-do"><strong>Do now:</strong> Check the exact model, firmware and vendor response. If trustworthy remediation is unavailable, ask your provider about isolation or replacement. Turning off remote administration alone does not remove this outbound component.</p>
+</article><article class="router-case"><p class="related-category">ADDED AFTER INTRUSION / OCT 2024</p>
+<h3>Quad7 · about 8,000 active devices</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>A vulnerability</span><b aria-hidden="true">→</b><span data-i18n>Intrusion</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
+<p class="router-priority" data-i18n>Update &amp; recover if compromised</p>
+<p><a href="https://www.microsoft.com/en-us/security/blog/2024/10/31/chinese-threat-actor-storm-0940-uses-credentials-from-password-spray-attacks-from-a-covert-network/">Microsoft’s CovertNetwork-1658 report</a> describes mostly TP-Link routers: attackers exploited a vulnerability, then added backdoors and proxies for password-spray attacks. About 8,000 was the historical average active network size, not today’s count.</p>
+<p>This is not evidence of a factory-installed TP-Link backdoor. Microsoft was still investigating the specific entry exploit; the report does not identify its CVE.</p>
+<p class="router-do"><strong>Do now:</strong> Apply the vendor’s supported firmware. Suspected compromise needs the vendor’s recovery steps as well as updates. Protect online accounts with multi-factor authentication.</p>
+</article><article class="router-case"><p class="related-category">NO MORE SECURITY PATCHES / JAN 2024</p>
+<h3>KV Botnet · end-of-life routers</h3>
+<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Support ends</span><b aria-hidden="true">→</b><span data-i18n>No more fixes</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
+<p class="router-priority" data-i18n>Check support &amp; replace</p>
+<p><a href="https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical">The US Justice Department</a> reported disrupting hundreds of US routers used by Volt Typhoon. The vast majority were end-of-life Cisco and NETGEAR devices, no longer receiving security fixes. The attackers used them to conceal further hacking activity.</p>
+<p>KV Botnet is a separate attack network from Quad7. Restarting an unpatched device is not a lasting repair.</p>
+<p class="router-do"><strong>Do now:</strong> Check the support end date. For an unsupported router, arrange replacement with your provider or administrator; a working internet connection does not show that security support continues.</p>
+</article></div><div class="router-followup"><h3>A named flaw with a published fix</h3>
+<p><a href="https://www.tp-link.com/us/support/faq/3643/">Archer AX21: CVE-2023-1389</a>. In April 2023, TP-Link acknowledged reports of Mirai exploitation and published firmware fixes. Choose the current firmware for your region and hardware revision. This separate example does not identify Quad7’s entry flaw.</p>
+<h3>How this connects to DNS and certificates</h3>
+<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">VulnCheck’s August follow-up</a> also documented DNS-redirection functions in a different ZBT component, SPEAKINGSTONE. That demonstrates a router mechanism for changing destinations. If traffic can be diverted <em>and</em> the connecting app accepts a forged certificate, a familiar HTTPS service can be impersonated. The report does not establish that this combined attack occurred.</p>
+<p>Some router or NAS management software uses PHP, as the <a href="#device-guide">device diagram</a> explains. These router cases have different causes: check the product’s actual components and affected-model advisory, not the presence of PHP alone.</p>
+</div><div class="router-next"><h3>Check the label → the update → the support date</h3>
+<p>Choose by the exact model, update support and security response, not just a brand or country. <a href="https://dlpa.jp/guidance/">DLPA’s recommended-router guidance</a> is one reference for automatic updates and safer defaults; it is not a guarantee that a device has no vulnerabilities.</p>
+</div></details></section>
+<details class="guide-details" id="related-details"><summary data-i18n>Related updates: PHP, DNS and apps</summary><section class="related-section" id="related-issues" aria-labelledby="related-title"><div class="section-heading"><p class="eyebrow">RELATED UPDATES / VERIFIED 23 OCT 2026</p>
 <h2 id="related-title">Close each gap.</h2>
 <p>These flaws need attention on their own. The diagram shows a possible combination, not a confirmed combined attack.</p>
 </div><div class="incident-chain" aria-label="Conditional risk / 条件が重なった場合"><span data-i18n>Intrusion or DNS tampering enables redirection</span>
@@ -435,76 +510,8 @@
 <p><a href="https://developers.google.com/speed/public-dns/docs/security">Google explains DNSSEC and encrypted DNS as complementary defenses</a>. DNSSEC authenticates signed DNS data and has separate keys from TLS certificates. DoH is not a repair for every vulnerable resolver or app.</p>
 <h3>Do past downloads need to be treated as fake?</h3>
 <p>This incident alone does not establish that a download was altered. Where available, verify the publisher’s signature using a separately trusted key and official guidance. A checksum obtained over the same intercepted connection is not independent evidence. Keep certificate verification enabled.</p>
-</details></section>
-<section class="actions-section" id="next-steps" aria-labelledby="steps-title"><div class="section-heading"><p class="eyebrow">01 / WHAT TO DO</p>
-<h2 id="steps-title">Three updates to check.</h2>
-<p>Use your usual settings and official update channels. At work, follow your IT team’s guidance.</p>
-</div><div class="action-grid"><article class="action-card" id="browser-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><span class="step-number">1</span></div><h3>Browser & operating system</h3>
-<p>Open the browser’s About or Update screen, then your device’s system updates. Apply available updates and restart when asked.</p>
-<p class="action-foot">Keep automatic updates enabled.</p>
-</article>
-<article class="action-card" id="app-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><span class="step-number">2</span></div><h3>Everyday apps</h3>
-<p>Open your app store or each app’s update menu. Some apps carry their own certificate list, so a browser update may not cover them.</p>
-<p class="action-foot">No update available? Check the vendor’s notice.</p>
-</article>
-<article class="action-card" id="device-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><span class="step-number">3</span></div><h3>Router & connected devices</h3>
-<p>Use the model number to find the manufacturer’s security notice. Install the recommended firmware and app updates. Device software can include PHP and its own certificate settings.</p>
-<p class="action-foot">An unsupported device? Ask about replacement or limit its internet access.</p>
-<p class="action-foot"><a href="#router-examples">Real router cases &amp; what to check →</a></p>
-
-</article>
-</div><p class="section-note">Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.</p>
-<details class="router-evidence related-questions" id="router-examples"><summary><strong data-i18n>Real routers. Three different failure paths.</strong>
-<span class="router-summary-note" data-i18n>Built-in access / intrusion / end of support — see examples ↓</span>
-</summary><p class="section-note">These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.</p>
-<div class="router-cases"><article class="router-case"><p class="related-category">BUILT INTO FIRMWARE / AUG 2026</p>
-<h3>Zbtlink · 20 models examined</h3>
-<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Built in</span><b aria-hidden="true">→</b><span data-i18n>Calls out</span><b aria-hidden="true">→</b><span data-i18n>Control at risk</span></div>
-<p class="router-priority" data-i18n>Check model &amp; remediation</p>
-<p><a href="https://www.vulncheck.com/blog/zbt-endlessdoors">VulnCheck’s ENDLESSDOORS analysis</a> found a boot-started remote-control component with full administrator privileges and no peer authentication (CVE-2026-66747), including in Z8102AX-2DSIM and WG3526 firmware. Control of its server or network path can enable takeover; the device connects outward.</p>
-<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">The follow-up report</a> records ZBT’s explanation as an after-sales support tool. The observed code behavior and the vendor’s claimed purpose are distinct; malicious intent is not established here.</p>
-<p class="router-do"><strong>Do now:</strong> Check the exact model, firmware and vendor response. If trustworthy remediation is unavailable, ask your provider about isolation or replacement. Turning off remote administration alone does not remove this outbound component.</p>
-</article><article class="router-case"><p class="related-category">ADDED AFTER INTRUSION / OCT 2024</p>
-<h3>Quad7 · about 8,000 active devices</h3>
-<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>A vulnerability</span><b aria-hidden="true">→</b><span data-i18n>Intrusion</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
-<p class="router-priority" data-i18n>Update &amp; recover if compromised</p>
-<p><a href="https://www.microsoft.com/en-us/security/blog/2024/10/31/chinese-threat-actor-storm-0940-uses-credentials-from-password-spray-attacks-from-a-covert-network/">Microsoft’s CovertNetwork-1658 report</a> describes mostly TP-Link routers: attackers exploited a vulnerability, then added backdoors and proxies for password-spray attacks. About 8,000 was the historical average active network size, not today’s count.</p>
-<p>This is not evidence of a factory-installed TP-Link backdoor. Microsoft was still investigating the specific entry exploit; the report does not identify its CVE.</p>
-<p class="router-do"><strong>Do now:</strong> Apply the vendor’s supported firmware. Suspected compromise needs the vendor’s recovery steps as well as updates. Protect online accounts with multi-factor authentication.</p>
-</article><article class="router-case"><p class="related-category">NO MORE SECURITY PATCHES / JAN 2024</p>
-<h3>KV Botnet · end-of-life routers</h3>
-<div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Support ends</span><b aria-hidden="true">→</b><span data-i18n>No more fixes</span><b aria-hidden="true">→</b><span data-i18n>Abused as proxy</span></div>
-<p class="router-priority" data-i18n>Check support &amp; replace</p>
-<p><a href="https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical">The US Justice Department</a> reported disrupting hundreds of US routers used by Volt Typhoon. The vast majority were end-of-life Cisco and NETGEAR devices, no longer receiving security fixes. The attackers used them to conceal further hacking activity.</p>
-<p>KV Botnet is a separate attack network from Quad7. Restarting an unpatched device is not a lasting repair.</p>
-<p class="router-do"><strong>Do now:</strong> Check the support end date. For an unsupported router, arrange replacement with your provider or administrator; a working internet connection does not show that security support continues.</p>
-</article></div><div class="router-followup"><h3>A named flaw with a published fix</h3>
-<p><a href="https://www.tp-link.com/us/support/faq/3643/">Archer AX21: CVE-2023-1389</a>. In April 2023, TP-Link acknowledged reports of Mirai exploitation and published firmware fixes. Choose the current firmware for your region and hardware revision. This separate example does not identify Quad7’s entry flaw.</p>
-<h3>How this connects to DNS and certificates</h3>
-<p><a href="https://www.vulncheck.com/blog/zbt-darklantern-speakingstone">VulnCheck’s August follow-up</a> also documented DNS-redirection functions in a different ZBT component, SPEAKINGSTONE. That demonstrates a router mechanism for changing destinations. If traffic can be diverted <em>and</em> the connecting app accepts a forged certificate, a familiar HTTPS service can be impersonated. The report does not establish that this combined attack occurred.</p>
-<p>Some router or NAS management software uses PHP, as the <a href="#device-guide">device diagram</a> explains. These router cases have different causes: check the product’s actual components and affected-model advisory, not the presence of PHP alone.</p>
-</div><div class="router-next"><h3>Check the label → the update → the support date</h3>
-<p>Choose by the exact model, update support and security response, not just a brand or country. <a href="https://dlpa.jp/guidance/">DLPA’s recommended-router guidance</a> is one reference for automatic updates and safer defaults; it is not a guarantee that a device has no vulnerabilities.</p>
-</div></details></section>
-<section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">02 / CHECK THIS BROWSER</p>
-<h2 id="check-title">A result for this browser, on this network.</h2>
-<p>This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.</p>
-</div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">This browser has not been checked yet.</p>
-<p id="verdict-detail">The check starts automatically when the page loads. You can also use the button below.</p>
-</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>A site using an affected certificate was reachable.</p>
-<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · No affected-site connection detected</strong><br>Keep automatic updates enabled.</p>
-<p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
-</div><p id="checker-note" class="section-note">A green result can also come from a network failure. This page cannot tell whether a certificate was revoked or blocked. Proxies that inspect encrypted traffic can change the result.</p>
-<details class="technical-details" id="test-details"><summary data-i18n>See all 14 connection results</summary>
-<p id="summary" class="technical-summary"></p>
-<div class="table-scroll" tabindex="0"><table id="results">
-  <thead><tr><th>Intermediate CA</th><th>Chains to</th><th>Result</th></tr></thead>
-  <tbody></tbody>
-</table></div></details>
-<noscript><p lang="ja">自動確認にはJavaScriptが必要です。上の３つの更新手順は、そのまま利用できます。</p>
-<p lang="en">The browser test needs JavaScript. The update steps above still apply.</p>
-</noscript></section>
-<section class="scope-section" aria-labelledby="scope-title"><div class="section-heading"><p class="eyebrow">03 / WHAT EACH CHECK COVERS</p>
+</details></section></details>
+<details class="guide-details" id="scope-details"><summary data-i18n>What the browser and tool checks cover</summary><section class="scope-section" aria-labelledby="scope-title"><div class="section-heading"><p class="eyebrow">03 / WHAT EACH CHECK COVERS</p>
 <h2 id="scope-title">One result is not a check of everything.</h2>
 </div><div class="scope-grid"><article class="scope-item"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><h3>This web page</h3>
 <p class="scope-badge">Only this browser</p>
@@ -518,11 +525,11 @@
 <p class="scope-badge">Not automatically checked here</p>
 <p>Use vendor guidance to check each product’s update status. A browser’s green result does not cover these products.</p>
 </article>
-</div></section>
-<section class="device-section" aria-labelledby="device-title"><div class="section-heading"><p class="eyebrow">DEVICE SOFTWARE / TWO DIFFERENT ISSUES</p>
+</div></section></details>
+<details class="guide-details" id="device-details"><summary data-i18n>Inside your router: software and update steps</summary><section class="device-section" aria-labelledby="device-title"><div class="section-heading"><p class="eyebrow">DEVICE SOFTWARE / TWO DIFFERENT ISSUES</p>
 <h2 id="device-title">The box has software inside.</h2>
 <p>Some routers, firewalls and NAS devices use PHP for their administration screen. The parts and affected versions vary by product. Start with the manufacturer’s update, not a manual PHP replacement.</p>
-</div><details id="device-guide" class="device-explainer" open><summary data-i18n>Diagram: the software inside your device</summary>
+</div><details id="device-guide" class="device-explainer"><summary data-i18n>Diagram: the software inside your device</summary>
 <div id="device-visual"><figure class="device-cutaway"><div class="device-client"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><p class="device-name">Your browser</p>
 <p class="device-small">Opens the admin screen</p>
 </div><div class="device-connector" aria-hidden="true">→</div><div class="device-shell"><p class="shell-heading">INSIDE A ROUTER / NAS · EXAMPLE</p>
@@ -550,8 +557,8 @@
 <p><a href="https://www.netgate.com/blog/the-new-gui-for-pfsense-plus">Netgate describes pfSense’s traditional PHP-based GUI</a> and the newer Go-based pfSense Plus GUI. This illustrates why the product and version matter; it is not a claim that every pfSense version is affected.</p>
 <p><a href="https://www.qnap.com/en-us/security-advisory/qsa-26-18">QNAP’s 22 October 2026 PHP advisory</a> lists affected products and protections while fixes are prepared, including restricting internet access to management services. This is a separate PHP vulnerability advisory, not an eMudhra exposure list.</p>
 <p>PHP can use its own <a href="https://www.php.net/manual/en/curl.configuration.php">curl CA configuration</a> or <a href="https://www.php.net/manual/en/context.ssl.php">TLS certificate settings</a>. Which certificate list is used depends on the application and configuration.</p>
-</details></section>
-<section class="risk-section" id="combined-risk" aria-labelledby="risk-title"><div class="section-heading"><p class="eyebrow">04 / WHY BOTH UPDATES MATTER</p>
+</details></section></details>
+<details class="guide-details" id="risk-details"><summary data-i18n>How DNS, router and certificate issues can combine</summary><section class="risk-section" id="combined-risk" aria-labelledby="risk-title"><div class="section-heading"><p class="eyebrow">04 / WHY BOTH UPDATES MATTER</p>
 <h2 id="risk-title">Two protections. Keep both in place.</h2>
 <p>DNS is the internet’s address book. Certificates help software check who it is talking to. A weakness in one does not automatically defeat the other.</p>
 </div><div class="risk-flow"><article class="risk-step"><span class="flow-number" aria-hidden="true">A</span><h3>The destination is changed</h3>
@@ -568,14 +575,12 @@
 <div class="bind-note"><h3>Where BIND 9 fits</h3>
 <p>BIND 9 is software used by some DNS servers. ISC has documented cache-poisoning flaws, including <a href="https://kb.isc.org/docs/cve-2025-40778">CVE-2025-40778 (2025)</a> and <a href="https://kb.isc.org/docs/cve-2026-11721">CVE-2026-11721 (2026)</a>, that can affect the address-book side of this diagram. The affected versions and conditions differ.</p>
 <p>Other flaws, such as <a href="https://kb.isc.org/docs/cve-2026-19630">CVE-2026-19630</a>, can interrupt DNS service; they do not by themselves establish that traffic can be redirected. DNS operators should check the <a href="https://kb.isc.org/docs/aa-00913">current ISC vulnerability matrix</a> and their distribution’s advisory. Home users can ask their router vendor or internet provider.</p>
-</div></section>
-<section class="admin-section" id="admin-guide" aria-labelledby="admin-title"><div><p class="eyebrow">FOR DEVELOPERS & ADMINISTRATORS</p>
+</div></section></details>
+<details class="guide-details" id="admin-details"><summary data-i18n>For developers and administrators</summary><section class="admin-section" id="admin-guide" aria-labelledby="admin-title"><div><p class="eyebrow">FOR DEVELOPERS & ADMINISTRATORS</p>
 <h2 id="admin-title">Update what runs behind the screen.</h2>
 <p>Inventory OS certificate stores, bundled CA lists, language runtimes, containers, CI jobs and device firmware. Apply vendor fixes, rebuild or redeploy where needed, then verify the running versions. Browser updates alone do not cover these.</p>
-<div class="admin-links"><a href="#developers" class="text-link" data-i18n>Patched versions →</a><a href="#command-line" class="text-link" data-i18n>Command-line checks →</a></div></div></section>
-<section id="technical-reference" class="reference-section"><p class="eyebrow">REFERENCE / EVIDENCE & DETAIL</p>
-<h2>The technical details, when you need them.</h2>
-<details class="technical-details" id="incident-detail"><summary data-i18n>Incident, proof, affected software & administrator workarounds</summary>
+<div class="admin-links"><a href="#developers" class="text-link" data-i18n>Patched versions →</a><a href="#command-line" class="text-link" data-i18n>Command-line checks →</a></div></div></section></details>
+<section id="technical-reference" class="reference-section"><details class="technical-details" id="incident-detail"><summary data-i18n>Incident, proof, affected software & administrator workarounds</summary>
 <p class="reference-note">The tables below are an upstream snapshot from 23 October 2026. Use the linked vendor notices for newer information. Administrator workarounds change system trust; prefer supported updates and involve your IT team.</p>
 <p>The private keys of eight eMudhra intermediate CA certificates have been compromised. They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores.</p>
 
@@ -842,14 +847,14 @@ certctl rehash
 
 </details>
 </section>
-<section class="sources-section" id="sources"><h2>Sources & how to read this guide</h2>
+<details class="guide-details" id="source-details"><summary data-i18n>Sources and evidence</summary><section class="sources-section" id="sources"><h2>Sources & how to read this guide</h2>
 <p>The incident and original test are from the <a href="https://emudhra.we-have-a-problem.com/">community incident report</a>. The update guidance is also informed by <a href="https://render.com/docs/advisory-emudhra">Render’s advisory</a> and <a href="https://curl.se/docs/sslcerts.html">curl’s certificate documentation</a>. DNS examples link to ISC’s own advisories above. The combined-risk diagram is an explanation of how those conditions could interact.</p>
-</section>
+</section></details>
 </main>
 <footer><p>An independent community guide on hamazon.is. Original incident site by <a href="https://github.com/dennisjackson">Dennis Jackson</a> and <a href="https://github.com/galadran/we-have-a-problem.com/graphs/contributors">community contributors</a>. <a href="https://github.com/moritayasuaki/we-have-a-problem.com/tree/codex/safe-japanese-translation">Guide source & tests</a>.</p>
 </footer>
 </div>
-<aside id="global-notice" class="global-notice neutral" aria-label="Browser result / ブラウザの結果"><div class="notice-inner"><span id="global-symbol" class="notice-symbol" aria-hidden="true">…</span><div class="notice-copy"><p id="global-title">This browser has not been checked yet.</p>
+<aside id="global-notice" class="global-notice neutral" aria-label="Browser result / ブラウザの結果"><div class="notice-inner"><span id="global-symbol" class="notice-symbol" aria-hidden="true">…</span><div class="notice-copy"><p id="global-title">Ready to check this browser.</p>
 <p id="global-detail">Apps and devices need their own updates.</p>
 </div><a id="global-action" href="#check" data-i18n>View result</a>
 </div></aside><div id="urgent-announcement" class="sr-only" role="alert" aria-atomic="true"></div>
@@ -955,13 +960,9 @@ certctl rehash
   "Three updates to check.": "確認する更新は、３つ。",
   "Use your usual settings and official update channels. At work, follow your IT team’s guidance.": "いつもの設定画面や公式の更新機能から進められます。会社の端末は、管理担当者の案内に従ってください。",
   "Open the browser’s About or Update screen, then your device’s system updates. Apply available updates and restart when asked.": "ブラウザの「バージョン情報／更新」と、端末の「ソフトウェア更新」を開きます。更新を適用し、案内があれば再起動します。",
-  "Keep automatic updates enabled.": "自動更新も有効に。",
+  "Keep automatic updates enabled.": "自動更新を続けてください。",
   "Everyday apps": "いつも使うアプリ",
-  "Open your app store or each app’s update menu. Some apps carry their own certificate list, so a browser update may not cover them.": "アプリストアやアプリ内の更新メニューを確認します。証明書の一覧を独自に持つアプリは、ブラウザの更新だけでは対応できない場合があります。",
-  "No update available? Check the vendor’s notice.": "更新がなければ、提供元のお知らせを確認。",
   "Check the manufacturer’s app or support page for your router, camera, NAS and other smart devices. Follow firmware update instructions.": "ルーター、カメラ、NASなどは、メーカーのアプリやサポートページで本体ソフトの更新を確認します。機種ごとの案内に沿って進めます。",
-  "An unsupported device? Ask about replacement or limit its internet access.": "サポート終了なら、買い替えや外部通信の制限を相談。",
-  "Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.": "すべてのアプリや機器が影響を受けるわけではありません。証明書の確認方法と更新状況で異なります。証明書の警告は無効にせず、更新で対応してください。",
   "02 / CHECK THIS BROWSER": "02 / このブラウザを確認",
   "A result for this browser, on this network.": "このブラウザの、いまの接続結果。",
   "This browser has not been checked yet.": "このブラウザは、まだ確認していません。",
@@ -1001,7 +1002,6 @@ certctl rehash
   "Command-line checks: this tool only": "コマンドの確認：対象はそのツールだけ",
   "The incident and original test are from the \u003ca href=\"https://emudhra.we-have-a-problem.com/\">community incident report\u003c/a>. The update guidance is also informed by \u003ca href=\"https://render.com/docs/advisory-emudhra\">Render’s advisory\u003c/a> and \u003ca href=\"https://curl.se/docs/sslcerts.html\">curl’s certificate documentation\u003c/a>. DNS examples link to ISC’s own advisories above. The combined-risk diagram is an explanation of how those conditions could interact.": "問題の情報と元のテストは\u003ca href=\"https://emudhra.we-have-a-problem.com/\">コミュニティの報告サイト\u003c/a>に基づきます。更新の説明には\u003ca href=\"https://render.com/docs/advisory-emudhra\">Renderの案内\u003c/a>と\u003ca href=\"https://curl.se/docs/sslcerts.html\">curlの証明書に関する文書\u003c/a>も参照しています。DNSの例は上記のISC公式情報を参照し、組み合わせの図は条件が重なる場合を説明したものです。",
   "Check your browser and system updates.": "ブラウザとOSの更新を確認してください。",
-  "The check is incomplete.": "確認を完了できませんでした。",
   "Some requests timed out or returned an unexpected response. Check your connection and try again.": "時間切れや想定外の応答がありました。通信を確認して、もう一度お試しください。",
   "Checking this browser…": "このブラウザを確認しています…",
   "This usually takes about 10 seconds.": "通常、10秒ほどで結果が出ます。",
@@ -1032,8 +1032,6 @@ certctl rehash
   "Software inside, too": "内蔵ソフトも",
   "Some devices run PHP behind their admin screen.": "管理画面の裏でPHPを使う機器もあります。",
   "See what to update →": "中身と更新の関係を見る →",
-  "A green browser result does not check apps or devices.": "ブラウザが緑でも、アプリや機器は未確認です。",
-  "Use the model number to find the manufacturer’s security notice. Install the recommended firmware and app updates. Device software can include PHP and its own certificate settings.": "本体の型番でメーカーの安全情報を確認し、案内された本体ソフトと追加アプリの更新を適用します。内部にはPHPや独自の証明書設定が含まれる場合もあります。",
   "DEVICE SOFTWARE / TWO DIFFERENT ISSUES": "機器の中身 / ２つの問題を分けて考える",
   "The box has software inside.": "その機器の中にも、ソフトが動いています。",
   "Some routers, firewalls and NAS devices use PHP for their administration screen. The parts and affected versions vary by product. Start with the manufacturer’s update, not a manual PHP replacement.": "ルーターやファイアウォール、NASの管理画面にPHPが使われる場合があります。構成や影響する版は製品ごとに違います。まずメーカーの本体更新を確認してください。",
@@ -1069,16 +1067,12 @@ certctl rehash
   "Apps and devices need their own updates.": "アプリと機器は、それぞれ更新を確認。",
   "View result": "結果を見る",
   "Check updates →": "更新を確認 →",
-  "Keep checking updates; the incomplete check has not cleared the earlier result.": "更新状況を確認してください。未完了の再確認では、前の結果は解消していません。",
-  "This browser: check incomplete.": "このブラウザ：確認を完了できません。",
   "Check your connection, then try again.": "通信を確認して、もう一度お試しください。",
   "Keep checking updates while this run completes.": "再確認が完了するまで、更新状況の確認を続けてください。",
   "Check this browser.\u003cbr>\u003cspan>Update apps &amp; devices.\u003c/span>": "ブラウザを確認。\u003cbr>\u003cspan>アプリ・機器も更新。\u003c/span>",
   "The eMudhra certificate incident can let affected software accept a false identity. This page checks only this browser.": "偽の通信相手を受け入れるおそれのある証明書の問題です。ここで確認できるのは、このブラウザだけ。",
   "Ask the vendor about PHP &amp; certificate fixes, too.": "内蔵PHP・証明書の対応もメーカーに確認",
-  "The test runs automatically. A red result prompts updates; it is not proof of an attack.": "自動で確認します。赤い結果は更新を促す通知で、被害の発生を示すものではありません。",
   "DNS poisoning can redirect traffic. So can a router takeover that permits changing its DNS settings; exploiting a reachable PHP flaw is one possible route to such a takeover.": "DNSの偽情報や、DNS設定を変更できるほどのルーター侵入で、偽の通信先へ誘導される場合があります。攻撃が届くPHPの欠陥などは、その侵入の入口になり得ます。",
-  "Even familiar destinations can be impersonated if traffic is diverted and forged certificates are accepted. This page checks only this browser.": "いつもの接続先でも、通信の誘導と証明書の問題が重なると危険です。ここで確認できるのは、このブラウザだけ。",
   "PHP, DNS and apps need separate fixes.": "PHP・DNS・アプリ、それぞれの対策を。",
   "See related issues &amp; updates →": "関連する問題と更新先を見る →",
   "The check starts automatically when the page loads. You can also use the button below.": "ページを開くと自動で確認します。下のボタンでも実行できます。",
@@ -1157,20 +1151,43 @@ certctl rehash
   "No more fixes": "修正が届かない",
   "Check support &amp; replace": "期限を確認して交換",
   "Action needed: check browser and OS updates.": "要対応：ブラウザ・OSの更新を確認。",
-  "A site using an affected certificate was reachable. This result is not proof of an attack.": "問題のある証明書のサイトに接続できました。被害が起きたという意味ではありません。",
-  "A previous connection needs attention. Recheck incomplete.": "前の確認では接続できました。再確認は未完了です。",
-  "A previous connection needs attention. Checking again…": "前の確認では接続できました。いま再確認中です…",
-  "This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.": "このブラウザは、問題のある証明書のサイトに接続できました。ブラウザ・OSの更新を適用して、もう一度確認してください。攻撃を受けたという意味ではありません。",
-  "This browser: no affected-site connection detected.": "このブラウザ：問題のある接続は見つかりませんでした。",
-  "No connection to the affected test sites was detected.": "今回、問題のある接続は見つかりませんでした。",
-  "No connection to the sites using affected certificates was confirmed. Keep automatic updates enabled. A network problem can produce the same result. Apps and devices need separate checks.": "問題のある証明書のサイトへの接続は確認されませんでした。自動更新は続けてください。通信障害でも同じ結果になります。アプリと機器は別に確認が必要です。",
-  "Network problems can produce the same result. Check apps and devices separately.": "通信障害でも同じ結果になります。アプリ・機器は別に確認。",
   "❌ Connected — check updates": "❌ 接続できました（更新を確認）",
   "✅ No connection confirmed": "✅ 接続は確認されませんでした",
-  "This browser connected to {n} of {total} sites using affected certificates. A failed connection does not prove safety. This checks only this browser; proxies that inspect encrypted traffic can affect the result.": "問題のある証明書を使う{total}サイトのうち、{n}サイトへの接続が確認されました。接続失敗だけでは安全とは断定できません。このブラウザだけの結果です。暗号化通信を検査するプロキシが結果に影響する場合があります。",
   "This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.": "問題のある証明書を使う14の確認用サイトに接続を試みます。対象はこのブラウザだけで、アプリやルーターの状態は調べられません。確認用サイトは、接続できた件数をソフトウェアの種類別に集計します。",
   "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Red · Check updates\u003c/strong>\u003cbr>A site using an affected certificate was reachable.": "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>赤：更新を確認\u003c/strong>\u003cbr>問題のある証明書のサイトに接続できました。",
-  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · No affected-site connection detected\u003c/strong>\u003cbr>Keep automatic updates enabled.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：問題のある接続は見つからず\u003c/strong>\u003cbr>自動更新は続けてください。"
+  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · No affected-site connection detected\u003c/strong>\u003cbr>Keep automatic updates enabled.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：問題のある接続は見つからず\u003c/strong>\u003cbr>自動更新は続けてください。",
+  "The browser check starts automatically. Follow the three update steps below.": "ブラウザの確認は自動で始まります。更新は下の3つから。",
+  "Start with your usual settings or official update menu.": "いつもの設定画面や、公式の更新メニューから。",
+  "Check apps and devices through their own update settings.": "アプリ・機器は、それぞれの更新画面で確認。",
+  "Open your app store or each app’s update menu. Apply the available updates.": "アプリストアやアプリ内の更新メニューを開き、更新を適用。",
+  "Check the vendor’s latest guidance.": "最新の案内は提供元で確認。",
+  "Find your model on the manufacturer’s site, then apply the recommended device updates.": "本体の型番をメーカーのサイトで調べ、案内に沿って更新。",
+  "Check the support date; arrange replacement when support ends.": "サポート期限を確認し、終了時は交換を相談。",
+  "Keep automatic updates and certificate warnings enabled.": "自動更新と証明書の警告を有効にしておきましょう。",
+  "Related updates: PHP, DNS and apps": "関連する更新：PHP・DNS・アプリ",
+  "What the browser and tool checks cover": "ブラウザ・ツールで確認できる範囲",
+  "Inside your router: software and update steps": "ルーターの中のソフトと更新手順",
+  "How DNS, router and certificate issues can combine": "DNS・ルーター・証明書の問題が重なる条件",
+  "For developers and administrators": "開発者・管理者向けの手順",
+  "Sources and evidence": "情報源と根拠",
+  "Check this browser, then review your apps and devices.": "このブラウザの結果を確認し、アプリ・機器の更新へ。",
+  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · Keep automatic updates enabled\u003c/strong>\u003cbr>No expected page content was obtained from the affected test sites.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：自動更新を継続\u003c/strong>\u003cbr>確認用サイトから所定のページ内容を取得できなかった結果です。",
+  "The check observes whether this browser obtains the expected page content. Certificate rejection, network errors and proxies that inspect encrypted traffic can affect the result. Use your product’s official guidance to verify revocation or trust updates.": "この確認では、現在のブラウザが所定のページ内容を取得できたかを調べます。結果には証明書の拒否、通信エラー、暗号化通信を検査するプロキシの影響が含まれます。失効や信頼設定の更新状況は、利用製品の公式情報で確認します。",
+  "Result details and how the check works": "結果の詳細・確認方法を見る",
+  "Apply available updates, then check again.": "更新を適用して、もう一度確認してください。",
+  "This browser: keep automatic updates enabled.": "このブラウザ：自動更新を継続。",
+  "Check app and device updates too.": "アプリ・機器の更新も確認してください。",
+  "This browser: try the check again.": "このブラウザ：もう一度確認。",
+  "Try the check again.": "もう一度確認してください。",
+  "Previous result: check updates. Retry the check.": "前回の結果：更新を確認。再確認へ。",
+  "Check your connection, then run the check again.": "通信を確認して、もう一度お試しください。",
+  "Previous result: check updates. Checking again…": "前回の結果：更新を確認。いま再確認中。",
+  "This browser obtained the expected page content from a site using an affected certificate. This result calls for checking browser and OS updates. It measures access to the check site; determining whether an attack occurred requires separate evidence.": "このブラウザは、問題のある証明書を使う確認用サイトから、所定のページ内容を取得しました。ブラウザ・OSの更新を確認する対象です。この結果は確認用サイトへの接続を示し、実際の被害の判断には別の証拠が必要です。",
+  "All checks ended without obtaining the expected page content. Certificate rejection or a network error can produce this result. Keep automatic updates enabled and check apps and devices separately.": "すべての確認で、所定のページ内容を取得する前に処理が終了しました。証明書の拒否や通信エラーでこの結果になります。自動更新を継続し、アプリ・機器の更新はそれぞれ確認します。",
+  "This browser obtained the expected content from {n} of {total} sites using affected certificates. Results describe this browser and network; certificate rejection, network errors and inspecting proxies affect the outcome.": "問題のある証明書を使う{total}サイトのうち、{n}サイトから所定の内容を取得しました。結果は、このブラウザと通信環境での確認です。証明書の拒否、通信エラー、通信を検査するプロキシの影響が含まれます。",
+  "Ready to check this browser.": "このブラウザを確認します。",
+  "BROWSER CHECK": "ブラウザの確認",
+  "UPDATE STEPS": "更新の手順"
 }
 </script>
 <script>
@@ -1272,14 +1289,14 @@ function globalStatus(state, title, detail) {
 function connectionNotice() {
   previousConnection = true;
   globalStatus('needs-action', 'Action needed: check browser and OS updates.',
-    'A site using an affected certificate was reachable. This result is not proof of an attack.');
+    'Apply available updates, then check again.');
 }
 function incompleteNotice() {
   if (previousConnection) {
-    globalStatus('needs-action', 'A previous connection needs attention. Recheck incomplete.',
-      'Keep checking updates; the incomplete check has not cleared the earlier result.');
+    globalStatus('needs-action', 'Previous result: check updates. Retry the check.',
+      'Check your connection, then run the check again.');
   } else {
-    globalStatus('neutral', 'This browser: check incomplete.',
+    globalStatus('neutral', 'This browser: try the check again.',
       'Check your connection, then try again.');
   }
 }
@@ -1288,22 +1305,29 @@ function showVerdict(state, symbol, title, detail) {
   verdict.className = 'verdict ' + state;
   document.getElementById('verdict-symbol').textContent = symbol;
   document.getElementById('verdict-title').textContent = t(title);
-  document.getElementById('verdict-detail').textContent = t(detail);
+  const explanation = document.getElementById('verdict-explanation');
+  explanation.textContent = t(detail);
+  explanation.lang = messages && hasOwn(messages, detail) ? 'ja' : 'en';
+  const nextStep = state === 'needs-action' ? 'Apply available updates, then check again.'
+    : state === 'no-response' ? 'Check app and device updates too.'
+    : title === 'Checking this browser…' ? 'This usually takes about 10 seconds.'
+    : 'Check your connection, then try again.';
+  document.getElementById('verdict-detail').textContent = t(nextStep);
 }
 function reportVerdict(connected, unknown) {
   if (connected) {
     connectionNotice();
     showVerdict('needs-action', '!', 'Check your browser and system updates.',
-      'This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.');
+      'This browser obtained the expected page content from a site using an affected certificate. This result calls for checking browser and OS updates. It measures access to the check site; determining whether an attack occurred requires separate evidence.');
   } else if (unknown) {
     incompleteNotice();
-    showVerdict('neutral', '…', 'The check is incomplete.',
+    showVerdict('neutral', '…', 'Try the check again.',
       'Some requests timed out or returned an unexpected response. Check your connection and try again.');
   } else {
     previousConnection = false;
-    globalStatus('no-response', 'This browser: no affected-site connection detected.', 'Network problems can produce the same result. Check apps and devices separately.');
-    showVerdict('no-response', '✓', 'No connection to the affected test sites was detected.',
-      'No connection to the sites using affected certificates was confirmed. Keep automatic updates enabled. A network problem can produce the same result. Apps and devices need separate checks.');
+    globalStatus('no-response', 'This browser: keep automatic updates enabled.', 'Check app and device updates too.');
+    showVerdict('no-response', '✓', 'Keep automatic updates enabled.',
+      'All checks ended without obtaining the expected page content. Certificate rejection or a network error can produce this result. Keep automatic updates enabled and check apps and devices separately.');
   }
 }
 
@@ -1360,7 +1384,7 @@ async function run() {
   summary.textContent = '';
   let connectionsThisRun = 0;
   if (previousConnection) {
-    globalStatus('needs-action', 'A previous connection needs attention. Checking again…',
+    globalStatus('needs-action', 'Previous result: check updates. Checking again…',
       'Keep checking updates while this run completes.');
   } else {
     globalStatus('neutral', 'This browser: checking…', 'Apps and devices need their own updates.');
@@ -1375,7 +1399,7 @@ async function run() {
     if (r.status === 'connected' && ++connectionsThisRun === 1) {
       connectionNotice();
       showVerdict('needs-action', '!', 'Check your browser and system updates.',
-        'This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.');
+        'This browser obtained the expected page content from a site using an affected certificate. This result calls for checking browser and OS updates. It measures access to the check site; determining whether an attack occurred requires separate evidence.');
     }
     cells[i].textContent = r.text;
     cells[i].className = { connected: 'bad', blocked: 'good', unknown: 'pending' }[r.status];
@@ -1384,7 +1408,7 @@ async function run() {
   const n = results.filter(s => s === 'connected').length;
   const unknown = results.filter(s => s === 'unknown').length;
   reportVerdict(n, unknown);
-  const summaryTemplate = 'This browser connected to {n} of {total} sites using affected certificates. A failed connection does not prove safety. This checks only this browser; proxies that inspect encrypted traffic can affect the result.';
+  const summaryTemplate = 'This browser obtained the expected content from {n} of {total} sites using affected certificates. Results describe this browser and network; certificate rejection, network errors and inspecting proxies affect the outcome.';
   summary.lang = messages && hasOwn(messages, summaryTemplate) ? 'ja' : 'en';
   summary.textContent = t(summaryTemplate).replace('{n}', n).replace('{total}', HOSTS.length);
   if (unknown) {
@@ -1408,7 +1432,7 @@ async function start() {
       }
       incompleteNotice();
       summary.textContent = t('The checker could not complete. No safety conclusion can be drawn.');
-      showVerdict('neutral', '…', 'The check is incomplete.', 'The checker could not complete. No safety conclusion can be drawn.');
+      showVerdict('neutral', '…', 'Try the check again.', 'The checker could not complete. No safety conclusion can be drawn.');
     }), new Promise(r => setTimeout(r, COOLDOWN_MS))]);
   } finally {
     rerun.textContent = t('Run again');

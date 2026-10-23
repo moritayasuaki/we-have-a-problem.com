@@ -20,7 +20,7 @@ function checker(fetch, options = {}) {
     };
   }
   const tbody = element(), summary = element(), rerun = element();
-  const verdict = element(), verdictTitle = element(), verdictDetail = element();
+  const verdict = element(), verdictTitle = element(), verdictDetail = element(), verdictExplanation = element();
   const globalNotice = element(), globalTitle = element(), globalDetail = element(), globalAction = element(), announcement = element();
   const document = {
     documentElement: {},
@@ -29,7 +29,7 @@ function checker(fetch, options = {}) {
     querySelectorAll: () => [],
     getElementById: id => ({ summary, rerun, results: element(),
       'browser-verdict': verdict, 'verdict-title': verdictTitle,
-      'verdict-detail': verdictDetail, 'verdict-symbol': element(),
+      'verdict-detail': verdictDetail, 'verdict-explanation': verdictExplanation, 'verdict-symbol': element(),
       'global-notice': globalNotice, 'global-title': globalTitle,
       'global-detail': globalDetail, 'global-action': globalAction,
       'global-symbol': element(), 'urgent-announcement': announcement,
@@ -44,7 +44,7 @@ function checker(fetch, options = {}) {
   });
   if (options.noHasOwn) vm.runInContext('Object.hasOwn = undefined', context);
   vm.runInContext(script, context);
-  return { context, tbody, summary, rerun, verdict, verdictTitle, verdictDetail,
+  return { context, tbody, summary, rerun, verdict, verdictTitle, verdictDetail, verdictExplanation,
     globalNotice, globalTitle, globalDetail, globalAction, announcement,
     probe: () => vm.runInContext("probe('test.example')", context),
     start: () => vm.runInContext('start()', context) };
@@ -74,10 +74,10 @@ test('TLS and network failures retain the original did-not-connect result', asyn
   await page.start();
   assert.equal(page.tbody.children.length, 14);
   assert.ok(page.tbody.children.every(row => row.children[2].className === 'good'));
-  assert.match(page.summary.textContent, /A failed connection does not prove safety/);
+  assert.match(page.summary.textContent, /Results describe this browser and network/);
   assert.equal(page.summary.children.length, 0);
   assert.equal(page.verdict.className, 'verdict no-response');
-  assert.match(page.verdictDetail.textContent, /network problems?/i);
+  assert.match(page.verdictExplanation.textContent, /network error/i);
 });
 
 test('a timed-out request is inconclusive and aborted', async () => {
@@ -111,7 +111,7 @@ test('Japanese checker works without Object.hasOwn and IntersectionObserver', as
   await page.start();
   assert.equal(vm.runInContext('document.documentElement.lang', page.context), 'ja');
   assert.equal(page.tbody.children.length, 14);
-  assert.match(page.summary.textContent, /安全とは断定できません/);
+  assert.match(page.summary.textContent, /このブラウザと通信環境/);
   assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ 接続は確認されませんでした' && row.children[2].className === 'good'));
   assert.equal(page.rerun.disabled, false);
 });
@@ -139,7 +139,7 @@ test('an incomplete set of checks never produces a green overview', async () => 
   });
   await page.start();
   assert.equal(page.verdict.className, 'verdict neutral');
-  assert.equal(page.verdictTitle.textContent, 'The check is incomplete.');
+  assert.equal(page.verdictTitle.textContent, 'Try the check again.');
 });
 
 test('a received test response takes action priority over incomplete checks', async () => {
@@ -147,7 +147,8 @@ test('a received test response takes action priority over incomplete checks', as
   const page = checker(async () => ({ status: 200, text: async () => ++calls === 1 ? marker : 'proxy' }));
   await page.start();
   assert.equal(page.verdict.className, 'verdict needs-action');
-  assert.match(page.verdictDetail.textContent, /does not show that an attack happened/);
+  assert.match(page.verdictDetail.textContent, /Apply available updates/);
+  assert.match(page.verdictExplanation.textContent, /determining whether an attack occurred requires separate evidence/);
 });
 
 test('the first received response raises the global alert before other probes finish', async () => {
@@ -160,7 +161,7 @@ test('the first received response raises the global alert before other probes fi
   assert.equal(page.globalNotice.className, 'global-notice needs-action');
   assert.match(page.globalTitle.textContent, /check browser and OS updates/);
   assert.equal(page.globalAction.href, '#browser-action');
-  assert.match(page.announcement.textContent, /not proof of an attack/);
+  assert.match(page.announcement.textContent, /Apply available updates/);
   finish({ status: 403, text: async () => 'proxy' });
   await running;
 });
@@ -177,14 +178,15 @@ test('retry and an incomplete result retain a clearly labeled previous alert', a
   mode = 'waiting';
   const running = page.start();
   assert.equal(page.globalNotice.className, 'global-notice needs-action');
-  assert.match(page.globalTitle.textContent, /previous.*Checking again/);
+  assert.match(page.globalTitle.textContent, /Previous.*Checking again/);
   finish({ status: 403, text: async () => 'proxy' });
   await running;
   assert.equal(page.globalNotice.className, 'global-notice needs-action');
-  assert.match(page.globalTitle.textContent, /previous.*incomplete/);
+  assert.match(page.globalTitle.textContent, /Previous.*Retry the check/);
   mode = 'blocked';
   await page.start();
   assert.equal(page.globalNotice.className, 'global-notice no-response');
-  assert.match(page.globalDetail.textContent, /network problems?/i);
+  assert.match(page.globalDetail.textContent, /Check app and device updates/);
+  assert.match(page.verdictExplanation.textContent, /network error/i);
   assert.equal(page.announcement.textContent, '');
 });

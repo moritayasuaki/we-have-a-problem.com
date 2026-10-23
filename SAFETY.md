@@ -47,6 +47,11 @@ This branch starts at PR #99 commit
   flaw. The examples do not establish PHP causation, malicious vendor intent, or
   combined eMudhra exploitation. Product-specific remediation takes precedence
   over brand/country generalizations.
+- The default view prioritizes short update actions. Exact observations, network
+  and proxy limitations, and detailed related-issue guidance are in closed native
+  disclosures. Green recommends continued automatic updates; it is not relabeled
+  as certificate revocation or a complete device assessment. Deep links open the
+  relevant disclosures, and the red update notice remains visible while scrolling.
 - Detailed evidence and administrator workarounds remain available in disclosure
   sections. Deep links open all enclosing disclosures, including nested ones.
 - The static Open Graph and X card tags point to the public 1200×630 PNG, so social
