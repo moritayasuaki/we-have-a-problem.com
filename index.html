@@ -3,74 +3,302 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The private keys of eight eMudhra intermediate CA certificates, trusted by major root programs, have been compromised. Check whether your client is affected and how to protect it.">
-  <title>eMudhra Intermediate CA Compromise</title>
-  <link rel="canonical" href="https://emudhra.we-have-a-problem.com/">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://emudhra.we-have-a-problem.com/">
-  <meta property="og:title" content="eMudhra Intermediate CA Compromise">
-  <meta property="og:description" content="The private keys of eight eMudhra intermediate CA certificates, trusted by major root programs, have been compromised. Check whether your client is affected and how to protect it.">
-  <meta property="og:site_name" content="we-have-a-problem.com">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="eMudhra Intermediate CA Compromise">
-  <meta name="twitter:description" content="The private keys of eight eMudhra intermediate CA certificates, trusted by major root programs, have been compromised. Check whether your client is affected and how to protect it.">
+  <meta name="description" content="A calm guide to the eMudhra certificate issue. Check this browser, then update your apps and connected devices. Understand what each test can and cannot tell you.">
+  <title>eMudhra: a practical update guide</title>
+  <link rel="canonical" href="https://emudhra.hamazon.is/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emudhra.hamazon.is/">
+  <meta property="og:title" content="eMudhra｜アプリと機器の更新ガイド / Update guide">
+  <meta property="og:description" content="ブラウザの確認から、アプリ・ルーターの更新まで。 / Check your browser. Update your apps and devices.">
+  <meta property="og:site_name" content="eMudhra Update Guide · hamazon.is">
+  <meta property="og:image" content="https://emudhra.hamazon.is/assets/share-card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ブラウザ・アプリ・機器を更新。確認できる範囲を知って、ひとつずつ。 Update your browser, apps and devices.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="eMudhra｜アプリと機器の更新ガイド / Update guide">
+  <meta name="twitter:description" content="ブラウザの確認から、アプリ・ルーターの更新まで。 / Check your browser. Update your apps and devices.">
+  <meta name="twitter:image" content="https://emudhra.hamazon.is/assets/share-card.png">
+  <meta name="twitter:image:alt" content="ブラウザ・アプリ・機器を更新。 Update your browser, apps and devices.">
+  <meta name="theme-color" content="#173e3b">
   <style>
-    html { font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-    @media (min-width: 30rem) { html { font-size: 18px; } }
-    body { margin: 2rem 0 5rem; color: #333; }
-    @media (min-width: 30rem) { body { margin-top: 5rem; } }
-    .container { max-width: 50rem; margin: 0 auto; padding: 0 1rem; }
-    a { color: #0074d9; text-decoration: none; }
-    a:hover, a:focus { text-decoration: underline; }
-    h1, h2, h3 { margin: 0 0 0.5rem -0.1rem; line-height: 1; color: #111; }
-    h1:lang(ja), h2:lang(ja), h3:lang(ja) { line-height: 1.4; }
-    h2 a, h3 a { color: inherit; }
-    h1 { font-size: 2rem; margin-bottom: 1rem; }
-    @media (min-width: 30rem) { h1 { font-size: 2.5rem; margin-bottom: 3rem; } }
-    h2 { margin-top: 2.5rem; font-size: 1.2rem; margin-bottom: 1rem; }
-    h3 { margin-top: 1.5rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: bold; }
-    p, ul, ol, table, pre, blockquote { margin-top: 0; margin-bottom: 1rem; }
-    ul, ol { padding-left: 1.5rem; }
-    blockquote { margin-left: 0; margin-right: 0; padding: 0 1rem; border-left: .25rem solid #ccc; color: #666; }
-    blockquote p:last-child { margin-bottom: 0; }
-    hr { border: none; margin: 1.5rem 0; border-bottom: 1px solid #ccc; }
-    table { width: 100%; border: 1px solid #ccc; border-collapse: collapse; }
-    td, th { padding: .25rem .5rem; border: 1px solid #ccc; text-align: left; vertical-align: top; }
-    th { background: #f5f5f5; font-weight: bold; }
-    .patched { width: auto; }
-    details.workaround { margin-top: 1rem; }
-    details.workaround > summary { cursor: pointer; }
-    details.workaround > summary > h4 { display: inline; margin: 0; }
-    details.workaround[open] > summary { margin-bottom: 1rem; }
-    h4 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1rem; font-weight: bold; }
-    pre, code { font-family: Menlo, Consolas, monospace; background-color: #eee; }
-    pre { padding: .5rem 1rem; font-size: 0.8rem; overflow-x: auto; }
-    code { padding: .1rem .25rem; font-size: 0.85em; word-break: break-all; }
+    :root { color-scheme: light; --ink: #182f30; --muted: #526561; --paper: #f7f8f3; --line: #dbe2d9; --accent: #22594c; --green: #216746; --red: #ab3434; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; font: 16px/1.7 -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    .container { max-width: 1184px; margin: 0 auto; padding: 0 40px; }
+    a { color: var(--accent); text-underline-offset: .25em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid #176ca0; outline-offset: 5px; }
+    h1,h2,h3,h4,p { margin: 0; }
+    h1,h2,h3,h4 { line-height: 1.45; letter-spacing: -.035em; text-wrap: balance; }
+    h1 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1.23; font-weight: 750; }
+    h1:lang(ja) { line-height: 1.45; }
+    h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); }
+    h3 { font-size: 1.2rem; }
+    h4 { font-size: 1.05rem; }
+    p + p { margin-top: .85rem; }
+    .site-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 750; text-decoration: none; color: var(--ink); line-height: 1.2; font-size: 1.15rem; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--ink); color: white; font: 700 27px Georgia, serif; }
+    .brand-sub { display: block; font-size: .55rem; letter-spacing: .16em; margin-top: 5px; }
+    .language-nav { display: flex; align-items: center; gap: 7px; font-size: .82rem; }
+    .language-nav a { padding: 8px 10px; border-radius: 7px; text-decoration: none; }
+    html[lang="ja"] [data-language="ja"],html[lang="en"] [data-language="en"] { background: #e7ece4; font-weight: 700; }
+    .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 65px; align-items: center; padding: 65px 0 55px; }
+    .eyebrow { color: var(--accent); font-size: .74rem; letter-spacing: .1em; font-weight: 700; margin-bottom: 16px; }
+    .hero-intro { max-width: 32rem; margin-top: 22px; color: var(--muted); font-size: 1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px; border: 1px solid transparent; border-radius: 8px; font: inherit; font-size: .93rem; font-weight: 650; cursor: pointer; text-decoration: none; }
+    .primary { background: var(--accent); color: #fff; }
+    .primary:hover { background: #174638; text-decoration: none; }
+    button:disabled { cursor: wait; opacity: .65; }
+    .text-link { font-size: .9rem; font-weight: 650; }
+    .reassurance { margin-top: 20px; font-size: .79rem; color: var(--muted); }
+    .scope-visual { border: 1px solid #ccd7c9; border-radius: 20px; padding: 28px; background: #eaf0e5; box-shadow: 0 12px 0 -5px #f0f3ec, 0 13px 0 -5px #d5dfd2; }
+    .visual-title { font-size: .92rem; font-weight: 650; padding-bottom: 20px; }
+    .visual-row { display: flex; align-items: center; gap: 18px; padding: 21px 0; border-top: 1px solid #cbd8c8; }
+    .visual-row .icon { width: 35px; height: 35px; flex-shrink: 0; }
+    .visual-name { font-size: .94rem; font-weight: 700; }
+    .visual-caption { margin-top: 2px; font-size: .79rem; color: var(--muted); }
+    .visual-arrow { margin-left: auto; font-size: 1.2rem; color: var(--muted); }
+    .visual-foot { font-size: .74rem; padding-top: 15px; border-top: 1px solid #cbd8c8; }
+    section { scroll-margin-top: 24px; }
+    .section-heading { max-width: 47rem; margin-bottom: 28px; }
+    .section-heading .eyebrow { margin-bottom: 10px; }
+    .section-heading > p:last-child:not(.eyebrow) { color: var(--muted); margin-top: 12px; font-size: .94rem; }
+    .actions-section,.scope-section,.risk-section,.reference-section { padding: 48px 0; border-top: 1px solid var(--line); }
+    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .action-card { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 26px; display: flex; flex-direction: column; }
+    .action-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .icon { width: 32px; height: 32px; }
+    .step-number { color: #63796b; font: 400 1.8rem Georgia, serif; }
+    .action-card h3 { font-size: 1.1rem; }
+    .action-card > p { font-size: .94rem; color: var(--muted); margin-top: 14px; }
+    .action-card .action-foot { margin-top: auto; padding-top: 22px; font-size: .78rem; font-weight: 600; color: var(--ink); }
+    .section-note { margin-top: 20px; font-size: .81rem; color: var(--muted); max-width: 65rem; }
+    .check-section { padding: 36px; background: white; border: 1px solid var(--line); border-radius: 18px; margin: 16px 0 52px; }
+    .verdict { display: flex; gap: 18px; align-items: flex-start; padding: 24px; border: 1px solid; border-left-width: 5px; border-radius: 10px; }
+    .verdict.neutral { background: #f3f5f5; border-color: #c0cace; color: #354e53; }
+    .verdict.needs-action { background: #fff0ed; border-color: #c64b40; color: #932f28; }
+    .verdict.no-response { background: #edf7ef; border-color: #34845a; color: #205b3b; }
+    .verdict-symbol { display: grid; place-items: center; width: 32px; height: 32px; border: 1.5px solid currentColor; border-radius: 50%; font-weight: 750; flex-shrink: 0; line-height: 1; }
+    #verdict-title { font-size: 1.16rem; font-weight: 700; }
+    #verdict-detail { margin-top: 8px; font-size: .88rem; }
+    .check-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; padding-top: 22px; }
+    .technical-summary { margin-top: 20px; color: var(--muted); font-size: .77rem; }
+    .technical-summary:empty { display: none; }
+    .result-legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; margin-top: 26px; }
+    .result-legend p { font-size: .77rem; margin: 0; color: var(--muted); }
+    .result-legend strong { display: inline-block; font-size: .82rem; color: var(--ink); }
+    .legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; }
+    .red { background: var(--red); } .green { background: var(--green); } .gray { background: #68767b; }
+    .scope-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .scope-item + .scope-item { border-left: 1px solid var(--line); padding-left: 30px; }
+    .scope-item h3 { margin-top: 18px; font-size: 1.05rem; }
+    .scope-item .scope-badge { color: var(--accent); font-weight: 650; font-size: .8rem; margin-top: 8px; }
+    .scope-item p { font-size: .94rem; color: var(--muted); }
+    .risk-flow { display: grid; grid-template-columns: 1fr 24px 1fr 24px 1.1fr; gap: 12px; align-items: stretch; }
+    .risk-step,.risk-outcome { padding: 22px; border-radius: 12px; }
+    .risk-step { background: #eef1e9; border: 1px solid #d6dfd1; }
+    .risk-outcome { background: #f3ece1; border: 1px solid #e2d5c1; }
+    .risk-flow h3 { font-size: 1.05rem; margin: 13px 0 10px; }
+    .risk-flow p { font-size: .85rem; color: #45574d; }
+    .flow-number { font-size: .8rem; font-weight: 700; background: white; width: 27px; height: 27px; display: grid; place-items: center; border-radius: 50%; }
+    .flow-join { align-self: center; text-align: center; font-size: 1.4rem; color: #597061; }
+    .risk-outcome .eyebrow { margin-bottom: 0; font-size: .7rem; color: #77582e; }
+    .bind-note { padding: 24px 0 0 22px; border-left: 2px solid #cbd6c4; margin-top: 30px; }
+    .bind-note h3 { font-size: 1.05rem; margin-bottom: 14px; }
+    .bind-note p { color: var(--muted); font-size: .85rem; }
+    .admin-section { background: #173e3b; color: #f5f8f1; border-radius: 16px; padding: 36px; margin: 10px 0 48px; }
+    .admin-section .eyebrow { color: #bfdbc8; }
+    .admin-section h2 { font-size: 1.65rem; }
+    .admin-section p:not(.eyebrow) { margin-top: 16px; font-size: .9rem; color: #d2e1da; max-width: 56rem; }
+    .admin-links { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 25px; }
+    .admin-links a { color: #f3f8ed; }
+    .reference-section { padding-top: 35px; }
+    .reference-section > h2 { font-size: 1.6rem; margin-bottom: 25px; }
+    details { border-top: 1px solid var(--line); padding: 18px 0; }
+    summary { cursor: pointer; font-size: .94rem; font-weight: 650; }
+    details[open] > summary { margin-bottom: 24px; }
+    details h2 { font-size: 1.35rem; margin: 35px 0 16px; }
+    details h3 { margin: 28px 0 12px; }
+    details h4 { margin: 20px 0 10px; }
+    details p,details li { font-size: .87rem; margin-bottom: 16px; }
+    details h2 a,details h3 a { color: inherit; }
+    .technical-details { margin-top: 24px; }
+    .reference-note { background: #eaf0e5; padding: 16px; border-radius: 8px; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .8rem; margin: 20px 0; background: white; }
+    td,th { border: 1px solid var(--line); padding: 12px; vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+    th { background: #edf1e9; font-weight: 650; }
+    #results { min-width: 660px; }
+    #results td:first-child { width: 38%; }
+    .patched td:first-child { width: 45%; }
+    .good { color: #17623b; } .bad { color: #a02727; } .pending { color: #58686f; }
+    .workaround > summary > h4 { display: inline; }
+    blockquote { border-left: 3px solid var(--line); padding-left: 20px; margin-left: 0; }
+    pre,code { font-family: Menlo, Consolas, monospace; background: #edf0eb; }
+    pre { overflow-x: auto; padding: 18px; font-size: .75rem; border-radius: 8px; }
+    code { font-size: .85em; padding: 2px 4px; overflow-wrap: anywhere; }
     pre > code { padding: 0; }
-    .good { color: #090; }
-    .bad { color: #c00; }
-    .pending { color: #999; }
     abbr[title] { cursor: help; }
-    small { color: #808080; }
-    button { font: inherit; font-size: .9rem; padding: .2rem .6rem; }
+    .sources-section { padding: 28px 0 40px; max-width: 58rem; }
+    .sources-section h2 { font-size: 1.05rem; margin-bottom: 12px; }
+    .sources-section p,footer p { color: var(--muted); font-size: .78rem; }
+    footer { padding: 28px 0 40px; border-top: 1px solid var(--line); }
+    .skip-link { position: absolute; left: 20px; top: -100px; background: white; padding: 12px; z-index: 10; }
+    .skip-link:focus { top: 10px; }
+    #preview-notice { font-size: .75rem; color: var(--muted); padding: 15px 0; }
+    @media (max-width: 900px) {
+      .container { padding: 0 25px; }
+      .hero { gap: 30px; }
+      .scope-visual { padding: 22px; }
+      .action-card { padding: 20px; }
+      .risk-flow { grid-template-columns: 1fr; gap: 8px; }
+      .flow-join { line-height: 1.1; }
+      .risk-step,.risk-outcome { padding: 22px; }
+      .risk-flow h3 { margin-top: 8px; }
+    }
+    @media (max-width: 680px) {
+      .container { padding: 0 20px; }
+      .site-header { padding: 18px 0; }
+      .brand { font-size: 1rem; gap: 8px; }
+      .brand-mark { width: 32px; height: 32px; }
+      .language-nav { gap: 1px; }
+      .language-nav a { padding: 8px; }
+      .hero { display: block; padding: 36px 0 40px; }
+      h1 { font-size: 2.15rem; }
+      .hero-intro { margin-top: 18px; font-size: .94rem; }
+      .scope-visual { margin-top: 32px; padding: 22px; }
+      .visual-row { padding: 16px 0; }
+      .hero-actions { gap: 18px; }
+      .action-grid,.scope-grid { grid-template-columns: 1fr; gap: 16px; }
+      .action-card { padding: 23px; }
+      .action-top { margin-bottom: 14px; }
+      .action-card > p { font-size: .92rem; }
+      .action-card .action-foot { padding-top: 18px; }
+      .actions-section,.scope-section,.risk-section { padding: 35px 0; }
+      .check-section { padding: 22px 18px; margin: 10px -6px 35px; }
+      .verdict { padding: 18px 14px; gap: 12px; }
+      .verdict-symbol { width: 27px; height: 27px; }
+      #verdict-title { font-size: 1.03rem; }
+      .result-legend { grid-template-columns: 1fr; gap: 16px; }
+      .scope-item { padding: 12px 0 20px; }
+      .scope-item + .scope-item { border-left: 0; border-top: 1px solid var(--line); padding: 22px 0 20px; }
+      .scope-item h3 { margin-top: 12px; }
+      .admin-section { padding: 25px; margin-bottom: 35px; }
+      .reference-section > h2 { font-size: 1.45rem; }
+      .bind-note { padding-left: 15px; }
+      .patched { table-layout: fixed; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print { .container { max-width: none; padding: 0; } .site-header,.hero-actions,.check-controls { display: none; } .hero { padding: 20px 0; } .action-card,.verdict,.risk-flow { break-inside: avoid; } }
+
   </style>
 </head>
 <body>
-<div class="container">
-
-<p style="text-align: right"><a href="?lang=en" lang="en" hreflang="en" data-language="en">English</a> / <a href="?lang=ja" lang="ja" hreflang="ja" data-language="ja">日本語</a></p>
-
-<h1>eMudhra Intermediate CA Compromise</h1>
-
-<p style="text-align: center"><strong>20th October 2026</strong></p>
-
+<a class="skip-link" href="#main" data-i18n>Skip to the guide</a><div class="container">
+<header class="site-header"><a class="brand" href="#main"><span class="brand-mark" aria-hidden="true">e.</span><span>eMudhra <span class="brand-sub">UPDATE GUIDE</span></span></a><nav class="language-nav" aria-label="Language / 言語"><a href="?lang=en" lang="en" hreflang="en" data-language="en">English</a><a href="?lang=ja" lang="ja" hreflang="ja" data-language="ja">日本語</a></nav>
+</header>
+<main id="main"><section class="hero" aria-labelledby="page-title"><div class="hero-copy"><p class="eyebrow">A community guide · Updated 23 October 2026</p>
+<h1 id="page-title">Check your browser.<br>Remember your apps<br>and devices, too.</h1>
+<p class="hero-intro">Some digital certificates used to identify websites can be forged. Updates help stop software from accepting them. Start with the three steps below.</p>
+<div class="hero-actions"><a class="button primary" href="#next-steps" data-i18n>See the 3 steps</a><a class="text-link" href="#check" data-i18n>Check this browser ↓</a></div><p class="reassurance">This issue alone does not mean your device has been hacked.</p>
+</div><div class="scope-visual"><p class="visual-title">One browser check. A wider update checklist.</p>
+<div class="visual-row"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><div><p class="visual-name">This browser</p>
+<p class="visual-caption">Can be tested here</p>
+</div><span class="visual-arrow" aria-hidden="true">↗</span></div><div class="visual-row"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><div><p class="visual-name">Your apps</p>
+<p class="visual-caption">Update each app</p>
+</div><span class="visual-arrow" aria-hidden="true">↗</span></div><div class="visual-row"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><div><p class="visual-name">Router & smart devices</p>
+<p class="visual-caption">Check with the manufacturer</p>
+</div><span class="visual-arrow" aria-hidden="true">↗</span></div><p class="visual-foot">A green browser result does not check the other two.</p>
+</div></section>
+<section class="actions-section" id="next-steps" aria-labelledby="steps-title"><div class="section-heading"><p class="eyebrow">01 / WHAT TO DO</p>
+<h2 id="steps-title">Three updates to check.</h2>
+<p>Use your usual settings and official update channels. At work, follow your IT team’s guidance.</p>
+</div><div class="action-grid"><article class="action-card"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><span class="step-number">1</span></div><h3>Browser & operating system</h3>
+<p>Open the browser’s About or Update screen, then your device’s system updates. Apply available updates and restart when asked.</p>
+<p class="action-foot">Keep automatic updates enabled.</p>
+</article>
+<article class="action-card"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="3"/><rect x="18" y="4" width="10" height="10" rx="3"/><rect x="4" y="18" width="10" height="10" rx="3"/><rect x="18" y="18" width="10" height="10" rx="3"/></svg><span class="step-number">2</span></div><h3>Everyday apps</h3>
+<p>Open your app store or each app’s update menu. Some apps carry their own certificate list, so a browser update may not cover them.</p>
+<p class="action-foot">No update available? Check the vendor’s notice.</p>
+</article>
+<article class="action-card"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><span class="step-number">3</span></div><h3>Router & connected devices</h3>
+<p>Check the manufacturer’s app or support page for your router, camera, NAS and other smart devices. Follow firmware update instructions.</p>
+<p class="action-foot">An unsupported device? Ask about replacement or limit its internet access.</p>
+</article>
+</div><p class="section-note">Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.</p>
+</section>
+<section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">02 / CHECK THIS BROWSER</p>
+<h2 id="check-title">A result for this browser, on this network.</h2>
+<p>The check contacts 14 test hosts. It cannot inspect your apps, your router or another browser. Test hosts count successful connections by client type.</p>
+</div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">This browser has not been checked yet.</p>
+<p id="verdict-detail">The check starts when this panel is visible. You can also use the button below.</p>
+</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>The expected test response was received.</p>
+<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · No test response</strong><br>Keep your software up to date.</p>
+<p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
+</div><p id="checker-note" class="section-note">A green result can also come from a network failure. This page cannot tell whether a certificate was revoked or blocked. Proxies that inspect encrypted traffic can change the result.</p>
+<details class="technical-details" id="test-details"><summary data-i18n>See all 14 connection results</summary>
+<p id="summary" class="technical-summary"></p>
+<div class="table-scroll" tabindex="0"><table id="results">
+  <thead><tr><th>Intermediate CA</th><th>Chains to</th><th>Result</th></tr></thead>
+  <tbody></tbody>
+</table></div></details>
+<noscript><p lang="ja">自動確認にはJavaScriptが必要です。上の３つの更新手順は、そのまま利用できます。</p>
+<p lang="en">The browser test needs JavaScript. The update steps above still apply.</p>
+</noscript></section>
+<section class="scope-section" aria-labelledby="scope-title"><div class="section-heading"><p class="eyebrow">03 / WHAT EACH CHECK COVERS</p>
+<h2 id="scope-title">One result is not a check of everything.</h2>
+</div><div class="scope-grid"><article class="scope-item"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="M3 11h26M8 8h.1M12 8h.1M10 18h12M10 23h7"/></svg><h3>This web page</h3>
+<p class="scope-badge">Only this browser</p>
+<p>It tests connections made by the browser you are using now. Other browsers need their own check.</p>
+</article>
+<article class="scope-item"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="24" rx="4"/><path d="m8 12 5 5-5 5M17 22h7"/></svg><h3>A command-line test</h3>
+<p class="scope-badge">Only that tool & setup</p>
+<p>A curl result applies to that curl installation and the certificates it uses. It does not test every app on the machine.</p>
+</article>
+<article class="scope-item"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><h3>Apps, routers & IoT</h3>
+<p class="scope-badge">Not automatically checked here</p>
+<p>Use vendor guidance to check each product’s update status. A browser’s green result does not cover these products.</p>
+</article>
+</div></section>
+<section class="risk-section" id="combined-risk" aria-labelledby="risk-title"><div class="section-heading"><p class="eyebrow">04 / WHY BOTH UPDATES MATTER</p>
+<h2 id="risk-title">Two protections. Keep both in place.</h2>
+<p>DNS is the internet’s address book. Certificates help software check who it is talking to. A weakness in one does not automatically defeat the other.</p>
+</div><div class="risk-flow"><article class="risk-step"><span class="flow-number" aria-hidden="true">A</span><h3>The destination is changed</h3>
+<p>A successful DNS attack, a compromised router, or another network attack directs traffic to an attacker.</p>
+</article>
+<span class="flow-join" aria-hidden="true">＋</span><article class="risk-step"><span class="flow-number" aria-hidden="true">B</span><h3>The false identity is accepted</h3>
+<p>An unpatched client accepts a forged certificate made with an affected key, and its other checks do not block it.</p>
+</article>
+<span class="flow-join" aria-hidden="true">→</span><article class="risk-outcome"><p class="eyebrow">IF BOTH HAPPEN</p>
+<h3>A fake service may look real</h3>
+<p>Data on that connection could be read or changed. Separate end-to-end encryption or signatures can still provide protection.</p>
+</article>
+</div><p class="section-note">This is a possible combination of conditions, not evidence that it happened to you or that these incidents were used together.</p>
+<div class="bind-note"><h3>Where BIND 9 fits</h3>
+<p>BIND 9 is software used by some DNS servers. ISC has documented cache-poisoning flaws, including <a href="https://kb.isc.org/docs/cve-2025-40778">CVE-2025-40778 (2025)</a> and <a href="https://kb.isc.org/docs/cve-2026-11721">CVE-2026-11721 (2026)</a>, that can affect the address-book side of this diagram. The affected versions and conditions differ.</p>
+<p>Other flaws, such as <a href="https://kb.isc.org/docs/cve-2026-19630">CVE-2026-19630</a>, can interrupt DNS service; they do not by themselves establish that traffic can be redirected. DNS operators should check the <a href="https://kb.isc.org/docs/aa-00913">current ISC vulnerability matrix</a> and their distribution’s advisory. Home users can ask their router vendor or internet provider.</p>
+</div></section>
+<section class="admin-section" id="admin-guide" aria-labelledby="admin-title"><div><p class="eyebrow">FOR DEVELOPERS & ADMINISTRATORS</p>
+<h2 id="admin-title">Update what runs behind the screen.</h2>
+<p>Inventory OS certificate stores, bundled CA lists, language runtimes, containers, CI jobs and device firmware. Apply vendor fixes, rebuild or redeploy where needed, then verify the running versions. Browser updates alone do not cover these.</p>
+<div class="admin-links"><a href="#developers" class="text-link" data-i18n>Patched versions →</a><a href="#command-line" class="text-link" data-i18n>Command-line checks →</a></div></div></section>
+<section id="technical-reference" class="reference-section"><p class="eyebrow">REFERENCE / EVIDENCE & DETAIL</p>
+<h2>The technical details, when you need them.</h2>
+<details class="technical-details" id="incident-detail"><summary data-i18n>Incident, proof, affected software & administrator workarounds</summary>
+<p class="reference-note">The tables below are an upstream snapshot from 23 October 2026. Use the linked vendor notices for newer information. Administrator workarounds change system trust; prefer supported updates and involve your IT team.</p>
 <p>The private keys of eight eMudhra intermediate CA certificates have been compromised. They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores.</p>
 
 <h2 id="proof"><a href="#proof">How do we know?</a></h2>
 
 <p>To demonstrate that the keys are compromised, the original reporter Wayne signed the following message with the private key of each of the eight intermediate CAs and reported it to the Root Program Teams on the 17th of October:</p>
 
-<blockquote lang="en"><p>We have a problem here - Wayne</p></blockquote>
+<blockquote lang="en"><p>We have a problem here - Wayne</p>
+</blockquote>
 
 <p><a href="proof.zip">proof.zip</a> contains the message, and for each intermediate the certificate, its public key and a signature on the message. To verify with OpenSSL:</p>
 <pre>openssl x509 -in EM-DV-TLS-CA-G3B.crt.pem -noout -pubkey | diff - EM-DV-TLS-CA-G3B.pub.pem
@@ -90,17 +318,9 @@ openssl dgst -sha384 -verify EM-DV-TLS-CA-G3B.pub.pem -signature EM-DV-TLS-CA-G3
 
 <p>The CA has also revoked the compromised intermediate certificates. However, many other clients do not consume revocation information and require software updates to ensure they no longer trust the compromised intermediates.</p>
 
-<h2 id="check"><a href="#check">Does your client still trust the compromised intermediates?</a></h2>
-
-<table id="results">
-  <thead><tr><th>Intermediate CA</th><th>Chains to</th><th>Result</th></tr></thead>
-  <tbody></tbody>
-</table>
-<p id="checker-note">Red recommends checking updates. Green means the expected test response was not obtained. Certificate rejection or a network problem can cause this; it does not confirm certificate revocation or distrust. Results apply only to this browser.</p>
-<p><button id="rerun" type="button">Run check</button> <small id="summary"></small></p>
-
 <p>On 22nd October 2026, two chains marked <em>No CT</em> were added. Their leaf certificates were never logged to Certificate Transparency (CT), so clients that enforce CT reject them even if they still trust the intermediate. A successful connection to these hosts means the client trusts the compromised intermediates <em>and</em> does not enforce CT. As described <a href="#cause">below</a>, these are the clients that can be attacked without anyone noticing.</p>
 
+<h3 id="command-line">Command-line checks: this tool only</h3>
 <p>To check curl or other command-line clients, run:</p>
 <pre>curl https://dv-g3b-emudhra.we-have-a-problem.com/
 curl https://dv-g3b-aaa-emudhra.we-have-a-problem.com/</pre>
@@ -225,7 +445,8 @@ curl https://dv-g3b-aaa-noct-emudhra.we-have-a-problem.com/</pre>
 <h3 id="workarounds"><a href="#workarounds">Are there workarounds until patches are available?</a></h3>
 
 <details class="workaround" id="macos-curl">
-<summary><h4>macOS curl, git, and Python</h4></summary>
+<summary><h4>macOS curl, git, and Python</h4>
+</summary>
 
 <p>macOS blocks the compromised intermediates, but the built-in <code>curl</code>, <code>git</code>, <code>python3</code>, <code>perl</code>, <code>ruby</code>, and <code>openssl</code> verify certificates against <code>/etc/ssl/cert.pem</code> without checking revocation, and that file has not been updated. To remove the affected roots from it, run:</p>
 <pre>sudo cp -p /etc/ssl/cert.pem /etc/ssl/cert.pem.bak &amp;&amp;
@@ -241,7 +462,8 @@ sudo chmod 644 "$F"</pre>
 </details>
 
 <details class="workaround" id="linux">
-<summary><h4>Linux</h4></summary>
+<summary><h4>Linux</h4>
+</summary>
 
 <p>Until a distribution ships an updated <code>ca-certificates</code> package, expert users can distrust the affected roots in the system trust store. This is NOT recommended for ordinary users.</p>
 
@@ -296,7 +518,8 @@ update-ca-trust</pre>
 </details>
 
 <details class="workaround" id="windows">
-<summary><h4>Windows</h4></summary>
+<summary><h4>Windows</h4>
+</summary>
 
 <p>Microsoft has shipped blocks for these certificates through Windows' <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-trust#automatic-certificate-trust-list-updates">automatic certificate trust list updates</a>. Machines that receive these updates don't need this workaround. This script lets administrators block the compromised certificates locally on machines that do not, for example those that are offline or have automatic updates disabled.</p>
 
@@ -312,7 +535,8 @@ update-ca-trust</pre>
 </details>
 
 <details class="workaround" id="netbsd">
-<summary><h4>NetBSD</h4></summary>
+<summary><h4>NetBSD</h4>
+</summary>
 
 <p>On NetBSD 10 and later, run as root:</p>
 <pre>certctl untrust /usr/share/certs/mozilla/all/emSign_ECC_Root_CA_-_G3.pem &amp;&amp;
@@ -320,7 +544,8 @@ certctl untrust /usr/share/certs/mozilla/all/Comodo_AAA_Services_root.pem</pre>
 </details>
 
 <details class="workaround" id="freebsd">
-<summary><h4>FreeBSD</h4></summary>
+<summary><h4>FreeBSD</h4>
+</summary>
 
 <p>On FreeBSD 14 or later, run the following commands as root:</p>
 <pre>
@@ -330,12 +555,15 @@ certctl rehash
 </pre>
 </details>
 
-<hr>
-
-<p>Site published by <a href="https://github.com/dennisjackson">Dennis Jackson</a>. This site is the work of <a href="https://github.com/galadran/we-have-a-problem.com/graphs/contributors">many contributors</a> from the community. The source is on <a href="https://github.com/galadran/we-have-a-problem.com">GitHub</a> and PRs are welcome.</p>
-
+</details>
+</section>
+<section class="sources-section" id="sources"><h2>Sources & how to read this guide</h2>
+<p>The incident and original test are from the <a href="https://emudhra.we-have-a-problem.com/">community incident report</a>. The update guidance is also informed by <a href="https://render.com/docs/advisory-emudhra">Render’s advisory</a> and <a href="https://curl.se/docs/sslcerts.html">curl’s certificate documentation</a>. DNS examples link to ISC’s own advisories above. The combined-risk diagram is an explanation of how those conditions could interact.</p>
+</section>
+</main>
+<footer><p>An independent community guide on hamazon.is. Original incident site by <a href="https://github.com/dennisjackson">Dennis Jackson</a> and <a href="https://github.com/galadran/we-have-a-problem.com/graphs/contributors">community contributors</a>. <a href="https://github.com/moritayasuaki/we-have-a-problem.com/tree/codex/safe-japanese-translation">Guide source & tests</a>.</p>
+</footer>
 </div>
-
 <script type="application/json" id="translations-ja">
 {
   "eMudhra Intermediate CA Compromise": "eMudhra中間認証局(CA)の秘密鍵の値が極端に小さいことによる侵害問題",
@@ -356,7 +584,7 @@ certctl rehash
   "Intermediate CA": "中間CA",
   "Chains to": "ルート証明書",
   "Result": "このブラウザでの接続結果",
-  "Run check": "このブラウザで接続をテストする",
+  "Run check": "確認する",
   "On 22nd October 2026, two chains marked \u003cem>No CT\u003c/em> were added. Their leaf certificates were never logged to Certificate Transparency (CT), so clients that enforce CT reject them even if they still trust the intermediate. A successful connection to these hosts means the client trusts the compromised intermediates \u003cem>and\u003c/em> does not enforce CT. As described \u003ca href=\"#cause\">below\u003c/a>, these are the clients that can be attacked without anyone noticing.": "2026年10月22日に，\u003cem>No CT\u003c/em>と表示された2つの証明書チェーンを追加しました。これらのリーフ証明書はCertificate Transparency（CT）のログに一度も記録されていません。そのため，CTを必須とするクライアントは，中間CAをまだ信頼していてもこれらの証明書を拒否します。これらのホストへの接続に成功した場合，そのクライアントは侵害された中間CAを信頼しており，\u003cem>かつ\u003c/em>CTを必須としていないことを意味します。\u003ca href=\"#cause\">後述\u003c/a>のとおり，これらは誰にも気づかれずに攻撃を受ける可能性があるクライアントです。",
   "To check curl or other command-line clients, run:": "curlなどのコマンドラインクライアントを確認するには，次を実行します。",
   "Most browsers enforce CT, but many non-browser clients, including curl, do not which places them at greater risk.": "ほとんどのブラウザーはCTを必須としていますが，curlを含むブラウザー以外の多くのクライアントは必須としていないため，より高いリスクにさらされています。",
@@ -421,7 +649,94 @@ certctl rehash
   "The checker could not complete. No safety conclusion can be drawn.": "確認ツールを完了できませんでした。安全性についての結論は出せません。",
   "❌ Test response received — check updates": "❌ テスト応答を受信しました（更新をご確認ください）",
   "✅ Test response not received": "✅ テスト応答を取得できませんでした",
-  "Red recommends checking updates. Green means the expected test response was not obtained. Certificate rejection or a network problem can cause this; it does not confirm certificate revocation or distrust. Results apply only to this browser.": "赤は更新状況の確認を勧める結果，緑はテスト用の応答が取得されなかった結果を示します。緑の場合も，証明書の拒否や通信障害などが原因として考えられ，証明書の失効・信頼停止を確認できたわけではありません。結果はこのブラウザに限ります。"
+  "Red recommends checking updates. Green means the expected test response was not obtained. Certificate rejection or a network problem can cause this; it does not confirm certificate revocation or distrust. Results apply only to this browser.": "赤は更新状況の確認を勧める結果，緑はテスト用の応答が取得されなかった結果を示します。緑の場合も，証明書の拒否や通信障害などが原因として考えられ，証明書の失効・信頼停止を確認できたわけではありません。結果はこのブラウザに限ります。",
+  "eMudhra: a practical update guide": "eMudhra：いま確認したい更新ガイド",
+  "A calm guide to the eMudhra certificate issue. Check this browser, then update your apps and connected devices. Understand what each test can and cannot tell you.": "eMudhraの証明書問題への対応を、落ち着いてひとつずつ。ブラウザの確認から、アプリ・ルーター・IoT機器の更新まで、確認できる範囲と次の行動を案内します。",
+  "Skip to the guide": "本文へ移動",
+  "A community guide · Updated 23 October 2026": "コミュニティによる解説 · 2026年10月23日更新",
+  "Check your browser.\u003cbr>Remember your apps\u003cbr>and devices, too.": "ブラウザを確認。\u003cbr>アプリと機器も、\u003cbr>忘れずに更新。",
+  "Some digital certificates used to identify websites can be forged. Updates help stop software from accepting them. Start with the three steps below.": "通信相手を確かめる「証明書」の一部に、偽造できる問題が見つかりました。偽物を受け入れないために、まずは３つの更新を確認しましょう。",
+  "See the 3 steps": "やること３つを見る",
+  "Check this browser ↓": "このブラウザを確認 ↓",
+  "This issue alone does not mean your device has been hacked.": "この問題があるだけで、端末が侵入されたという意味ではありません。",
+  "One browser check. A wider update checklist.": "確認はブラウザ。更新は、その先まで。",
+  "This browser": "このブラウザ",
+  "Can be tested here": "このページで確認",
+  "Your apps": "使っているアプリ",
+  "Update each app": "それぞれの更新を確認",
+  "Check with the manufacturer": "メーカーの更新を確認",
+  "A green browser result does not check the other two.": "ブラウザが緑でも、アプリや機器は未確認です。",
+  "01 / WHAT TO DO": "01 / まず、やること",
+  "Three updates to check.": "確認する更新は、３つ。",
+  "Use your usual settings and official update channels. At work, follow your IT team’s guidance.": "いつもの設定画面や公式の更新機能から進められます。会社の端末は、管理担当者の案内に従ってください。",
+  "Open the browser’s About or Update screen, then your device’s system updates. Apply available updates and restart when asked.": "ブラウザの「バージョン情報／更新」と、端末の「ソフトウェア更新」を開きます。更新を適用し、案内があれば再起動します。",
+  "Keep automatic updates enabled.": "自動更新も有効に。",
+  "Everyday apps": "いつも使うアプリ",
+  "Open your app store or each app’s update menu. Some apps carry their own certificate list, so a browser update may not cover them.": "アプリストアやアプリ内の更新メニューを確認します。証明書の一覧を独自に持つアプリは、ブラウザの更新だけでは対応できない場合があります。",
+  "No update available? Check the vendor’s notice.": "更新がなければ、提供元のお知らせを確認。",
+  "Check the manufacturer’s app or support page for your router, camera, NAS and other smart devices. Follow firmware update instructions.": "ルーター、カメラ、NASなどは、メーカーのアプリやサポートページで本体ソフトの更新を確認します。機種ごとの案内に沿って進めます。",
+  "An unsupported device? Ask about replacement or limit its internet access.": "サポート終了なら、買い替えや外部通信の制限を相談。",
+  "Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.": "すべてのアプリや機器が影響を受けるわけではありません。証明書の確認方法と更新状況で異なります。証明書の警告は無効にせず、更新で対応してください。",
+  "02 / CHECK THIS BROWSER": "02 / このブラウザを確認",
+  "A result for this browser, on this network.": "このブラウザの、いまの接続結果。",
+  "The check contacts 14 test hosts. It cannot inspect your apps, your router or another browser. Test hosts count successful connections by client type.": "14か所のテスト先への接続を確認します。アプリ、ルーター、別のブラウザは検査できません。テスト先では、接続できた利用ソフトの種類別に回数が集計されます。",
+  "This browser has not been checked yet.": "このブラウザは、まだ確認していません。",
+  "The check starts when this panel is visible. You can also use the button below.": "この欄が表示されると確認を始めます。下のボタンからも実行できます。",
+  "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Red · Check updates\u003c/strong>\u003cbr>The expected test response was received.": "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>赤：更新状況を確認\u003c/strong>\u003cbr>テスト用の応答を受信しました。",
+  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · No test response\u003c/strong>\u003cbr>Keep your software up to date.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：テスト応答なし\u003c/strong>\u003cbr>引き続き更新を保ちましょう。",
+  "\u003cspan class=\"legend-dot gray\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Gray · Check incomplete\u003c/strong>\u003cbr>Try again on a working connection.": "\u003cspan class=\"legend-dot gray\" aria-hidden=\"true\">\u003c/span>\u003cstrong>灰：確認できません\u003c/strong>\u003cbr>通信を確認して、再実行してください。",
+  "A green result can also come from a network failure. This page cannot tell whether a certificate was revoked or blocked. Proxies that inspect encrypted traffic can change the result.": "緑には、通信できなかった場合も含まれます。このページだけでは、証明書の失効・信頼停止が理由かを判別できません。通信を中継・検査する仕組みも結果に影響します。",
+  "See all 14 connection results": "14件の接続結果を詳しく見る",
+  "03 / WHAT EACH CHECK COVERS": "03 / 確認できる範囲",
+  "One result is not a check of everything.": "ひとつの結果で、全部は分かりません。",
+  "This web page": "このWebページ",
+  "Only this browser": "このブラウザだけ",
+  "It tests connections made by the browser you are using now. Other browsers need their own check.": "いま開いているブラウザの接続を確認します。別のブラウザは、それぞれで確認が必要です。",
+  "A command-line test": "コマンドのテスト",
+  "A curl result applies to that curl installation and the certificates it uses. It does not test every app on the machine.": "curlの結果は、実行したcurlと、その設定・証明書一覧に限られます。同じ端末の他のアプリの結果ではありません。",
+  "Not automatically checked here": "ここでは自動検査できません",
+  "Use vendor guidance to check each product’s update status. A browser’s green result does not cover these products.": "製品ごとの案内で更新状況を確認します。ブラウザの緑の結果は、これらの製品の確認にはなりません。",
+  "04 / WHY BOTH UPDATES MATTER": "04 / なぜ、両方の更新が必要？",
+  "Two protections. Keep both in place.": "「行き先」と「相手の確認」。両方を守る。",
+  "DNS is the internet’s address book. Certificates help software check who it is talking to. A weakness in one does not automatically defeat the other.": "DNSはインターネットの「住所録」。証明書は、通信相手が本物か確かめるための仕組みです。片方に問題があっても、それだけで両方が破られるわけではありません。",
+  "The destination is changed": "行き先を変えられる",
+  "A successful DNS attack, a compromised router, or another network attack directs traffic to an attacker.": "DNSへの攻撃やルーターの乗っ取りなどが成功し、通信が攻撃者の側へ誘導される。",
+  "The false identity is accepted": "偽の相手を受け入れる",
+  "An unpatched client accepts a forged certificate made with an affected key, and its other checks do not block it.": "未対応のアプリなどが、問題の鍵で作られた偽の証明書を受け入れ、他の確認でも止められない。",
+  "IF BOTH HAPPEN": "条件が重なると",
+  "A fake service may look real": "偽のサービスを、本物だと思ってしまう",
+  "Data on that connection could be read or changed. Separate end-to-end encryption or signatures can still provide protection.": "その通信の内容を読まれたり、書き換えられたりするおそれがあります。別の暗号化や署名による保護が残る場合もあります。",
+  "This is a possible combination of conditions, not evidence that it happened to you or that these incidents were used together.": "これは条件が重なった場合の仕組みの説明です。あなたに被害が起きたことや、これらを組み合わせた攻撃の発生を示すものではありません。",
+  "Where BIND 9 fits": "BIND 9の脆弱性との関係",
+  "BIND 9 is software used by some DNS servers. ISC has documented cache-poisoning flaws, including \u003ca href=\"https://kb.isc.org/docs/cve-2025-40778\">CVE-2025-40778 (2025)\u003c/a> and \u003ca href=\"https://kb.isc.org/docs/cve-2026-11721\">CVE-2026-11721 (2026)\u003c/a>, that can affect the address-book side of this diagram. The affected versions and conditions differ.": "BIND 9は、一部のDNSサーバーで使われるソフトウェアです。ISCは、住所録に偽の情報が入る脆弱性として、\u003ca href=\"https://kb.isc.org/docs/cve-2025-40778\">CVE-2025-40778（2025年）\u003c/a>や\u003ca href=\"https://kb.isc.org/docs/cve-2026-11721\">CVE-2026-11721（2026年）\u003c/a>を公表しています。図の「行き先」に関わる例ですが、影響する版や条件はそれぞれ異なります。",
+  "Other flaws, such as \u003ca href=\"https://kb.isc.org/docs/cve-2026-19630\">CVE-2026-19630\u003c/a>, can interrupt DNS service; they do not by themselves establish that traffic can be redirected. DNS operators should check the \u003ca href=\"https://kb.isc.org/docs/aa-00913\">current ISC vulnerability matrix\u003c/a> and their distribution’s advisory. Home users can ask their router vendor or internet provider.": "一方、\u003ca href=\"https://kb.isc.org/docs/cve-2026-19630\">CVE-2026-19630\u003c/a>のようにDNSを停止させる種類の問題もあり、それだけで行き先を書き換えられるとはいえません。DNSの管理者は\u003ca href=\"https://kb.isc.org/docs/aa-00913\">ISCの脆弱性一覧\u003c/a>と利用OSの案内を確認してください。家庭では、ルーターのメーカーや回線事業者に確認できます。",
+  "Update what runs behind the screen.": "画面の裏で動くソフトも更新を。",
+  "Inventory OS certificate stores, bundled CA lists, language runtimes, containers, CI jobs and device firmware. Apply vendor fixes, rebuild or redeploy where needed, then verify the running versions. Browser updates alone do not cover these.": "OSの証明書一覧、アプリ同梱の証明書、言語環境、コンテナ、CI、機器の本体ソフトを確認します。提供元の修正を適用し、必要な再ビルド・再配布後に、実際に動いている版を確認してください。",
+  "Patched versions →": "修正版の一覧 →",
+  "Command-line checks →": "コマンドでの確認 →",
+  "The technical details, when you need them.": "詳しい情報は、必要なときに。",
+  "The tables below are an upstream snapshot from 23 October 2026. Use the linked vendor notices for newer information. Administrator workarounds change system trust; prefer supported updates and involve your IT team.": "以下の一覧は、2026年10月23日時点の元サイトの情報です。最新の状況は各リンク先で確認してください。管理者向けの暫定対応は証明書の設定を変更します。通常は正式な更新を優先し、管理担当者と進めてください。",
+  "Command-line checks: this tool only": "コマンドの確認：対象はそのツールだけ",
+  "The incident and original test are from the \u003ca href=\"https://emudhra.we-have-a-problem.com/\">community incident report\u003c/a>. The update guidance is also informed by \u003ca href=\"https://render.com/docs/advisory-emudhra\">Render’s advisory\u003c/a> and \u003ca href=\"https://curl.se/docs/sslcerts.html\">curl’s certificate documentation\u003c/a>. DNS examples link to ISC’s own advisories above. The combined-risk diagram is an explanation of how those conditions could interact.": "問題の情報と元のテストは\u003ca href=\"https://emudhra.we-have-a-problem.com/\">コミュニティの報告サイト\u003c/a>に基づきます。更新の説明には\u003ca href=\"https://render.com/docs/advisory-emudhra\">Renderの案内\u003c/a>と\u003ca href=\"https://curl.se/docs/sslcerts.html\">curlの証明書に関する文書\u003c/a>も参照しています。DNSの例は上記のISC公式情報を参照し、組み合わせの図は条件が重なる場合を説明したものです。",
+  "Check your browser and system updates.": "ブラウザとOSの更新を確認してください。",
+  "At least one test response was received. Apply available updates and check again. This result does not show that an attack happened.": "テスト用の応答を受信しました。利用できる更新を適用して、もう一度確認してください。攻撃を受けたことを示す結果ではありません。",
+  "The check is incomplete.": "確認を完了できませんでした。",
+  "Some requests timed out or returned an unexpected response. Check your connection and try again.": "時間切れや想定外の応答がありました。通信を確認して、もう一度お試しください。",
+  "No test responses were received.": "テスト用の応答は、ありませんでした。",
+  "This check found no connection that calls for extra action. Keep updates enabled. Network failures can also produce this result; apps and devices still need their own update checks.": "この確認では、追加対応を勧める接続は見つかりませんでした。引き続き更新を保ちましょう。通信障害でもこの結果になります。アプリや機器は、それぞれ更新を確認してください。",
+  "Checking this browser…": "このブラウザを確認しています…",
+  "This usually takes about 10 seconds.": "通常、10秒ほどで結果が出ます。",
+  "Router &amp; smart devices": "ルーター・スマート機器",
+  "Browser &amp; operating system": "ブラウザとOS",
+  "Router &amp; connected devices": "ルーター・つながる機器",
+  "Then check your apps &amp; devices ↑": "アプリ・機器の更新も確認 ↑",
+  "Only that tool &amp; setup": "そのツール・設定だけ",
+  "Apps, routers &amp; IoT": "アプリ・ルーター・IoT",
+  "FOR DEVELOPERS &amp; ADMINISTRATORS": "開発・管理を担当している方へ",
+  "REFERENCE / EVIDENCE &amp; DETAIL": "参考 / 根拠と詳しい情報",
+  "Incident, proof, affected software &amp; administrator workarounds": "問題の詳細・根拠・修正版・管理者向けの暫定対応",
+  "Sources &amp; how to read this guide": "情報源と、このページについて",
+  "An independent community guide on hamazon.is. Original incident site by \u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a> and \u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">community contributors\u003c/a>. \u003ca href=\"https://github.com/moritayasuaki/we-have-a-problem.com/tree/codex/safe-japanese-translation\">Guide source &amp; tests\u003c/a>.": "hamazon.isによる独立したコミュニティ向け解説です。元の報告サイト：\u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a>と\u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">コミュニティの貢献者\u003c/a>。\u003ca href=\"https://github.com/moritayasuaki/we-have-a-problem.com/tree/codex/safe-japanese-translation\">この解説のソースとテスト\u003c/a>。"
 }
 </script>
 <script>
@@ -451,7 +766,7 @@ function t(english) {
 document.documentElement.lang = messages ? 'ja' : 'en';
 if (messages) {
   // Match complete fragments so edits to links or inline code also invalidate translations.
-  document.querySelectorAll('title, h1, h2, h3, h4, p, th, td, button, a.pending').forEach(el => {
+  document.querySelectorAll('title, h1, h2, h3, h4, p, th, td, button, a.pending, [data-i18n]').forEach(el => {
     if (el.closest('blockquote, pre, code')) return;
     const english = el.innerHTML;
     const translated = t(english);
@@ -503,6 +818,25 @@ const EXPECTED_BODY = 'Your client successfully connected to the site.';
 const resultsBody = document.querySelector('#results tbody');
 const summary = document.getElementById('summary');
 const rerun = document.getElementById('rerun');
+const verdict = document.getElementById('browser-verdict');
+function showVerdict(state, symbol, title, detail) {
+  verdict.className = 'verdict ' + state;
+  document.getElementById('verdict-symbol').textContent = symbol;
+  document.getElementById('verdict-title').textContent = t(title);
+  document.getElementById('verdict-detail').textContent = t(detail);
+}
+function reportVerdict(connected, unknown) {
+  if (connected) {
+    showVerdict('needs-action', '!', 'Check your browser and system updates.',
+      'At least one test response was received. Apply available updates and check again. This result does not show that an attack happened.');
+  } else if (unknown) {
+    showVerdict('neutral', '…', 'The check is incomplete.',
+      'Some requests timed out or returned an unexpected response. Check your connection and try again.');
+  } else {
+    showVerdict('no-response', '✓', 'No test responses were received.',
+      'This check found no connection that calls for extra action. Keep updates enabled. Network failures can also produce this result; apps and devices still need their own update checks.');
+  }
+}
 
 function cell(text, cls) {
   const td = document.createElement('td');
@@ -555,6 +889,7 @@ const cells = HOSTS.map(({ host, label, root, noct }) => {
 
 async function run() {
   summary.textContent = '';
+  showVerdict('neutral', '…', 'Checking this browser…', 'This usually takes about 10 seconds.');
   for (const td of cells) {
     td.textContent = t('checking…');
     td.className = 'pending';
@@ -567,6 +902,7 @@ async function run() {
   }));
   const n = results.filter(s => s === 'connected').length;
   const unknown = results.filter(s => s === 'unknown').length;
+  reportVerdict(n, unknown);
   const summaryTemplate = 'Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.';
   summary.lang = messages && hasOwn(messages, summaryTemplate) ? 'ja' : 'en';
   summary.textContent = t(summaryTemplate).replace('{n}', n).replace('{total}', HOSTS.length);
@@ -591,6 +927,7 @@ async function start() {
         td.className = 'pending';
       }
       summary.textContent = t('The checker could not complete. No safety conclusion can be drawn.');
+      showVerdict('neutral', '…', 'The check is incomplete.', 'The checker could not complete. No safety conclusion can be drawn.');
     }), new Promise(r => setTimeout(r, COOLDOWN_MS))]);
   } finally {
     rerun.textContent = t('Run again');
@@ -598,13 +935,13 @@ async function start() {
   }
 }
 
-// Run automatically the first time the results table scrolls into view.
+// Run when the visible overview enters view; the detailed table is collapsed.
 let observer = null;
 if ('IntersectionObserver' in window) {
   observer = new IntersectionObserver(entries => {
     if (entries.some(e => e.isIntersecting)) start();
   });
-  observer.observe(document.getElementById('results'));
+  observer.observe(verdict);
 }
 
 rerun.addEventListener('click', start);
@@ -612,10 +949,17 @@ rerun.addEventListener('click', start);
 // Workarounds are collapsed by default. Open the one a link points at.
 function openLinkedWorkaround() {
   const el = document.getElementById(location.hash.slice(1));
-  if (el instanceof HTMLDetailsElement && !el.open) {
-    el.open = true;
-    el.scrollIntoView();
+  if (!el) return;
+  let parent = el;
+  let opened = false;
+  while (parent) {
+    if (parent instanceof HTMLDetailsElement && !parent.open) {
+      parent.open = true;
+      opened = true;
+    }
+    parent = parent.parentElement;
   }
+  if (opened) el.scrollIntoView();
 }
 openLinkedWorkaround();
 window.addEventListener('hashchange', openLinkedWorkaround);

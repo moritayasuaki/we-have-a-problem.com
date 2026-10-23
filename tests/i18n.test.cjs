@@ -9,7 +9,7 @@ const html = readFileSync(join(__dirname, '..', 'index.html'), 'utf8');
 const japanese = html.match(/<script type="application\/json" id="translations-ja">([\s\S]*?)<\/script>/)[1];
 const setup = html.match(/<script>([\s\S]*?)\/\/ Hosts under test\./)[1];
 const dictionary = JSON.parse(japanese);
-const englishTitle = 'eMudhra Intermediate CA Compromise';
+const englishTitle = html.match(/<title>([^<]*)<\/title>/)[1];
 const englishDescription = html.match(/<meta name="description" content="([^"]*)"/)[1];
 
 function render(languages, search = '', options = {}) {

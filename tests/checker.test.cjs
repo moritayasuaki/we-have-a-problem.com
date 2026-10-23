@@ -20,12 +20,15 @@ function checker(fetch, options = {}) {
     };
   }
   const tbody = element(), summary = element(), rerun = element();
+  const verdict = element(), verdictTitle = element(), verdictDetail = element();
   const document = {
     documentElement: {},
     createElement: element,
     querySelector: () => tbody,
     querySelectorAll: () => [],
     getElementById: id => ({ summary, rerun, results: element(),
+      'browser-verdict': verdict, 'verdict-title': verdictTitle,
+      'verdict-detail': verdictDetail, 'verdict-symbol': element(),
       'translations-ja': { textContent: japanese } })[id] || null,
   };
   const context = vm.createContext({
@@ -37,7 +40,7 @@ function checker(fetch, options = {}) {
   });
   if (options.noHasOwn) vm.runInContext('Object.hasOwn = undefined', context);
   vm.runInContext(script, context);
-  return { context, tbody, summary, rerun,
+  return { context, tbody, summary, rerun, verdict, verdictTitle, verdictDetail,
     probe: () => vm.runInContext("probe('test.example')", context),
     start: () => vm.runInContext('start()', context) };
 }
@@ -68,6 +71,8 @@ test('TLS and network failures retain the original did-not-connect result', asyn
   assert.ok(page.tbody.children.every(row => row.children[2].className === 'good'));
   assert.match(page.summary.textContent, /Failed connections do not prove safety/);
   assert.equal(page.summary.children.length, 0);
+  assert.equal(page.verdict.className, 'verdict no-response');
+  assert.match(page.verdictDetail.textContent, /Network failures/);
 });
 
 test('a timed-out request is inconclusive and aborted', async () => {
@@ -92,6 +97,7 @@ test('missing checker APIs show a failure notice and leave retry enabled', async
   await page.start();
   assert.equal(page.rerun.disabled, false);
   assert.match(page.summary.textContent, /No safety conclusion/);
+  assert.equal(page.verdict.className, 'verdict neutral');
   assert.ok(page.tbody.children.every(row => row.children[2].className === 'pending'));
 });
 
@@ -117,4 +123,24 @@ test('a second start cannot issue duplicate probes while a run is active', async
   await first;
   assert.equal(page.rerun.disabled, false);
   assert.match(page.summary.textContent, /14 of 14/);
+  assert.equal(page.verdict.className, 'verdict needs-action');
+});
+
+test('an incomplete set of checks never produces a green overview', async () => {
+  let calls = 0;
+  const page = checker(async () => {
+    if (++calls === 1) return { status: 403, text: async () => 'proxy block page' };
+    throw new TypeError('Failed to fetch');
+  });
+  await page.start();
+  assert.equal(page.verdict.className, 'verdict neutral');
+  assert.equal(page.verdictTitle.textContent, 'The check is incomplete.');
+});
+
+test('a received test response takes action priority over incomplete checks', async () => {
+  let calls = 0;
+  const page = checker(async () => ({ status: 200, text: async () => ++calls === 1 ? marker : 'proxy' }));
+  await page.start();
+  assert.equal(page.verdict.className, 'verdict needs-action');
+  assert.match(page.verdictDetail.textContent, /does not show that an attack happened/);
 });

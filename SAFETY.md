@@ -14,6 +14,20 @@ This branch starts at PR #99 commit
   certificate revocation or distrust. Successful test responses are red and
   recommend checking updates; timeouts and unexpected responses remain gray.
 - Unexpected checker failures show an inconclusive notice and leave retry enabled.
+- The overview is red if any expected test response is received, gray if the
+  remaining result is incomplete, and green only if every probe returned the
+  existing `blocked` result. Green describes missing responses, not verified
+  distrust. Apps, command-line installations, and devices are explicitly outside
+  a browser test's scope. The test starts when its visible overview enters view.
+- Plain-language steps cover browser/OS, app, and firmware updates. A conditional
+  DNS/TLS diagram distinguishes cache poisoning from denial of service and cites
+  ISC advisories. It does not claim a combined exploit has occurred. Version tables
+  are identified as the upstream snapshot dated 23 October 2026.
+- Detailed evidence and administrator workarounds remain available in disclosure
+  sections. Deep links open all enclosing disclosures, including nested ones.
+- The static Open Graph and X card tags point to the public 1200×630 PNG, so social
+  crawlers do not need JavaScript. The editable SVG is its source. No social SDK,
+  analytics script, external font, or third-party image request was added.
 - English fragments still have to match exactly before translation. Links, inline
   commands, templates, and the signed proof text are preserved.
 
@@ -30,5 +44,8 @@ unexpected-response states. A successful mocked test does not establish the
 certificate behavior of a particular browser or network.
 
 The upstream hosts, certificate material, proof archives, and remediation scripts
-are unchanged. A mirror should identify itself as an unofficial snapshot and keep
-deployment backups and configuration outside its public directory.
+are unchanged. This independently branded guide identifies its sources and uses
+its own canonical URL at emudhra.hamazon.is. Deployment backups and configuration
+must stay outside its public directory. Open Graph image URLs must be updated if
+the guide is hosted at another origin. Card metadata and image availability can
+be tested locally; a platform's cached preview is controlled by that platform.
