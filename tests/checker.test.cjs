@@ -46,7 +46,7 @@ test('only the expected test response produces a connected result', async () => 
   const page = checker(async () => ({ status: 200, text: async () => marker }));
   const result = await page.probe();
   assert.equal(result.status, 'connected');
-  assert.match(result.text, /potentially affected/);
+  assert.match(result.text, /check updates/);
 });
 
 test('a proxy block page is inconclusive, regardless of HTTP success', async () => {
@@ -62,7 +62,7 @@ test('TLS and network failures retain the original did-not-connect result', asyn
   const page = checker(async () => { throw new TypeError('Failed to fetch'); });
   const result = await page.probe();
   assert.equal(result.status, 'blocked');
-  assert.equal(result.text, '✅ Did not connect');
+  assert.equal(result.text, '✅ Test response not received');
   await page.start();
   assert.equal(page.tbody.children.length, 14);
   assert.ok(page.tbody.children.every(row => row.children[2].className === 'good'));
@@ -101,7 +101,7 @@ test('Japanese checker works without Object.hasOwn and IntersectionObserver', as
   assert.equal(vm.runInContext('document.documentElement.lang', page.context), 'ja');
   assert.equal(page.tbody.children.length, 14);
   assert.match(page.summary.textContent, /安全とは断定できません/);
-  assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ 接続しませんでした' && row.children[2].className === 'good'));
+  assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ テスト応答を取得できませんでした' && row.children[2].className === 'good'));
   assert.equal(page.rerun.disabled, false);
 });
 

@@ -9,9 +9,10 @@ This branch starts at PR #99 commit
 - The executable page script uses ECMAScript 2018 syntax, a compatible own-property
   check, and a manual check button when IntersectionObserver is unavailable.
 - Certificate and network errors retain the original `blocked` classification
-  and "Did not connect" display. The summary explains that failed connections
-  do not prove certificate distrust. Timeouts and unexpected responses remain
-  inconclusive.
+  and green result color. Text describes the observation: the expected test
+  response was not received. A visible note explains that this does not prove
+  certificate revocation or distrust. Successful test responses are red and
+  recommend checking updates; timeouts and unexpected responses remain gray.
 - Unexpected checker failures show an inconclusive notice and leave retry enabled.
 - English fragments still have to match exactly before translation. Links, inline
   commands, templates, and the signed proof text are preserved.
