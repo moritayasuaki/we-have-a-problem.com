@@ -446,14 +446,19 @@
 <p class="action-foot">Check the vendor’s latest guidance.</p>
 </article>
 <article class="action-card" id="device-action"><div class="action-top"><svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="17" width="26" height="11" rx="4"/><path d="M8 17V7M24 17V7M8 23h.1M13 23h.1M12 8a6 6 0 0 1 8 0M15 12a2 2 0 0 1 2 0"/></svg><span class="step-number">3</span></div><h3>Router & connected devices</h3>
-<p>Find your model on the manufacturer’s site, then apply the recommended device updates.</p>
+<p>Find your model on the manufacturer’s site, then apply the recommended device updates. <a href="#router-passwords">Check the admin password too.</a></p>
 <p class="action-foot">Check the support date; arrange replacement when support ends.</p>
 
 </article>
 </div><p class="section-note">Keep automatic updates and certificate warnings enabled.</p>
-<details class="router-evidence related-questions" id="router-examples"><summary><strong data-i18n>Real routers. Three different failure paths.</strong>
-<span class="router-summary-note" data-i18n>Built-in access / intrusion / end of support — see examples ↓</span>
-</summary><p class="section-note">These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.</p>
+<details class="router-evidence related-questions" id="router-examples"><summary><strong data-i18n>Router checks and real cases</strong>
+<span class="router-summary-note" data-i18n>Passwords / updates / support — see checks and cases ↓</span>
+</summary><div class="router-next" id="router-passwords"><h3>Check the password for changing settings</h3>
+<p><strong>Wi-Fi password:</strong> joins the wireless network.<br><strong>Admin password:</strong> opens the router’s settings. Check each in your device’s instructions.</p>
+<p>Replace shared default, easily guessed or reused admin passwords with a long, unique password within the device’s supported limits. Some devices ship with a strong password unique to that unit; follow the vendor’s guidance for that model.</p>
+<p>If someone can reach the management interface and guess its password, they may gain access to settings such as DNS. A strong password protects that login; firmware updates address software flaws. Follow your provider’s instructions to turn off unused internet-facing administration.</p>
+<p>Guidance: <a href="https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network">FTC: Wi-Fi and admin passwords</a> · <a href="https://dlpa.jp/guidance/">DLPA: unique passwords and updates</a>.</p>
+</div><p class="section-note">These cases show different ways routers can be exposed. They do not measure the share of all routers affected, establish PHP as the cause, or document a combined eMudhra attack.</p>
 <div class="router-cases"><article class="router-case"><p class="related-category">BUILT INTO FIRMWARE / AUG 2026</p>
 <h3>Zbtlink · 20 models examined</h3>
 <div class="router-route" aria-label="Sequence / 問題の流れ"><span data-i18n>Built in</span><b aria-hidden="true">→</b><span data-i18n>Calls out</span><b aria-hidden="true">→</b><span data-i18n>Control at risk</span></div>
@@ -1200,7 +1205,15 @@ certctl rehash
   "Protect the DNS service your device uses": "利用するDNSサービスと通信を守る",
   "DNS helps your device find a service’s address. Your router, internet provider or a public DNS service may handle these lookups. Google Public DNS, whose addresses include 8.8.8.8, is one example.": "DNSは、接続したいサービスのアドレスを調べる仕組みです。ルーターや回線事業者、公開DNSサービスなどを利用します。8.8.8.8は、公開サービスであるGoogle Public DNSのアドレスの一例です。",
   "\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoH protects DNS communication using HTTPS\u003c/a>. Impersonating that service through a forged certificate requires both an opportunity to redirect or intercept traffic and a client that accepts the forged identity. The compromised CA keys concern the identity check; control of the communication path is a separate condition.": "\u003ca href=\"https://www.rfc-editor.org/rfc/rfc8484.html#section-9\">DoHはHTTPSでDNSの通信を保護します\u003c/a>。偽の証明書でその接続先になりすますには、通信を誘導・中継できることと、利用ソフトが偽の相手を受け入れることの両方が条件です。今回のCAの鍵の問題は相手の確認に関わり、通信経路の操作は別の条件です。",
-  "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSEC and encrypted DNS have complementary roles\u003c/a>: DNSSEC verifies signed DNS data using keys separate from TLS, while encrypted DNS protects communication with the resolver. Keep encryption enabled and update the DNS client, its certificate protections and any DNS server you manage.": "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSECと暗号化DNSは、異なる部分を守ります\u003c/a>。DNSSECはTLSとは別の鍵で署名付きのDNS情報を検証し、暗号化DNSはDNSサービスとの通信を保護します。暗号化を有効に保ち、利用ソフト・証明書の保護機能・管理しているDNSサーバーを更新してください。"
+  "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSEC and encrypted DNS have complementary roles\u003c/a>: DNSSEC verifies signed DNS data using keys separate from TLS, while encrypted DNS protects communication with the resolver. Keep encryption enabled and update the DNS client, its certificate protections and any DNS server you manage.": "\u003ca href=\"https://developers.google.com/speed/public-dns/docs/security\">DNSSECと暗号化DNSは、異なる部分を守ります\u003c/a>。DNSSECはTLSとは別の鍵で署名付きのDNS情報を検証し、暗号化DNSはDNSサービスとの通信を保護します。暗号化を有効に保ち、利用ソフト・証明書の保護機能・管理しているDNSサーバーを更新してください。",
+  "Find your model on the manufacturer’s site, then apply the recommended device updates. \u003ca href=\"#router-passwords\">Check the admin password too.\u003c/a>": "本体の型番をメーカーのサイトで調べ、案内に沿って更新。\u003ca href=\"#router-passwords\">管理用パスワードも確認。\u003c/a>",
+  "Router checks and real cases": "ルーターの確認ポイントと実例",
+  "Passwords / updates / support — see checks and cases ↓": "パスワード・更新・サポート期限 — 確認方法と実例 ↓",
+  "Check the password for changing settings": "設定を変更するためのパスワードを確認",
+  "\u003cstrong>Wi-Fi password:\u003c/strong> joins the wireless network.\u003cbr>\u003cstrong>Admin password:\u003c/strong> opens the router’s settings. Check each in your device’s instructions.": "\u003cstrong>Wi-Fi用：\u003c/strong>無線ネットワークにつなぐためのもの。\u003cbr>\u003cstrong>管理用：\u003c/strong>ルーターの設定画面を開くためのもの。機器の説明書で、それぞれを確認します。",
+  "Replace shared default, easily guessed or reused admin passwords with a long, unique password within the device’s supported limits. Some devices ship with a strong password unique to that unit; follow the vendor’s guidance for that model.": "共通の初期値、推測しやすい文字列、使い回しの管理用パスワードは、機器が対応する長さで十分に長い固有のものへ変更。機器ごとに強い初期パスワードが設定された製品もあるため、型番ごとの案内で確認します。",
+  "If someone can reach the management interface and guess its password, they may gain access to settings such as DNS. A strong password protects that login; firmware updates address software flaws. Follow your provider’s instructions to turn off unused internet-facing administration.": "管理画面にアクセスできる相手がパスワードを推測できると、DNSなどの設定を変更される場合があります。強いパスワードでログインを守り、本体の更新でソフトの欠陥に対処します。利用していない外部からの管理機能は、提供元の手順に沿ってオフにします。",
+  "Guidance: \u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC: Wi-Fi and admin passwords\u003c/a> · \u003ca href=\"https://dlpa.jp/guidance/\">DLPA: unique passwords and updates\u003c/a>.": "確認先：\u003ca href=\"https://consumer.ftc.gov/articles/how-secure-your-home-wi-fi-network\">FTC：Wi-Fi用と管理用のパスワード\u003c/a>・\u003ca href=\"https://dlpa.jp/guidance/\">DLPA：パスワードの固有化と更新\u003c/a>。"
 }
 </script>
 <script>
