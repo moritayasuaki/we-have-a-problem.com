@@ -101,6 +101,7 @@ test('Japanese checker works without Object.hasOwn and IntersectionObserver', as
   assert.equal(vm.runInContext('document.documentElement.lang', page.context), 'ja');
   assert.equal(page.tbody.children.length, 14);
   assert.match(page.summary.textContent, /安全とは断定できません/);
+  assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ 接続しませんでした' && row.children[2].className === 'good'));
   assert.equal(page.rerun.disabled, false);
 });
 

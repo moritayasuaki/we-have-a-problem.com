@@ -50,7 +50,6 @@
     .good { color: #090; }
     .bad { color: #c00; }
     .pending { color: #999; }
-    html:lang(ja) .good, html:lang(ja) .pending, html:lang(ja) #summary { color: #666; }
     abbr[title] { cursor: help; }
     small { color: #808080; }
     button { font: inherit; font-size: .9rem; padding: .2rem .6rem; }
@@ -415,7 +414,7 @@ certctl rehash
   "Run again": "もう一度接続をテストする",
   "pending\u003cbr>(1.4.16, 1.6.0)": "修正版の提供待ち\u003cbr>(1.4.16, 1.6.0)",
   "❌ Connected (potentially affected)": "❌ 接続成功（影響を受けている可能性があります）",
-  "✅ Did not connect": "⚠️ 接続失敗（証明書の拒否や通信エラーなど）",
+  "✅ Did not connect": "✅ 接続しませんでした",
   "Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.": "接続テスト{total}件のうち，{n}件でテスト用の応答を受信しました。接続失敗だけでは安全とは断定できません。この結果はこのブラウザでの確認に限ります。通信を中継・検査するプロキシが結果に影響することがあります。",
   " {unknown} checks were inconclusive because of certificate or network errors, timeouts, or unexpected responses. Try again later or from a network without a TLS-intercepting proxy.": " {unknown}件は，証明書または通信のエラー，タイムアウト，想定外の応答により判定できませんでした。時間をおいて再試行するか，通信を中継・検査するプロキシを経由しないネットワークからお試しください。",
   "A certificate error means the connection was rejected; it does not establish why. Certificate Transparency enforcement or other certificate errors can also cause rejection. To check whether the client accepts certificates that were never logged to CT, run:": "証明書エラーは接続が拒否されたことを示しますが，その理由までは確定できません。Certificate Transparencyの強制や，別の証明書エラーでも拒否されることがあります。CTログに一度も記録されていない証明書を受け入れるかどうかを確認するには，次を実行します。",
