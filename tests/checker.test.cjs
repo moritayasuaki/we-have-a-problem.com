@@ -58,16 +58,16 @@ test('a proxy block page is inconclusive, regardless of HTTP success', async () 
   }
 });
 
-test('TLS failures and network failures never produce a safe result', async () => {
+test('TLS and network failures retain the original did-not-connect result', async () => {
   const page = checker(async () => { throw new TypeError('Failed to fetch'); });
   const result = await page.probe();
-  assert.equal(result.status, 'unknown');
-  assert.match(result.text, /Inconclusive/);
+  assert.equal(result.status, 'blocked');
+  assert.equal(result.text, '✅ Did not connect');
   await page.start();
   assert.equal(page.tbody.children.length, 14);
-  assert.ok(page.tbody.children.every(row => row.children[2].className === 'pending'));
+  assert.ok(page.tbody.children.every(row => row.children[2].className === 'good'));
   assert.match(page.summary.textContent, /Failed connections do not prove safety/);
-  assert.match(page.summary.children[0].textContent, /14 checks were inconclusive/);
+  assert.equal(page.summary.children.length, 0);
 });
 
 test('a timed-out request is inconclusive and aborted', async () => {
@@ -82,9 +82,9 @@ test('a timed-out request is inconclusive and aborted', async () => {
   assert.match(result.text, /timed out/);
 });
 
-test('response-body read failures are inconclusive', async () => {
+test('response-body read failures retain the original failure classification', async () => {
   const page = checker(async () => ({ status: 200, text: async () => { throw new Error('disconnected'); } }));
-  assert.equal((await page.probe()).status, 'unknown');
+  assert.equal((await page.probe()).status, 'blocked');
 });
 
 test('missing checker APIs show a failure notice and leave retry enabled', async () => {
