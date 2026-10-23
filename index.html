@@ -488,11 +488,11 @@
 </div></details></section>
 <section class="check-section" id="check" aria-labelledby="check-title"><div class="section-heading"><p class="eyebrow">02 / CHECK THIS BROWSER</p>
 <h2 id="check-title">A result for this browser, on this network.</h2>
-<p>The check contacts 14 test hosts. It cannot inspect your apps, your router or another browser. Test hosts count successful connections by client type.</p>
+<p>This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.</p>
 </div><div id="browser-verdict" class="verdict neutral" role="status" aria-live="polite" aria-atomic="true"><span class="verdict-symbol" id="verdict-symbol" aria-hidden="true">○</span><div><p id="verdict-title">This browser has not been checked yet.</p>
 <p id="verdict-detail">The check starts automatically when the page loads. You can also use the button below.</p>
-</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>The expected test response was received.</p>
-<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · No test response</strong><br>Keep your software up to date.</p>
+</div></div><div class="check-controls"><button id="rerun" type="button" class="button primary">Run check</button><a href="#next-steps" class="text-link" data-i18n>Then check your apps & devices ↑</a></div><div class="result-legend"><p><span class="legend-dot red" aria-hidden="true"></span><strong>Red · Check updates</strong><br>A site using an affected certificate was reachable.</p>
+<p><span class="legend-dot green" aria-hidden="true"></span><strong>Green · No affected-site connection detected</strong><br>Keep automatic updates enabled.</p>
 <p><span class="legend-dot gray" aria-hidden="true"></span><strong>Gray · Check incomplete</strong><br>Try again on a working connection.</p>
 </div><p id="checker-note" class="section-note">A green result can also come from a network failure. This page cannot tell whether a certificate was revoked or blocked. Proxies that inspect encrypted traffic can change the result.</p>
 <details class="technical-details" id="test-details"><summary data-i18n>See all 14 connection results</summary>
@@ -925,20 +925,16 @@ certctl rehash
   "On FreeBSD 14 or later, run the following commands as root:": "FreeBSD 14以降では，root権限で次のコマンドを実行します。",
   "Site published by \u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a>. This site is the work of \u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">many contributors\u003c/a> from the community. The source is on \u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">GitHub\u003c/a> and PRs are welcome.": "このサイトは\u003ca href=\"https://github.com/dennisjackson\">Dennis Jackson\u003c/a>が公開し，コミュニティの\u003ca href=\"https://github.com/galadran/we-have-a-problem.com/graphs/contributors\">多くの貢献者\u003c/a>が制作しています。ソースコードは\u003ca href=\"https://github.com/galadran/we-have-a-problem.com\">GitHub\u003c/a>で公開しており，PRを歓迎します。\u003cbr>この一時的な和訳はGrEarlによって提案されています。",
   "No Certificate Transparency: this certificate was never logged to CT and has no SCTs. Clients that enforce CT, such as Chrome, Safari and Firefox, reject it even if they still trust the intermediate.": "Certificate Transparencyなし：この証明書はCTログに一度も記録されておらず，SCTもありません。Chrome，Safari，Firefoxなど，CTを必須とするクライアントは，中間CAをまだ信頼していてもこの証明書を拒否します。",
-  "⚠️ Inconclusive (unexpected HTTP {status} response)": "⚠️ 判定できません（テスト用の応答を確認できませんでした：HTTP {status}）",
+  "⚠️ Inconclusive (unexpected HTTP {status} response)": "⚠️ 判定できません（接続先の内容を確認できませんでした：HTTP {status}）",
   "⚠️ Inconclusive (timed out)": "⚠️ 判定できません（時間内に応答がありませんでした）",
   "not yet checked": "まだテストしていません",
   "checking…": "接続をテスト中…",
   "Run again": "もう一度接続をテストする",
   "pending\u003cbr>(1.4.16, 1.6.0)": "修正版の提供待ち\u003cbr>(1.4.16, 1.6.0)",
-  "Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.": "接続テスト{total}件のうち，{n}件でテスト用の応答を受信しました。接続失敗だけでは安全とは断定できません。この結果はこのブラウザでの確認に限ります。通信を中継・検査するプロキシが結果に影響することがあります。",
   " {unknown} checks were inconclusive because of certificate or network errors, timeouts, or unexpected responses. Try again later or from a network without a TLS-intercepting proxy.": " {unknown}件は，証明書または通信のエラー，タイムアウト，想定外の応答により判定できませんでした。時間をおいて再試行するか，通信を中継・検査するプロキシを経由しないネットワークからお試しください。",
   "A certificate error means the connection was rejected; it does not establish why. Certificate Transparency enforcement or other certificate errors can also cause rejection. To check whether the client accepts certificates that were never logged to CT, run:": "証明書エラーは接続が拒否されたことを示しますが，その理由までは確定できません。Certificate Transparencyの強制や，別の証明書エラーでも拒否されることがあります。CTログに一度も記録されていない証明書を受け入れるかどうかを確認するには，次を実行します。",
   "⚠️ Inconclusive (checker unavailable)": "⚠️ 判定できません（確認ツールを利用できません）",
   "The checker could not complete. No safety conclusion can be drawn.": "確認ツールを完了できませんでした。安全性についての結論は出せません。",
-  "❌ Test response received — check updates": "❌ テスト応答を受信しました（更新をご確認ください）",
-  "✅ Test response not received": "✅ テスト応答を取得できませんでした",
-  "Red recommends checking updates. Green means the expected test response was not obtained. Certificate rejection or a network problem can cause this; it does not confirm certificate revocation or distrust. Results apply only to this browser.": "赤は更新状況の確認を勧める結果，緑はテスト用の応答が取得されなかった結果を示します。緑の場合も，証明書の拒否や通信障害などが原因として考えられ，証明書の失効・信頼停止を確認できたわけではありません。結果はこのブラウザに限ります。",
   "eMudhra: a practical update guide": "eMudhra：いま確認したい更新ガイド",
   "A calm guide to the eMudhra certificate issue. Check this browser, then update your apps and connected devices. Understand what each test can and cannot tell you.": "eMudhraの証明書問題への対応を、落ち着いてひとつずつ。ブラウザの確認から、アプリ・ルーター・IoT機器の更新まで、確認できる範囲と次の行動を案内します。",
   "Skip to the guide": "本文へ移動",
@@ -968,11 +964,8 @@ certctl rehash
   "Not every app or device is affected. The answer depends on its certificate checks and the updates it has received. Keep certificate warnings enabled.": "すべてのアプリや機器が影響を受けるわけではありません。証明書の確認方法と更新状況で異なります。証明書の警告は無効にせず、更新で対応してください。",
   "02 / CHECK THIS BROWSER": "02 / このブラウザを確認",
   "A result for this browser, on this network.": "このブラウザの、いまの接続結果。",
-  "The check contacts 14 test hosts. It cannot inspect your apps, your router or another browser. Test hosts count successful connections by client type.": "14か所のテスト先への接続を確認します。アプリ、ルーター、別のブラウザは検査できません。テスト先では、接続できた利用ソフトの種類別に回数が集計されます。",
   "This browser has not been checked yet.": "このブラウザは、まだ確認していません。",
   "The check starts when this panel is visible. You can also use the button below.": "この欄が表示されると確認を始めます。下のボタンからも実行できます。",
-  "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Red · Check updates\u003c/strong>\u003cbr>The expected test response was received.": "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>赤：更新状況を確認\u003c/strong>\u003cbr>テスト用の応答を受信しました。",
-  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · No test response\u003c/strong>\u003cbr>Keep your software up to date.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：テスト応答なし\u003c/strong>\u003cbr>引き続き更新を保ちましょう。",
   "\u003cspan class=\"legend-dot gray\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Gray · Check incomplete\u003c/strong>\u003cbr>Try again on a working connection.": "\u003cspan class=\"legend-dot gray\" aria-hidden=\"true\">\u003c/span>\u003cstrong>灰：確認できません\u003c/strong>\u003cbr>通信を確認して、再実行してください。",
   "A green result can also come from a network failure. This page cannot tell whether a certificate was revoked or blocked. Proxies that inspect encrypted traffic can change the result.": "緑には、通信できなかった場合も含まれます。このページだけでは、証明書の失効・信頼停止が理由かを判別できません。通信を中継・検査する仕組みも結果に影響します。",
   "See all 14 connection results": "14件の接続結果を詳しく見る",
@@ -1008,11 +1001,8 @@ certctl rehash
   "Command-line checks: this tool only": "コマンドの確認：対象はそのツールだけ",
   "The incident and original test are from the \u003ca href=\"https://emudhra.we-have-a-problem.com/\">community incident report\u003c/a>. The update guidance is also informed by \u003ca href=\"https://render.com/docs/advisory-emudhra\">Render’s advisory\u003c/a> and \u003ca href=\"https://curl.se/docs/sslcerts.html\">curl’s certificate documentation\u003c/a>. DNS examples link to ISC’s own advisories above. The combined-risk diagram is an explanation of how those conditions could interact.": "問題の情報と元のテストは\u003ca href=\"https://emudhra.we-have-a-problem.com/\">コミュニティの報告サイト\u003c/a>に基づきます。更新の説明には\u003ca href=\"https://render.com/docs/advisory-emudhra\">Renderの案内\u003c/a>と\u003ca href=\"https://curl.se/docs/sslcerts.html\">curlの証明書に関する文書\u003c/a>も参照しています。DNSの例は上記のISC公式情報を参照し、組み合わせの図は条件が重なる場合を説明したものです。",
   "Check your browser and system updates.": "ブラウザとOSの更新を確認してください。",
-  "At least one test response was received. Apply available updates and check again. This result does not show that an attack happened.": "テスト用の応答を受信しました。利用できる更新を適用して、もう一度確認してください。攻撃を受けたことを示す結果ではありません。",
   "The check is incomplete.": "確認を完了できませんでした。",
   "Some requests timed out or returned an unexpected response. Check your connection and try again.": "時間切れや想定外の応答がありました。通信を確認して、もう一度お試しください。",
-  "No test responses were received.": "テスト用の応答は、ありませんでした。",
-  "This check found no connection that calls for extra action. Keep updates enabled. Network failures can also produce this result; apps and devices still need their own update checks.": "この確認では、追加対応を勧める接続は見つかりませんでした。引き続き更新を保ちましょう。通信障害でもこの結果になります。アプリや機器は、それぞれ更新を確認してください。",
   "Checking this browser…": "このブラウザを確認しています…",
   "This usually takes about 10 seconds.": "通常、10秒ほどで結果が出ます。",
   "Router &amp; smart devices": "ルーター・スマート機器",
@@ -1078,16 +1068,10 @@ certctl rehash
   "This browser: checking…": "このブラウザを確認中…",
   "Apps and devices need their own updates.": "アプリと機器は、それぞれ更新を確認。",
   "View result": "結果を見る",
-  "Action needed: a test response was received.": "要確認：テスト用の応答を受信しました。",
-  "Check browser and OS updates. This result is not proof of an attack.": "ブラウザ・OSの更新を確認してください。被害の発生を示す結果ではありません。",
   "Check updates →": "更新を確認 →",
-  "A previous test response was received. Recheck incomplete.": "テスト応答の受信履歴があります。再確認は未完了です。",
   "Keep checking updates; the incomplete check has not cleared the earlier result.": "更新状況を確認してください。未完了の再確認では、前の結果は解消していません。",
   "This browser: check incomplete.": "このブラウザ：確認を完了できません。",
   "Check your connection, then try again.": "通信を確認して、もう一度お試しください。",
-  "This browser: no test response.": "このブラウザ：テスト応答なし。",
-  "Network failures can also cause this. Check apps and devices separately.": "通信障害でもこの結果になります。アプリと機器は別に確認。",
-  "A previous test response was received. Checking again…": "前の確認ではテスト応答を受信。いま再確認中です…",
   "Keep checking updates while this run completes.": "再確認が完了するまで、更新状況の確認を続けてください。",
   "Check this browser.\u003cbr>\u003cspan>Update apps &amp; devices.\u003c/span>": "ブラウザを確認。\u003cbr>\u003cspan>アプリ・機器も更新。\u003c/span>",
   "The eMudhra certificate incident can let affected software accept a false identity. This page checks only this browser.": "偽の通信相手を受け入れるおそれのある証明書の問題です。ここで確認できるのは、このブラウザだけ。",
@@ -1171,7 +1155,22 @@ certctl rehash
   "Update &amp; recover if compromised": "更新・侵害時は復旧も",
   "Support ends": "サポート終了",
   "No more fixes": "修正が届かない",
-  "Check support &amp; replace": "期限を確認して交換"
+  "Check support &amp; replace": "期限を確認して交換",
+  "Action needed: check browser and OS updates.": "要対応：ブラウザ・OSの更新を確認。",
+  "A site using an affected certificate was reachable. This result is not proof of an attack.": "問題のある証明書のサイトに接続できました。被害が起きたという意味ではありません。",
+  "A previous connection needs attention. Recheck incomplete.": "前の確認では接続できました。再確認は未完了です。",
+  "A previous connection needs attention. Checking again…": "前の確認では接続できました。いま再確認中です…",
+  "This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.": "このブラウザは、問題のある証明書のサイトに接続できました。ブラウザ・OSの更新を適用して、もう一度確認してください。攻撃を受けたという意味ではありません。",
+  "This browser: no affected-site connection detected.": "このブラウザ：問題のある接続は見つかりませんでした。",
+  "No connection to the affected test sites was detected.": "今回、問題のある接続は見つかりませんでした。",
+  "No connection to the sites using affected certificates was confirmed. Keep automatic updates enabled. A network problem can produce the same result. Apps and devices need separate checks.": "問題のある証明書のサイトへの接続は確認されませんでした。自動更新は続けてください。通信障害でも同じ結果になります。アプリと機器は別に確認が必要です。",
+  "Network problems can produce the same result. Check apps and devices separately.": "通信障害でも同じ結果になります。アプリ・機器は別に確認。",
+  "❌ Connected — check updates": "❌ 接続できました（更新を確認）",
+  "✅ No connection confirmed": "✅ 接続は確認されませんでした",
+  "This browser connected to {n} of {total} sites using affected certificates. A failed connection does not prove safety. This checks only this browser; proxies that inspect encrypted traffic can affect the result.": "問題のある証明書を使う{total}サイトのうち、{n}サイトへの接続が確認されました。接続失敗だけでは安全とは断定できません。このブラウザだけの結果です。暗号化通信を検査するプロキシが結果に影響する場合があります。",
+  "This check tries to connect to 14 sites using the affected certificates. It checks this browser only. It cannot inspect your apps or router. The sites count successful connections by client type.": "問題のある証明書を使う14の確認用サイトに接続を試みます。対象はこのブラウザだけで、アプリやルーターの状態は調べられません。確認用サイトは、接続できた件数をソフトウェアの種類別に集計します。",
+  "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Red · Check updates\u003c/strong>\u003cbr>A site using an affected certificate was reachable.": "\u003cspan class=\"legend-dot red\" aria-hidden=\"true\">\u003c/span>\u003cstrong>赤：更新を確認\u003c/strong>\u003cbr>問題のある証明書のサイトに接続できました。",
+  "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>Green · No affected-site connection detected\u003c/strong>\u003cbr>Keep automatic updates enabled.": "\u003cspan class=\"legend-dot green\" aria-hidden=\"true\">\u003c/span>\u003cstrong>緑：問題のある接続は見つからず\u003c/strong>\u003cbr>自動更新は続けてください。"
 }
 </script>
 <script>
@@ -1272,12 +1271,12 @@ function globalStatus(state, title, detail) {
 }
 function connectionNotice() {
   previousConnection = true;
-  globalStatus('needs-action', 'Action needed: a test response was received.',
-    'Check browser and OS updates. This result is not proof of an attack.');
+  globalStatus('needs-action', 'Action needed: check browser and OS updates.',
+    'A site using an affected certificate was reachable. This result is not proof of an attack.');
 }
 function incompleteNotice() {
   if (previousConnection) {
-    globalStatus('needs-action', 'A previous test response was received. Recheck incomplete.',
+    globalStatus('needs-action', 'A previous connection needs attention. Recheck incomplete.',
       'Keep checking updates; the incomplete check has not cleared the earlier result.');
   } else {
     globalStatus('neutral', 'This browser: check incomplete.',
@@ -1295,16 +1294,16 @@ function reportVerdict(connected, unknown) {
   if (connected) {
     connectionNotice();
     showVerdict('needs-action', '!', 'Check your browser and system updates.',
-      'At least one test response was received. Apply available updates and check again. This result does not show that an attack happened.');
+      'This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.');
   } else if (unknown) {
     incompleteNotice();
     showVerdict('neutral', '…', 'The check is incomplete.',
       'Some requests timed out or returned an unexpected response. Check your connection and try again.');
   } else {
     previousConnection = false;
-    globalStatus('no-response', 'This browser: no test response.', 'Network failures can also cause this. Check apps and devices separately.');
-    showVerdict('no-response', '✓', 'No test responses were received.',
-      'This check found no connection that calls for extra action. Keep updates enabled. Network failures can also produce this result; apps and devices still need their own update checks.');
+    globalStatus('no-response', 'This browser: no affected-site connection detected.', 'Network problems can produce the same result. Check apps and devices separately.');
+    showVerdict('no-response', '✓', 'No connection to the affected test sites was detected.',
+      'No connection to the sites using affected certificates was confirmed. Keep automatic updates enabled. A network problem can produce the same result. Apps and devices need separate checks.');
   }
 }
 
@@ -1326,13 +1325,13 @@ async function probe(host) {
     if (!body.includes(EXPECTED_BODY)) {
       return { status: 'unknown', text: t('⚠️ Inconclusive (unexpected HTTP {status} response)').replace('{status}', res.status) };
     }
-    return { status: 'connected', text: t('❌ Test response received — check updates') };
+    return { status: 'connected', text: t('❌ Connected — check updates') };
   } catch (err) {
     // A slow server is not evidence that the chain was rejected.
     if (err.name === 'AbortError') return { status: 'unknown', text: t('⚠️ Inconclusive (timed out)') };
     // Browsers report TLS failures and network errors identically here.
     // Neither proves that the compromised intermediate was distrusted.
-    return { status: 'blocked', text: t('✅ Test response not received') };
+    return { status: 'blocked', text: t('✅ No connection confirmed') };
   } finally {
     clearTimeout(timer);
   }
@@ -1361,7 +1360,7 @@ async function run() {
   summary.textContent = '';
   let connectionsThisRun = 0;
   if (previousConnection) {
-    globalStatus('needs-action', 'A previous test response was received. Checking again…',
+    globalStatus('needs-action', 'A previous connection needs attention. Checking again…',
       'Keep checking updates while this run completes.');
   } else {
     globalStatus('neutral', 'This browser: checking…', 'Apps and devices need their own updates.');
@@ -1376,7 +1375,7 @@ async function run() {
     if (r.status === 'connected' && ++connectionsThisRun === 1) {
       connectionNotice();
       showVerdict('needs-action', '!', 'Check your browser and system updates.',
-        'At least one test response was received. Apply available updates and check again. This result does not show that an attack happened.');
+        'This browser reached a site using an affected certificate. Apply available browser and OS updates, then check again. This result does not show that an attack happened.');
     }
     cells[i].textContent = r.text;
     cells[i].className = { connected: 'bad', blocked: 'good', unknown: 'pending' }[r.status];
@@ -1385,7 +1384,7 @@ async function run() {
   const n = results.filter(s => s === 'connected').length;
   const unknown = results.filter(s => s === 'unknown').length;
   reportVerdict(n, unknown);
-  const summaryTemplate = 'Your browser received the expected test response from {n} of {total} hosts. Failed connections do not prove safety. This checks only this browser; TLS-intercepting proxies can affect the result.';
+  const summaryTemplate = 'This browser connected to {n} of {total} sites using affected certificates. A failed connection does not prove safety. This checks only this browser; proxies that inspect encrypted traffic can affect the result.';
   summary.lang = messages && hasOwn(messages, summaryTemplate) ? 'ja' : 'en';
   summary.textContent = t(summaryTemplate).replace('{n}', n).replace('{total}', HOSTS.length);
   if (unknown) {

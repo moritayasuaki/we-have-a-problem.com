@@ -70,14 +70,14 @@ test('TLS and network failures retain the original did-not-connect result', asyn
   const page = checker(async () => { throw new TypeError('Failed to fetch'); });
   const result = await page.probe();
   assert.equal(result.status, 'blocked');
-  assert.equal(result.text, '✅ Test response not received');
+  assert.equal(result.text, '✅ No connection confirmed');
   await page.start();
   assert.equal(page.tbody.children.length, 14);
   assert.ok(page.tbody.children.every(row => row.children[2].className === 'good'));
-  assert.match(page.summary.textContent, /Failed connections do not prove safety/);
+  assert.match(page.summary.textContent, /A failed connection does not prove safety/);
   assert.equal(page.summary.children.length, 0);
   assert.equal(page.verdict.className, 'verdict no-response');
-  assert.match(page.verdictDetail.textContent, /Network failures/);
+  assert.match(page.verdictDetail.textContent, /network problems?/i);
 });
 
 test('a timed-out request is inconclusive and aborted', async () => {
@@ -112,7 +112,7 @@ test('Japanese checker works without Object.hasOwn and IntersectionObserver', as
   assert.equal(vm.runInContext('document.documentElement.lang', page.context), 'ja');
   assert.equal(page.tbody.children.length, 14);
   assert.match(page.summary.textContent, /安全とは断定できません/);
-  assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ テスト応答を取得できませんでした' && row.children[2].className === 'good'));
+  assert.ok(page.tbody.children.every(row => row.children[2].textContent === '✅ 接続は確認されませんでした' && row.children[2].className === 'good'));
   assert.equal(page.rerun.disabled, false);
 });
 
@@ -158,7 +158,7 @@ test('the first received response raises the global alert before other probes fi
   await new Promise(setImmediate);
   assert.equal(page.rerun.disabled, true);
   assert.equal(page.globalNotice.className, 'global-notice needs-action');
-  assert.match(page.globalTitle.textContent, /test response was received/);
+  assert.match(page.globalTitle.textContent, /check browser and OS updates/);
   assert.equal(page.globalAction.href, '#browser-action');
   assert.match(page.announcement.textContent, /not proof of an attack/);
   finish({ status: 403, text: async () => 'proxy' });
@@ -185,6 +185,6 @@ test('retry and an incomplete result retain a clearly labeled previous alert', a
   mode = 'blocked';
   await page.start();
   assert.equal(page.globalNotice.className, 'global-notice no-response');
-  assert.match(page.globalDetail.textContent, /Network failures/);
+  assert.match(page.globalDetail.textContent, /network problems?/i);
   assert.equal(page.announcement.textContent, '');
 });
